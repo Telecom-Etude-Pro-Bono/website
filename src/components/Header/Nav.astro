@@ -1,0 +1,121 @@
+---
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../../i18n/utils";
+import StaticDonateButton from "../StaticDonateButton.astro";
+import SearchButton from "../SearchButton.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+---
+
+<nav class="nav">
+    <a href={tr("/")}>
+        <div class="logo-container">
+            <img
+                class="logo"
+                src="public/logos/tpb-logo-text.svg"
+                alt="Logo Telecom Etude Pro Bono avec texte"
+            />
+        </div>
+    </a>
+    <div class="menu-container">
+        <a class="nav-link" href={tr("/about")}>
+            {t("nav.about")}
+        </a>
+        <a class="nav-link" href={tr("/patron")}>
+            {t("nav.patron")}
+        </a>
+        <a class="nav-link" href={tr("/support")}>
+            {t("nav.support")}
+        </a>
+        <a class="nav-link" href={tr("/blog")}>
+            {t("nav.blog")}
+        </a>
+        <a class="nav-link" href={tr("/contact")}>
+            {t("nav.contact")}
+        </a>
+
+        <StaticDonateButton />
+        <SearchButton />
+    </div>
+</nav>
+
+<style>
+    .nav {
+        display: flex;
+        padding: var(--sds-size-space-300) 20px;
+
+        justify-content: space-between;
+        align-items: center;
+        align-self: stretch;
+        opacity: var(--sds-size-stroke-border);
+    }
+
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .menu-container {
+        display: flex; */
+    width: 940.914px;
+    /* flex-direction: column; */
+    /* align-items: center; */
+    /* gap: 9.789px; */
+    opacity: var(--sds-size-stroke-border);
+    display: flex;
+    height: -webkit-fill-available;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 11.747px;
+    align-self: stretch;
+    }
+
+    .nav-link {
+        display: flex;
+    /* width: 140px; */
+    /* padding: 12px 2px 12.05px 3px; */
+    justify-content: center;
+    align-items: center;
+    /* align-self: stretch; */
+    text-decoration: none;
+    }
+
+    @media (max-width: 930px) {
+    .nav {
+        display: flex;
+    padding: var(--sds-size-space-300) 20px;
+    align-items: center;
+    align-self: stretch;
+    opacity: var(--sds-size-stroke-border);
+    flex-direction: column;;
+    }
+
+    .menu-container {
+    opacity: var(--sds-size-stroke-border);
+    display: flex;
+    height: -webkit-fill-available;
+    justify-content: center;
+    align-items: center;
+    gap: 11.747px;
+    align-self: stretch;
+    }
+
+    .nav-link {
+        padding: 12px 2px 12.05px 3px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .menu-container{
+        display: none;
+    }
+</style>
+
+

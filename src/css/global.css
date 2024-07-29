@@ -1,0 +1,73 @@
+:root {
+    --information-color:#3AA32B;
+    --ongoing-color:#70AC70;
+    --completed-color:#0D3E06;
+    --orange: #fd8334;
+    --deg1: #ffb58f;
+    --deg2: #ffb99d;
+    --deg3: #f07b6b;
+    --deg4: #e34e5a;
+    --deg5: #dc3551;
+    --deg6: #d92b4d;
+    --red: #d51f48;
+    --accent-gradient: linear-gradient(45deg, var(--orange), var(--red) 85%, rgb(255, 252, 251) 150%);
+}
+html {
+    font-family: Montserrat, sans-serif;
+    color: #1a1b1f;
+}
+body {
+    margin: 0px;
+    font-size: 16px;
+    line-height: 28px;
+    font-weight: 400;
+}
+h3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 30px;
+    line-height: 46px;
+    font-weight: 400;
+}
+h5 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    line-height: 34px;
+    font-weight: 500;
+}
+
+h6 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 28px;
+    font-weight: 500;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+a {
+    display: block;
+    -webkit-transition: opacity 200ms ease;
+    transition: opacity 200ms ease;
+    color: #1a1b1f;
+    cursor: pointer;
+    text-decoration: none;
+}
+code {
+    font-family:
+        Menlo,
+        Monaco,
+        Lucida Console,
+        Liberation Mono,
+        DejaVu Sans Mono,
+        Bitstream Vera Sans Mono,
+        Courier New,
+        monospace;
+}
+* {
+    box-sizing: border-box;
+}

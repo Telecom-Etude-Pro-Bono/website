@@ -1,0 +1,60 @@
+---
+const { subtitle } = Astro.props
+
+export interface Props{
+    subtitle: string
+}
+
+---
+
+<div class="subtitle-container">
+    <b class="subtitle-text">{subtitle}</b>
+    <div class="short-horizontal-separator">
+        <div class="short-horizontal-separator-child"></div>
+    </div>
+</div>
+
+
+<style>
+.subtitle-text {
+    align-self: stretch;
+    position: relative;
+    letter-spacing: 1.36px;
+    line-height: 27.17px;
+    text-transform: uppercase;
+}
+.short-horizontal-separator-child {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    right: 0%;
+    bottom: 0%;
+    left: 0%;
+    background-color: #276033;
+}
+.short-horizontal-separator {
+    width: 190px;
+    position: relative;
+    height: 5px;
+}
+.subtitle-container {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 38px 18px;
+    box-sizing: border-box;
+    gap: 15px;
+    text-align: center;
+    font-size: 27.17px;
+    color: #000;
+    font-family: Montserrat;
+}
+
+</style>
+
+

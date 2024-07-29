@@ -1,0 +1,66 @@
+---
+import Subtitle from "../Subtitle.astro";
+import ArticleCard from "./ArticleCard.astro";
+import type { CollectionEntry, CollectionKey } from "astro:content";
+import { getCollection } from "astro:content";
+import { ARTICLES_PER_CAROUSEL } from "../../constants.ts";
+const { title, option } = Astro.props;
+
+interface Props {
+    title: string;
+    option: string;
+}
+
+const allBlogArticles: CollectionEntry<"blog">[] = (
+    await getCollection("blog")
+).sort(
+    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+        b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+).filter((article) => article.data.type === option || option === "all");
+
+const articlesForCarousel: CollectionEntry<"blog">[] = allBlogArticles.slice(0, ARTICLES_PER_CAROUSEL);
+---
+
+<div class="carousel-container">
+    <Subtitle subtitle={title} />
+    <div class="carousel">
+        {
+            articlesForCarousel.map((article) => (
+                <ArticleCard article={article} inCarousel={true} />
+            ))
+        }
+    </div>
+</div>
+
+<style>
+    .carousel-container {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 27.17px;
+        color: #000;
+        font-family: Montserrat;
+    }
+    .carousel {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-evenly;
+        padding: 10px 0px;
+        box-sizing: border-box;
+        gap: 50px 40px;
+        text-align: center;
+        font-size: 23px;
+        color: #fff;
+        font-family: Montserrat;
+    }
+</style>
