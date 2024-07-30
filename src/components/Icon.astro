@@ -1,0 +1,16 @@
+---
+const {icon, alt} = Astro.props;
+interface IconProps {
+    iconFile: string;
+    alt: string;
+}
+
+---
+
+<img class="icon" alt={alt} src={"/icons/" +  icon +".svg"}>
+<style>
+.icon {
+position: relative;
+cursor:pointer
+}
+</style>

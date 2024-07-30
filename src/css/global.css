@@ -14,15 +14,16 @@
 }
 html {
     font-family: Montserrat, sans-serif;
-    color: #1a1b1f;
+    color: #000000;
 }
 body {
-    margin: 0px;
-    font-size: 16px;
-    line-height: 28px;
-    font-weight: 400;
+    margin-left: 0px;
+    margin-right: 0px;
+    /* font-size: 16px; */
+    /* line-height: 28px; */
+    /* font-weight: 400; */
 }
-h3 {
+/* h3 {
     margin-top: 10px;
     margin-bottom: 10px;
     font-size: 30px;
@@ -43,7 +44,7 @@ h6 {
     font-size: 16px;
     line-height: 28px;
     font-weight: 500;
-}
+} */
 
 p {
     margin-bottom: 10px;
@@ -70,4 +71,25 @@ code {
 }
 * {
     box-sizing: border-box;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.separator {
+    display: flex;
+    height: 2px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    align-self: stretch;
+    opacity: var(--sds-size-stroke-border);
+    width: -webkit-fill-available;
+
+    background: #276033;
+}
+
+.w-nav {
+    width: 100%;
 }

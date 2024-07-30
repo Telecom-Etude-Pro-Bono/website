@@ -1,0 +1,18 @@
+---
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../web-data/i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const tr = useTranslatedPath(lang);
+---
+<a href={tr("/")}>
+    <div class="logo-container">
+        <img
+            class="logo"
+            src="/logos/tpb-logo-text.svg"
+            alt="Logo Telecom Etude Pro Bono avec texte"
+        />
+    </div>
+</a>

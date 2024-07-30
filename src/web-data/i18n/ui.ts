@@ -15,6 +15,13 @@ export const ui = {
         'nav.blog': 'Actualités',
         'nav.contact': 'Contact',
         'nav.donate': 'Faire un don',
+        'nav.publications': 'Publications',
+        'nav.sitemap': 'Plan du site',
+
+
+        'footer.legal': 'Mentions légales',
+        'footer.rights': 'Tous droits réservés',
+        'footer.contact': 'Contacter Telecom Etude Pro Bono',
 
     },
 } as const;

@@ -3,9 +3,8 @@ import {
     getLangFromUrl,
     useTranslations,
     useTranslatedPath,
-} from "../../i18n/utils";
+} from "../../web-data/i18n/utils";
 import StaticDonateButton from "../StaticDonateButton.astro";
-import SearchButton from "../SearchButton.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -13,34 +12,23 @@ const tr = useTranslatedPath(lang);
 ---
 
 <nav class="nav">
-    <a href={tr("/")}>
-        <div class="logo-container">
-            <img
-                class="logo"
-                src="public/logos/tpb-logo-text.svg"
-                alt="Logo Telecom Etude Pro Bono avec texte"
-            />
-        </div>
+    <a class="nav-link uppercase" href={tr("/about")}>
+        {t("nav.about")}
     </a>
-    <div class="menu-container">
-        <a class="nav-link" href={tr("/about")}>
-            {t("nav.about")}
-        </a>
-        <a class="nav-link" href={tr("/patron")}>
-            {t("nav.patron")}
-        </a>
-        <a class="nav-link" href={tr("/support")}>
-            {t("nav.support")}
-        </a>
-        <a class="nav-link" href={tr("/blog")}>
-            {t("nav.blog")}
-        </a>
-        <a class="nav-link" href={tr("/contact")}>
-            {t("nav.contact")}
-        </a>
-
+    <a class="nav-link uppercase" href={tr("/patron")}>
+        {t("nav.patron")}
+    </a>
+    <a class="nav-link uppercase" href={tr("/support")}>
+        {t("nav.support")}
+    </a>
+    <a class="nav-link uppercase" href={tr("/blog")}>
+        {t("nav.blog")}
+    </a>
+    <a class="nav-link uppercase" href={tr("/contact")}>
+        {t("nav.contact")}
+    </a>
+    <div class="donate-button-container">
         <StaticDonateButton />
-        <SearchButton />
     </div>
 </nav>
 
@@ -53,6 +41,7 @@ const tr = useTranslatedPath(lang);
         align-items: center;
         align-self: stretch;
         opacity: var(--sds-size-stroke-border);
+        gap: 11.747px;
     }
 
     .logo-container {
@@ -62,60 +51,79 @@ const tr = useTranslatedPath(lang);
         gap: 2px;
     }
 
-    .menu-container {
-        display: flex; */
-    width: 940.914px;
-    /* flex-direction: column; */
-    /* align-items: center; */
-    /* gap: 9.789px; */
-    opacity: var(--sds-size-stroke-border);
-    display: flex;
-    height: -webkit-fill-available;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 11.747px;
-    align-self: stretch;
+    nav a {
+        color: var(--Menu-button-color, #000);
+
+        text-align: center;
+        text-shadow: 0px 3.916px 3.916px rgba(0, 0, 0, 0.25);
+        font-family: Montserrat, Helvetica;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .donate-button-container {
+        width: 207px;
+        font-size: 12px;
     }
 
     .nav-link {
         display: flex;
-    /* width: 140px; */
-    /* padding: 12px 2px 12.05px 3px; */
-    justify-content: center;
-    align-items: center;
-    /* align-self: stretch; */
-    text-decoration: none;
+        /* width: 140px; */
+        /* padding: 12px 2px 12.05px 3px; */
+        justify-content: center;
+        align-items: center;
+        /* align-self: stretch; */
+        text-decoration: none;
     }
 
-    @media (max-width: 930px) {
-    .nav {
-        display: flex;
-    padding: var(--sds-size-space-300) 20px;
-    align-items: center;
-    align-self: stretch;
-    opacity: var(--sds-size-stroke-border);
-    flex-direction: column;;
+    @media (max-width: 1120px) {
+        .nav {
+            opacity: var(--sds-size-stroke-border);
+            display: flex;
+            height: -webkit-fill-available;
+            justify-content: center;
+            align-items: center;
+            gap: 11.747px;
+            align-self: stretch;
+        }
+
+        .nav-link {
+            padding: 12px 2px 12.05px 3px;
+        }
     }
 
-    .menu-container {
-    opacity: var(--sds-size-stroke-border);
-    display: flex;
-    height: -webkit-fill-available;
-    justify-content: center;
-    align-items: center;
-    gap: 11.747px;
-    align-self: stretch;
+    @media (max-width: 950px) {
+        .donate-button-container {
+            width: 160px;
+        }
     }
 
-    .nav-link {
-        padding: 12px 2px 12.05px 3px;
+    @media (max-width: 900px) {
+        nav a {
+            font-size: 10px;
+        }
     }
-}
 
-@media screen and (max-width: 768px) {
-    .menu-container{
-        display: none;
+    @media screen and (max-width: 810px) {
+        .nav {
+            display: flex;
+            padding: var(--sds-size-space-300) 20px;
+            align-items: center;
+            align-self: stretch;
+            opacity: var(--sds-size-stroke-border);
+            flex-direction: column;
+        }
+
+        .nav-link {
+            padding: 12px 2px 12.05px 3px;
+        }
+
+        nav a {
+            font-size: 20px;
+            white-space: nowrap;
+        }
     }
 </style>
-
-

@@ -1,0 +1,251 @@
+---
+import { socials } from "../../web-data/externals/links.ts";
+import { EMAIL } from "../../web-data/constants.ts";
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../../web-data/i18n/utils.ts";
+import StaticDonateButton from "../StaticDonateButton.astro";
+
+import Icon from "../Icon.astro";
+import LogoText from "../LogoText.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+---
+
+<footer class="footer w-nav">
+    <div class="separator"></div>
+    <div class="footer-content">
+        <div class="logo">
+            <LogoText />
+        </div>
+        <div class="contact">
+            <div class="contact-title">{t("footer.contact")}</div>
+            <div class="contact-content">
+                <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+                <div class="social">
+                    {
+                        socials.map((social) => (
+                            <a
+                                href={social.link}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <Icon icon={social.icon} alt={social.alt} />
+                            </a>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+        <nav class="nav">
+            <a href={tr("/publications")}>
+                {t("nav.publications")}
+            </a>
+            <a href={tr("/blog")}>
+                {t("nav.blog")}
+                <a href={tr("/sitemap")}>
+                    {t("nav.sitemap")}
+                </a>
+            </a>
+        </nav>
+        <div class="donate-button-container">
+            <StaticDonateButton />
+        </div>
+    </div>
+    <div class="legal">
+        <a href={tr("/legal")}>{t("footer.legal")}</a>
+        <div class="horizontal-separator"></div>
+        <p>
+            Copyright &copy; <script>
+                document.write(new Date().getFullYear().toString());
+            </script>
+            {t("footer.rights")}
+        </p>
+    </div>
+</footer>
+
+<style>
+
+    .logo {
+        display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: -webkit-fill-available;
+    }
+    .footer {
+        width: 100%;
+        position: relative;
+        background-color: #fff;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        gap: 10px;
+        text-align: center;
+        font-size: 16px;
+        color: #02542d;
+        font-family: Montserrat;
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        align-content: center;
+        gap: 40px;
+        align-self: stretch;
+        flex-wrap: wrap;
+    }
+    .contact {
+        display: flex;
+        height: 142px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        opacity: var(--sds-size-stroke-border);
+    }
+    .contact-title {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex-shrink: 0;
+        align-self: stretch;
+        color: #02542d;
+        text-align: center;
+        width: fit-content;
+
+        /* telecom-etude.fr/Montserrat/Regular 16 */
+        font-family: Montserrat;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        opacity: var(--sds-size-stroke-border);
+    }
+
+    .contact-content {
+        display: flex;
+        /* width: fit-content; */
+        flex-direction: column;
+        justify-content: space-between;
+        flex-shrink: 0;
+        align-self: stretch;
+        color: var(--Menu-button-color, #000);
+        text-align: center;
+        font-family: Montserrat;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        opacity: var(--sds-size-stroke-border);
+        align-items: center;
+        gap: 20px
+    }
+
+    .contact-content a {
+        width: fit-content;
+    }
+
+    .social {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .social a {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: fit-content;
+    }
+
+    .nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: fit-content;
+    }
+
+    .nav a {
+        color: #02542d;
+
+        text-align: center;
+        text-shadow: 0px 3.916px 3.916px rgba(0, 0, 0, 0.25);
+        /* telecom-etude.fr/Montserrat/Regular 16 */
+        font-family: Montserrat;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        width: fit-content;
+    }
+
+    .donate-button-container {
+        width: 300px;
+        height: 80px;
+        font-size: 15px;
+    }
+
+    .legal {
+        display: flex;
+        padding: 10px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        width: fit-content;
+    }
+
+    .legal a {
+        color: var(--Menu-button-color, #000);
+
+        /* telecom-etude.fr/Montserrat/Regular 12 */
+        font-family: Montserrat;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px; /* 166.667% */
+        width: fit-content;
+    }
+
+    .horizontal-separator {
+        width: 22px;
+        height: 1px;
+        background-color: #276033;
+        transform: rotate(-90deg);
+    }
+
+    .legal p {
+        color: var(--Menu-button-color, #000);
+
+        /* telecom-etude.fr/Montserrat/Regular 12 */
+        font-family: Montserrat;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px; /* 166.667% */
+        width: fit-content;
+    }
+
+    @media screen and (max-width: 810px) {
+        .footer-content {
+            flex-direction: column;
+            gap: 20px;
+        }
+        .contact {
+            height: fit-content;
+        }
+        .nav {
+            gap: 20px;
+        }
+        .legal {
+            gap: 20px;
+        }
+
+    }
+</style>

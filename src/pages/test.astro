@@ -1,7 +1,9 @@
 ---
 import Carousel from "../components/Article/Carousel.astro";
 import DonateButton from "../components/DonateButton.astro";
-import Header from "../components/Header/Header.astro";
+import PageFooter from "../components/Footer/PageFooter.astro";
+import PageHeader from "../components/Header/PageHeader.astro";
+import "../css/global.css";
 ---
 
 
@@ -12,11 +14,14 @@ import Header from "../components/Header/Header.astro";
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" />
+
 		<meta name="generator" content={Astro.generator} />
 		<title>Title</title>
 	</head>
 	<body>
-		<Header />
+		<PageHeader/>
+		<PageFooter client:load/>
 	</body>
 </html>
 

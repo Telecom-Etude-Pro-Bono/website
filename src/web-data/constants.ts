@@ -5,3 +5,7 @@ export const HOMEPAGE_ARTICLE_LIMIT = 6;
 export const ARTICLES_PER_PAGE = 6;
 
 export const ARTICLES_PER_CAROUSEL = 3;
+
+export const EMAIL = "probono@telecom-etude.fr";
+
+export const MOBILE_BREAKPOINT = "810px";
