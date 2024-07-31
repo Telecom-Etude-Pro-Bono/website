@@ -1,0 +1,27 @@
+---
+import DonateButton from "../components/DonateButton.astro";
+import PageLayout from "./PageLayout.astro";
+---
+
+<PageLayout>
+	<div class="fixed-donate">
+		<DonateButton dynamic={true} big={true} />
+	</div>
+    <slot />
+
+	</div>
+
+    <style>
+        .fixed-donate {
+            position: fixed;
+            z-index: 2000;
+            bottom: 30px;
+            width: 270px;
+            height: 70px;
+            top: 40%;
+            right:0px
+        }
+    </style>
+</PageLayout>
+
+

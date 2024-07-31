@@ -1,33 +1,15 @@
 ---
-import Carousel from "../components/Article/Carousel.astro";
 import DonateButton from "../components/DonateButton.astro";
-import Footer from "../components/Footer/Footer.astro";
-import Header from "../components/Header/Header.astro";
-import SearchBar from "../components/Search/SearchBar.astro";
-import Subsubtitle from "../components/Subsubtitle.astro";
-import Subtitle from "../components/Subtitle.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+import PageWithDonateLayout from "../layouts/PageWithDonateLayout.astro";
 import Title from "../components/Title.astro";
-import "../css/global.css";
+
 ---
 
 
-<!doctype html>
-<html lang="fr">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" />
+<PageWithDonateLayout>
 
-		<meta name="generator" content={Astro.generator} />
-		<title>Title</title>
-	</head>
-	<body>
-		<Header/>
-		<Title title="title" height="100vh"/>
-		<Subtitle subtitle="subtitle"/>
-		<Subsubtitle subsubtitle="subsubtitle"/>
-	</body>
-</html>
+<Title title="Test" height="100vh"/>
 
+
+</PageWithDonateLayout>

@@ -1,22 +1,32 @@
 ---
-import { pageNameToSlug, nameToSlug, mdToDate, typeToString } from "../utils";
-import type { CollectionEntry } from "astro:content";
-
-const { article } = Astro.props;
-const inCarousel = Astro.props.inCarousel || false;
-const date = mdToDate(article.data.pubDate);
-
-const typeColor = "var(--"+article.data.type + "-color)";
-
-import "../../css/global.css";
-
-const path =
-  "/" + pageNameToSlug("blog") + "/" + article.slug;
-
 interface Props {
   article: CollectionEntry<"blog">;
   inCarousel?: boolean;
 }
+
+import {mdToDate, typeToString } from "../utils";
+import type { CollectionEntry } from "astro:content";
+
+const { article } = Astro.props;
+const inCarousel = Astro.props.inCarousel || false;
+
+
+const typeColor = "var(--"+article.data.type + "-color)";
+
+import {
+    getLangFromUrl,
+    useTranslatedPath,
+} from "../../web-data/i18n/utils";
+
+
+const lang = getLangFromUrl(Astro.url);
+const tr = useTranslatedPath(lang);
+
+const path =
+  "/" + tr("blog") + "/" + article.slug;
+
+
+const date = mdToDate(lang, article.data.pubDate);
 ---
 
 

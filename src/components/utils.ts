@@ -28,10 +28,10 @@ export function formatDate(date: Date): string {
 };
 
 // Format the date to an object of day, month, year
-export function mdToDate(date: Date) : {day: string, month: string, year: string} {
-    let day = new Date(date).toLocaleDateString("fr", {day: 'numeric'});
-    let month = new Date(date).toLocaleDateString("fr", {month: 'long'});
-    let year = new Date(date).toLocaleDateString("fr", {year: 'numeric'});
+export function mdToDate(lang : keyof typeof ui, date: Date) : {day: string, month: string, year: string} {
+    let day = new Date(date).toLocaleDateString(lang.toString(), {day: 'numeric'});
+    let month = new Date(date).toLocaleDateString(lang.toString(), {month: 'long'});
+    let year = new Date(date).toLocaleDateString(lang.toString(), {year: 'numeric'});
 
     return {day, month, year};
 };

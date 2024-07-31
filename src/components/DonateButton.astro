@@ -1,21 +1,24 @@
 ---
 import { getLangFromUrl, useTranslatedPath } from "../web-data/i18n/utils";
 
-const { dynamic } = Astro.props;
+const { dynamic, big } = Astro.props;
 interface DonateButtonProps {
     dynamic?: boolean;
+    big?: boolean;
 }
 
 const lang = getLangFromUrl(Astro.url);
 const tr = useTranslatedPath(lang);
+
+const prefix = + big ? " big-donate-button" : "donate-button"
 ---
 
 <a href={tr("/donate")}>
-<div class="donate-button">
+<div class={prefix}>
 
-    <div class="donate-button-bar"></div>
-    <div class="donate-button-content">
-        <div class="donate-button-text">
+    <div class={prefix +"-bar"}></div>
+    <div class={prefix +"-content"}>
+        <div class={prefix +"-text"}>
             <p>Faire un don</p>
         </div>
         {
@@ -39,12 +42,12 @@ const tr = useTranslatedPath(lang);
             )
         }
     </div>
-    <div class="donate-button-bar"></div>
+    <div class={prefix +"-bar"}></div>
 </div>
 </a>
 
 <style>
-    .donate-button {
+    .donate-button, .big-donate-button {
         overflow: hidden;
         display: flex;
         width: -webkit-fill-available;
@@ -58,32 +61,37 @@ const tr = useTranslatedPath(lang);
         opacity: var(--sds-size-stroke-border);
         background: var(--sds-color-background-default-default);
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        background: white;
     }
 
-    .donate-button:hover > .donate-button-bar {
+    .big-donate-button{
+        height:70px;
+    }
+
+    .donate-button:hover,.big-donate-button:hover > .donate-button-bar {
     background:#3AAC29;
 }
 
-.donate-button:active {
+.donate-button:active,.big-donate-button:active {
     -webkit-box-shadow: inset 1px 1px 10px #333;
    -moz-box-shadow:    inset 1px 1px 10px #333;
    box-shadow:         inset 1px 1px 10px #333;
 }
 
 
-    .donate-button-content {
+    .donate-button-content,.big-donate-button-content {
         width: -webkit-fill-available;
         height: -webkit-fill-available;
 
         display: flex;
         flex-direction: row;
         justify-content: center;
-        align-items: stretch;
+        align-items: center;
         gap: 9px;
         align-content: center;
         padding: 5px;
     }
-    .donate-button-bar {
+    .donate-button-bar, .big-donate-button-bar {
         width: -webkit-fill-available;
         height: 4px;
         flex-shrink: 0;
@@ -95,7 +103,7 @@ const tr = useTranslatedPath(lang);
         text-decoration: none;
     }
 
-    .donate-button-text {
+    .donate-button-text, .big-donate-button-text {
         display: flex;
         width: fit-content;
         height: -webkit-fill-available;
@@ -122,7 +130,23 @@ const tr = useTranslatedPath(lang);
         height: -webkit-fill-available;
 
         flex-shrink: 0;
-        opacity: var(--sds-size-stroke-border);
         pointer-events: none;
     }
+
+    @media screen and (max-width: 768px) {
+        .big-donate-button {
+            border-radius: 20px;
+            width:230px;
+            height:70px;
+        }
+
+        .big-donate-button-text {
+            text
+        }
+
+        .big-donate-button-bar {
+            display: none;
+        }
+    }
+
 </style>

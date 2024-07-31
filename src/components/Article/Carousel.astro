@@ -3,12 +3,13 @@ import Subtitle from "../Subtitle.astro";
 import ArticleCard from "./ArticleCard.astro";
 import type { CollectionEntry, CollectionKey } from "astro:content";
 import { getCollection } from "astro:content";
-import { ARTICLES_PER_CAROUSEL } from "../../web-data/constants.tsstants.ts";
-const { title, option } = Astro.props;
+import { ARTICLES_PER_CAROUSEL } from "../../web-data/constants.ts";
+const { title, option, option2 } = Astro.props;
 
 interface Props {
     title: string;
-    option: string;
+    option?: string;
+    option2?: string;
 }
 
 const allBlogArticles: CollectionEntry<"blog">[] = (
@@ -16,7 +17,7 @@ const allBlogArticles: CollectionEntry<"blog">[] = (
 ).sort(
     (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
         b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-).filter((article) => article.data.type === option || option === "all");
+).filter((article) => article.data.type === option || option === "all" || option === undefined || article.data.type === option2 );
 
 const articlesForCarousel: CollectionEntry<"blog">[] = allBlogArticles.slice(0, ARTICLES_PER_CAROUSEL);
 ---
