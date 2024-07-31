@@ -2,7 +2,7 @@ export const languages = {
     fr: 'Français',
 };
 
-export const defaultLang = 'fr';
+export const  defaultLang = 'fr' ;
 
 export const showDefaultLang = false;
 
@@ -23,18 +23,21 @@ export const ui = {
         'footer.rights': 'Tous droits réservés',
         'footer.contact': 'Contacter Telecom Etude Pro Bono',
 
+        'search.placeholder': 'Rechercher',
+
     },
 } as const;
 
 export const routes = {
     fr: {
-        home: '/',
-        about: '/qui-sommes-nous',
-        patron: '/devenez-mecene',
-        support: '/ils-nous-soutiennent',
-        blog: '/actualites',
-        contact: '/contact',
-        donate: '/donner',
+        'home': '',
+        'about': 'qui-sommes-nous',
+        'patron': 'devenez-mecene',
+        'support': 'ils-nous-soutiennent',
+        'blog': 'actualites',
+        'contact': 'contact',
+        'donate': 'donner',
+        'search': 'rechercher',
     }
 
 } as const;

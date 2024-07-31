@@ -1,16 +1,17 @@
 ---
-const {icon, alt} = Astro.props;
+const { icon, alt } = Astro.props;
 interface IconProps {
-    iconFile: string;
+    icon: string;
     alt: string;
 }
-
 ---
 
-<img class="icon" alt={alt} src={"/icons/" +  icon +".svg"}>
+<img class="icon" alt={alt} src={"/icons/" + icon + ".svg"} />
 <style>
-.icon {
-position: relative;
-cursor:pointer
-}
+    .icon {
+        position: relative;
+        cursor: pointer;
+        width: -webkit-fill-available;
+        height: -webkit-fill-available;
+    }
 </style>

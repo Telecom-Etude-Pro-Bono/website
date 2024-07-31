@@ -2,6 +2,7 @@
     --information-color:#3AA32B;
     --ongoing-color:#70AC70;
     --completed-color:#0D3E06;
+    --bar-green:#276033;
     --orange: #fd8334;
     --deg1: #ffb58f;
     --deg2: #ffb99d;
@@ -19,6 +20,7 @@ html {
 body {
     margin-left: 0px;
     margin-right: 0px;
+    margin-top: 0px;
     /* font-size: 16px; */
     /* line-height: 28px; */
     /* font-weight: 400; */

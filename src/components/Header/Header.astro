@@ -2,6 +2,7 @@
 import Nav from "./Nav.astro";
 import Icon from "../Icon.astro";
 import LogoText from "../LogoText.astro";
+import SearchBar from "../Search/SearchBar.astro";
 ---
 
 <header class="header w-nav">
@@ -19,7 +20,9 @@ import LogoText from "../LogoText.astro";
             <div class="nav">
                 <Nav />
             </div>
-            <Icon icon="search" alt="Icone de recherche" />
+            <div id="search">
+                <Icon icon="search" alt="Icone de recherche" />
+            </div>
         </div>
     </div>
     <div id="myNav" class="overlay">
@@ -32,11 +35,18 @@ import LogoText from "../LogoText.astro";
     </div>
 
     <div class="separator"></div>
+    <div id="search-bar">
+        <SearchBar />
+    </div>
     <script>
         const menuIcon = document.getElementById("menu-icon");
         const closeBtn = document.getElementById("close-icon");
+        const searchIcon = document.getElementById("search");
+        const closeSearchBtn = document.getElementById("close-search");
         menuIcon.addEventListener("click", openNav);
         closeBtn.addEventListener("click", closeNav);
+        searchIcon.addEventListener("click", openSearch);
+        closeSearchBtn.addEventListener("click", closeSearch);
         function openNav() {
             document.getElementById("myNav").style.width = "100%";
         }
@@ -44,23 +54,51 @@ import LogoText from "../LogoText.astro";
         function closeNav() {
             document.getElementById("myNav").style.width = "0%";
         }
+
+        function openSearch() {
+            document.getElementById("search-bar").style.display = "flex";
+            document.getElementById("search-bar").style.width = "100%";
+            document.getElementById("query").focus();
+        }
+        function closeSearch() {
+            document.getElementById("search-bar").style.width = "0%";
+            document.getElementById("search-bar").style.display = "none";
+            document.getElementById("query").blur();
+        }
     </script>
 </header>
 
 <style>
-    /* #close-icon path{
-        color:white
-    } */
+    #search-bar {
+        padding: 10px;
+        display:none;
+        display: none;
+        justify-content: flex-end;
+        width:0%;
+    }
+    #close-icon{
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: inherit;
+    border: none;
+    height: 60px;
+    width: 60px;
+    margin: 10px;
+    }
     .header {
+        height:81px;
         display: flex;
 
         flex-direction: column;
         align-items: center;
         flex-shrink: 0;
-        opacity: var(--sds-size-stroke-border);
-        background: var(--sds-color-background-default-default);
+        top: 0;
+        left: 0;
+        background: rgba(255, 255, 255, 0.9);
         position: -webkit-sticky; /* Safari */
-        position: sticky;
+        position: fixed;
+        z-index: 10;
     }
 
     .header-container {
@@ -71,7 +109,7 @@ import LogoText from "../LogoText.astro";
         align-items: center;
         align-self: stretch;
         opacity: var(--sds-size-stroke-border);
-        padding: 10px
+        padding: 10px;
     }
 
     .separator {
@@ -109,10 +147,14 @@ import LogoText from "../LogoText.astro";
     }
 
     @media (max-width: 1120px) {
+
+        .header {
+            height:131px;
+        }
         .header-container {
             display: flex;
-            flex-direction: column;
-
+            flex-direction: column;*
+            height:130px;
             justify-content: space-between;
             align-items: center;
             align-self: stretch;
@@ -120,6 +162,9 @@ import LogoText from "../LogoText.astro";
         }
 
         @media screen and (max-width: 810px) {
+            .header {
+                height:80px;
+            }
             .overlay-button {
                 display: flex;
             }

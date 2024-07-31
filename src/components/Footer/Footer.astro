@@ -6,7 +6,7 @@ import {
     useTranslations,
     useTranslatedPath,
 } from "../../web-data/i18n/utils.ts";
-import StaticDonateButton from "../StaticDonateButton.astro";
+import DonateButton from "../DonateButton.astro";
 
 import Icon from "../Icon.astro";
 import LogoText from "../LogoText.astro";
@@ -53,7 +53,7 @@ const tr = useTranslatedPath(lang);
             </a>
         </nav>
         <div class="donate-button-container">
-            <StaticDonateButton />
+            <DonateButton />
         </div>
     </div>
     <div class="legal">
@@ -69,13 +69,12 @@ const tr = useTranslatedPath(lang);
 </footer>
 
 <style>
-
     .logo {
         display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    height: -webkit-fill-available;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        height: -webkit-fill-available;
     }
     .footer {
         width: 100%;
@@ -145,7 +144,7 @@ const tr = useTranslatedPath(lang);
         font-weight: 400;
         opacity: var(--sds-size-stroke-border);
         align-items: center;
-        gap: 20px
+        gap: 20px;
     }
 
     .contact-content a {
@@ -246,6 +245,5 @@ const tr = useTranslatedPath(lang);
         .legal {
             gap: 20px;
         }
-
     }
 </style>

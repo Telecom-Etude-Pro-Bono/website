@@ -1,3 +1,6 @@
+import { useTranslatedPath } from "../web-data/i18n/utils";
+import type { ui } from "../web-data/i18n/ui";
+
 export const localizePathByLang = (lang: string) => (path: string) => {
     if (lang === "en") {
         if (path !== "/") {
@@ -6,19 +9,6 @@ export const localizePathByLang = (lang: string) => (path: string) => {
         return "/en";
     }
     return path;
-};
-
-//convert page name to slug
-export const pageNameToSlug = (pageName: string) => {
-    switch (pageName) {
-        case "about": return "qui-sommes-nous";
-        case "patron": return "devenez-mecene";
-        case "support": return "ils-nous-supportent";
-        case "blog": return "actualites";
-        case "contact": return "contact";
-        case "donate": return "donner";
-        default: return "/";
-    }
 };
 
 //
@@ -62,5 +52,11 @@ export function typeToString(type: string): string {
         default: return "Information";
     }
 };
+
+export const isSelected = (lang : keyof typeof ui, url: URL) => (pagename: string) : boolean => {
+    // console.log(useTranslatedPath(lang)(pagename));
+    console.log(url.pathname.includes(useTranslatedPath(lang)(pagename)));
+    return url.pathname.includes(useTranslatedPath(lang)(pagename));
+}
 
 

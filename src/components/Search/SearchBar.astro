@@ -1,0 +1,86 @@
+---
+import Icon from "../Icon.astro";
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../../web-data/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+---
+
+<form class="search" action={tr("/search")}>
+    <input
+        type="text"
+        id="query"
+        name="q"
+        class="search-input"
+        placeholder={t("search.placeholder")}
+        required
+    />
+    <button type="reset" id="close-search">
+        <Icon icon="x" alt="Icone de recherche" />
+    </button>
+</form>
+
+<style>
+    .search {
+        width: fit-content;
+        position: relative;
+        border-radius: 9999px;
+        background-color: #fff;
+        border: solid;
+        border-color: #1e1e1e;
+        border-width: 1px;
+        box-sizing: border-box;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 6px;
+        padding-right: 12px;
+        padding-bottom: 6px;
+        padding-left: 12px;
+        gap: 8px;
+        text-align: left;
+        font-size: 16px;
+        color: #1e1e1e;
+    }
+
+    .search-input {
+        flex: 1;
+        width: 100%;
+        position: relative;
+        font-size: 16px;
+        line-height: 100%;
+
+        color: #1e1e1e;
+        text-align: left;
+        display: inline-block;
+        border: none;
+        field-sizing: content;
+        min-width: 200px;
+        max-inline-size: 50ch;
+    }
+
+    #close-search {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: inherit;
+        border: none;
+        height: 30px;
+    }
+
+    #query:focus{
+        outline: none;
+    }
+
+    .search:focus-within {
+        border-color: var(--bar-green);
+        border-width: 2px;
+    }
+</style>

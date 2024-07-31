@@ -1,15 +1,25 @@
 ---
+import { getLangFromUrl, useTranslatedPath } from "../web-data/i18n/utils";
 
+const { dynamic } = Astro.props;
+interface DonateButtonProps {
+    dynamic?: boolean;
+}
+
+const lang = getLangFromUrl(Astro.url);
+const tr = useTranslatedPath(lang);
 ---
 
+<a href={tr("/donate")}>
 <div class="donate-button">
-    <a href="/donate">
-        <div class="donate-button-bar"></div>
-        <div class="donate-button-content">
-            <div class="donate-button-text">
-                <p>Faire un don</p>
-            </div>
 
+    <div class="donate-button-bar"></div>
+    <div class="donate-button-content">
+        <div class="donate-button-text">
+            <p>Faire un don</p>
+        </div>
+        {
+            dynamic ? (
                 <object
                     type="image/svg+xml"
                     class="animated-tpb-logo"
@@ -20,43 +30,64 @@
                         alt="Logo animé de Telecom Etude Pro Bono"
                     />
                 </object>
-
-        </div>
-
-    </a>
+            ) : (
+                <img
+                    class="animated-tpb-logo"
+                    src="/logos/animated-tpb-logo.svg"
+                    alt="Logo animé de Telecom Etude Pro Bono"
+                />
+            )
+        }
+    </div>
     <div class="donate-button-bar"></div>
 </div>
+</a>
 
 <style>
     .donate-button {
         overflow: hidden;
         display: flex;
-        width: 345px;
-        height: 79px;
+        width: -webkit-fill-available;
+        height: -webkit-fill-available;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         flex-shrink: 0;
         border-radius: 3px;
+        /* padding: 0px; */
         opacity: var(--sds-size-stroke-border);
-
         background: var(--sds-color-background-default-default);
-
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     }
 
+    .donate-button:hover > .donate-button-bar {
+    background:#3AAC29;
+}
+
+.donate-button:active {
+    -webkit-box-shadow: inset 1px 1px 10px #333;
+   -moz-box-shadow:    inset 1px 1px 10px #333;
+   box-shadow:         inset 1px 1px 10px #333;
+}
+
+
     .donate-button-content {
+        width: -webkit-fill-available;
+        height: -webkit-fill-available;
+
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: stretch;
+        gap: 9px;
+        align-content: center;
+        padding: 5px;
     }
     .donate-button-bar {
-        width: 356px;
-        height: 6px;
+        width: -webkit-fill-available;
+        height: 4px;
         flex-shrink: 0;
         opacity: var(--sds-size-stroke-border);
-
         background: #0f8d42;
     }
 
@@ -66,73 +97,32 @@
 
     .donate-button-text {
         display: flex;
-        width: 248px;
-        height: 67px;
+        width: fit-content;
+        height: -webkit-fill-available;
+
         flex-direction: column;
         justify-content: center;
         flex-shrink: 0;
-
         color: var(--Menu-button-color, #000);
         text-align: center;
         text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-        /* Subtitle */
-        font-family: Montserrat;
-        font-size: 20px;
+        color: var(--Menu-button-color, #000);
+        text-align: center;
+        text-shadow: 0px 2.4px 2.4px rgba(0, 0, 0, 0.25);
+        font-family: Montserrat, sans-serif;
         font-style: normal;
-        font-weight: 500;
-        line-height: 20px; /* 100% */
-        letter-spacing: 1px;
+        font-weight: 700;
+        line-height: 12px;
+        letter-spacing: 0.6px;
         text-transform: uppercase;
     }
 
     .animated-tpb-logo {
-        width: 56.365px;
-        height: 60.493px;
+        width: 30px;
+        height: -webkit-fill-available;
+
         flex-shrink: 0;
         opacity: var(--sds-size-stroke-border);
         pointer-events: none;
-    }
-
-    @media screen and (max-width: 768px) {
-        .donate-button {
-            display: flex;
-            width: 345px;
-            height: 79px;
-            padding: 6px 19.635px 6px 33px;
-            justify-content: flex-end;
-            align-items: center;
-            flex-shrink: 0;
-            border-radius: 20px;
-            opacity: var(--sds-size-stroke-border);
-
-            background: var(--sds-color-background-default-default);
-
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        }
-        .donate-button-text {
-            display: flex;
-            width: 248px;
-            height: 67px;
-            flex-direction: column;
-            justify-content: center;
-            flex-shrink: 0;
-
-            color: var(--Menu-button-color, #000);
-
-            text-align: center;
-            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-            /* Subtitle */
-            font-family: Montserrat;
-            font-size: 20px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: 20px; /* 100% */
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .donate-button-bar {
-            display: none;
-        }
     }
 </style>

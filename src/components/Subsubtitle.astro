@@ -1,0 +1,43 @@
+---
+const { subsubtitle, align } = Astro.props;
+
+export interface Props {
+    subsubtitle: string;
+    align?: string;
+}
+const alignItem = align || "center";
+---
+
+<div class="subsubtitle-container">
+    <h3 class="subsubtitle-text uppercase">{subsubtitle}</h3>
+    <div class="short-horizontal-separator">
+        <div class="separator short-separator"></div>
+    </div>
+</div>
+
+<style define:vars={{alignItem}}>
+    .subsubtitle-container h3{
+        margin: 0px;
+        width: fit-content;
+    }
+    .subsubtitle-container {
+        display: flex;
+        padding-top: 20px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: var(--alignItem);
+        gap: 7px;
+    }
+
+    .subsubtitle-text {
+        font-style: normal;
+        font-weight: 700;
+        text-align: center;
+        letter-spacing: 1px;
+    }
+
+    .short-separator {
+        width: 100px;
+        height: 3.5px;
+    }
+</style>
