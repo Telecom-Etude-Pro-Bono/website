@@ -1,12 +1,17 @@
 ---
 import Carousel from "../components/Article/Carousel.astro";
+import CauseButton from "../components/Index/CauseButton.astro";
+import PresidentWords from "../components/Index/PresidentWords.astro";
 import Title from "../components/Title.astro";
 import PageWithDonateLayout from "../layouts/PageWithDonateLayout.astro";
+import QuoteCarousel from "../components/Index/QuoteCarousel.astro";
 
 
 ---
 <PageWithDonateLayout>
 	<Title title="Test" height="100vh"/>
 	<Carousel title="Last news"/>
+	<PresidentWords />
+	<QuoteCarousel />
 	<Carousel title="Last Projects" option="ongoing" option2="completed"/>
 </PageWithDonateLayout>

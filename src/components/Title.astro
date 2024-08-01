@@ -51,7 +51,6 @@ const imgHeight = height || "auto";
     }
     .title-text {
         letter-spacing: 1.36px;
-        line-height: 27.17px;
         text-transform: uppercase;
     }
     .title-separator {
@@ -72,13 +71,21 @@ const imgHeight = height || "auto";
         box-sizing: border-box;
         gap: 15px;
         align-items: center;
-        font-size: 27.17px;
+        font-size: 2rem;
     }
 
     @media screen and (max-width: 810px) {
         .title-container {
             height: calc(var(--imgHeight) / 2);
             min-height: 50vh;
+        }
+
+        .title-text {
+            font-size: 2rem;
+        }
+
+        .title-separator {
+            width: 100px;
         }
 
     }

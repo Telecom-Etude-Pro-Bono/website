@@ -11,14 +11,26 @@ import "../css/global.css";
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap"
+		/>
 
 		<meta name="generator" content={Astro.generator} />
 		<title>Title</title>
 	</head>
 	<body>
-		<Header/>
+		<Header />
 		<slot />
-        <Footer></Footer>
+		<Footer />
 	</body>
 </html>
+
+<style>
+	body {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 20px;
+	}
+</style>

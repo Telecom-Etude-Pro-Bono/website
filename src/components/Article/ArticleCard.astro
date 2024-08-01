@@ -33,19 +33,20 @@ const date = mdToDate(lang, article.data.pubDate);
 <div class="article-card">
   <a href={path}>
     <div class="article-card-img"></div>
+    <div class="article-card-date">
+      <b class="b">{date.day}</b>
+      <b class="month-year">
+        <span>
+          <p class="month-year-text letter-space">{date.month}</p>
+          <p class="month-year-text letter-space">{date.year}</p>
+        </span>
+      </b>
+    </div>
+    <div class="article-card-type">
+      <b class="article-card-type-text letter-space">{typeToString(article.data.type)}</b>
+    </div>
   </a>
-  <div class="short-horizontal-separator">
-    <div class="short-horizontal-separator-child"></div>
-  </div>
-  <div class="article-card-date">
-    <b class="b">{date.day}</b>
-    <b class="month-year">
-      <span>
-        <p class="month-year-text">{date.month}</p>
-        <p class="month-year-text">{date.year}</p>
-      </span>
-    </b>
-  </div>
+
   <div class="article-card-title-parent">
     <div class="article-card-title">
       {
@@ -62,8 +63,8 @@ const date = mdToDate(lang, article.data.pubDate);
       </p>
     </div>
   </div>
-  <div class="article-card-type">
-    <b class="article-card-type-text">{typeToString(article.data.type)}</b>
+
+  <div class="separator">
   </div>
 </div>
 
@@ -158,14 +159,12 @@ const date = mdToDate(lang, article.data.pubDate);
     font-size: 20px;
   }
   .article-card-title {
-    align-self: stretch;
     position: relative;
-    height: 100%;
   }
   .article-card-description {
     align-self: stretch;
     position: relative;
-    font-size: 12px;
+    font-size: 14px;
     color: #000;
     text-align: justify;
     display: flex;
@@ -174,19 +173,12 @@ const date = mdToDate(lang, article.data.pubDate);
     flex-shrink: 0;
   }
   .article-card-title-parent {
-    position: absolute;
-    top: 198px;
-    left: 1px;
-    width: 319px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
     padding: 0px 15px;
     box-sizing: border-box;
     text-align: left;
     font-size: 20px;
     color: var(--typeColor);
+    height: -webkit-fill-available;
   }
   .article-card-type-text {
     position: absolute;
@@ -199,7 +191,12 @@ const date = mdToDate(lang, article.data.pubDate);
     justify-content: center;
     width: 133px;
     height: 22px;
+
   }
+  .letter-space{
+    letter-spacing: 1.36px;
+  }
+
   .article-card-type {
     position: absolute;
     top: 0px;
@@ -213,7 +210,7 @@ const date = mdToDate(lang, article.data.pubDate);
   .article-card {
     width: max-content;
     background-color: #fff;
-    height: 347px;
+    height: 350px;
     overflow: hidden;
     flex-shrink: 0;
     text-align: center;
@@ -221,5 +218,12 @@ const date = mdToDate(lang, article.data.pubDate);
     color: #fff;
     font-family: Montserrat;
     position: relative;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  a {
+    color:white;
   }
 </style>

@@ -1,0 +1,96 @@
+---
+import Subsubtitle from "../Subsubtitle.astro";
+import CauseButton from "./CauseButton.astro";
+---
+
+<div class="container">
+    <div class="text-image">
+        <div class="text-container">
+            <Subsubtitle subsubtitle="President's Words" align="center" />
+            <p class="president-words">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+            <p class="president-words">Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.</p>
+            <p class="president-id">
+                Prénom Nom, <br /> Président(e) de Telecom Etude ProBono
+            </p>
+        </div>
+        <div class="image-container" />
+        <img class="image" src="/essentiel-cause.jpg" />
+    </div>
+    <CauseButton />
+</div>
+
+<style>
+    .container {
+        max-width: 53.4375rem;
+    margin-right: auto;
+    margin-left: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: space-between;
+    }
+
+    .text-image {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: nowrap;
+        gap: 20px;
+        padding-bottom: 30px;
+        width: 50%;
+        /* align-self: stretch; */
+    }
+
+    .text-container {
+        display: flex;
+        width: 622px;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+    }
+
+    .president-words {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .president-id {
+        display: flex;
+        width: 402px;
+        height: 70.242px;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        color: var(--dark-green);
+        font-weight: 500;
+    }
+
+    .image-container{
+        float: right;
+        padding: 0px;
+        width:50%
+}
+
+
+
+
+    .image {
+
+        display: block;
+    margin: auto;
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    height: auto;
+}
+
+</style>

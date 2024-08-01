@@ -1,0 +1,49 @@
+---
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../../web-data/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+---
+
+<div class="cause-button" id="causeButtonContainer">
+    <a class="button-text">Notre cause en détail</a>
+</div>
+
+<style>
+    .button-text {
+        width: 100%;
+        top: 3px;
+        left: 0%;
+        letter-spacing: 1px;
+
+        text-transform: uppercase;
+        font-weight: 500;
+        background: linear-gradient(74.01deg, #34c759, #276033 85%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+    .cause-button-child {
+    }
+    .cause-button {
+        width: 100%;
+        position: relative;
+        height: 79px;
+        overflow: hidden;
+        max-width: 33vw;
+        cursor: pointer;
+        font-size: 20px;
+        border-width: 4px;
+        border-style: solid;
+        border-image: linear-gradient(74.01deg, #34c759, #276033 85%) 1;
+        min-width: 320px;
+    }
+</style>

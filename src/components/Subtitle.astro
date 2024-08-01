@@ -26,7 +26,6 @@ const alignItem = align || "center";
 .subtitle-text {
     position: relative;
     letter-spacing: 1.36px;
-    line-height: 27.17px;
     text-transform: uppercase;
 }
 .short-horizontal-separator-child {
@@ -51,6 +50,12 @@ const alignItem = align || "center";
     box-sizing: border-box;
     gap: 15px;
     align-items: var(--alignItem);
+}
+
+@media (max-width: 810px) {
+    .subtitle-text{
+        font-size: 1.5rem;
+    }
 }
 
 </style>

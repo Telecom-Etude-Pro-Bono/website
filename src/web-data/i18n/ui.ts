@@ -25,6 +25,8 @@ export const ui = {
 
         'search.placeholder': 'Rechercher',
 
+        'index.cause-button': 'Notre cause en détail',
+
     },
 } as const;
 

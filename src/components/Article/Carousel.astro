@@ -12,14 +12,23 @@ interface Props {
     option2?: string;
 }
 
-const allBlogArticles: CollectionEntry<"blog">[] = (
-    await getCollection("blog")
-).sort(
-    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
-        b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-).filter((article) => article.data.type === option || option === "all" || option === undefined || article.data.type === option2 );
+const allBlogArticles: CollectionEntry<"blog">[] = (await getCollection("blog"))
+    .sort(
+        (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+            b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+    )
+    .filter(
+        (article) =>
+            article.data.type === option ||
+            option === "all" ||
+            option === undefined ||
+            article.data.type === option2,
+    );
 
-const articlesForCarousel: CollectionEntry<"blog">[] = allBlogArticles.slice(0, ARTICLES_PER_CAROUSEL);
+const articlesForCarousel: CollectionEntry<"blog">[] = allBlogArticles.slice(
+    0,
+    ARTICLES_PER_CAROUSEL,
+);
 ---
 
 <div class="carousel-container">
@@ -49,19 +58,14 @@ const articlesForCarousel: CollectionEntry<"blog">[] = allBlogArticles.slice(0, 
     }
     .carousel {
         width: 100%;
-        position: relative;
         overflow: hidden;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         align-items: baseline;
-        justify-content: space-evenly;
+        justify-content: center;
         padding: 10px 0px;
-        box-sizing: border-box;
-        gap: 50px 40px;
-        text-align: center;
-        font-size: 23px;
+        gap: 60px 60px;
         color: #fff;
-        font-family: Montserrat;
     }
 </style>
