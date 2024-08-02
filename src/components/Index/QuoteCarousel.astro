@@ -1,31 +1,60 @@
 ---
 import Icon from "../Icon.astro";
 import Subsubtitle from "../Subsubtitle.astro";
+import Quote from "./Quote.astro";
+
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+const allQuotes: CollectionEntry<"quote">[] = await getCollection("quote");
+const size = allQuotes.length;
 ---
 
-<div class="quote-carousel-container">
-    <div class="quote-conatiner">
-        <div class="icon-container">
-            <Icon icon="chevron-left" />
-        </div>
-        <div class="text-container">
-            <Subsubtitle subsubtitle="CITAS DESTACADAS" />
-            <div class="quote">
-                <p class="quote-text">
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua."
-                </p>
-                <p class="quote-author function">
-                    Prénom Nom <br> Président(e) de Telecom Etude ProBono
-                </p>
+{
+    allQuotes.map((quote, index) => (
+        <div id={index.toString()} class="quote-carousel-container">
+            <div class="quote-conatiner">
+                <div class="icon-container left">
+                    <Icon icon="chevron-left" />
+                </div>
+                <div class="text-container">
+                    <Subsubtitle subsubtitle="CITAS DESTACADAS" />
+
+                    <Quote quote={quote} />
+                </div>
+                <div class="icon-container right">
+                    <Icon icon="chevron-right" />
+                </div>
             </div>
         </div>
-        <div class="icon-container">
-            <Icon icon="chevron-right" />
-        </div>
-    </div>
-</div>
+    ))
+}
+
+<script define:vars={{ size }}>
+    let current = 0;
+    right_buttons = document.getElementsByClassName("right");
+    left_buttons = document.getElementsByClassName("left");
+    for (let i = 0; i < right_buttons.length; i++) {
+        right_buttons[i].addEventListener("click", () => nextQuote(size));
+        left_buttons[i].addEventListener("click", () => previousQuote(size));
+    }
+
+    for (let i = 1; i < size; i++) {
+        document.getElementById(i.toString()).style.display = "none";
+    }
+
+    function nextQuote(size) {
+        document.getElementById(current.toString()).style.display = "none";
+        current = (current + 1) % size;
+        document.getElementById(current.toString()).style.display = "flex";
+    }
+
+    function previousQuote(size) {
+        document.getElementById(current.toString()).style.display = "none";
+        current = (current - 1 + size) % size;
+        document.getElementById(current.toString()).style.display = "flex";
+    }
+</script>
 
 <style>
     .quote-carousel-container {
@@ -45,8 +74,8 @@ import Subsubtitle from "../Subsubtitle.astro";
         background-size: cover;
         background-color: rgba(255, 255, 255, 0.45);
         display: flex;
-    justify-content: center;
-    flex-direction: row;
+        justify-content: center;
+        flex-direction: row;
     }
 
     .icon-container {
@@ -56,7 +85,7 @@ import Subsubtitle from "../Subsubtitle.astro";
 
     .quote-conatiner {
         display: flex;
-        width: 855px;
+        width: 810px;
         height: 520px;
         padding: 2px 10px;
         justify-content: center;
@@ -66,7 +95,14 @@ import Subsubtitle from "../Subsubtitle.astro";
         background: rgba(255, 255, 255, 0.75);
     }
 
-    p{
+    p {
         text-align: center;
+    }
+
+    @media screen and (max-width: 810px) {
+        .quote-conatiner {
+            width: 100%;
+        }
+
     }
 </style>

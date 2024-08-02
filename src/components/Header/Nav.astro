@@ -96,6 +96,12 @@ const selected = isSelected(lang, Astro.url);
         font-weight: bold;
     }
 
+    @media (min-width: 1440px) {
+        .nav a {
+            font-size: 14px;
+        }
+    }
+
     @media (max-width: 1120px) {
         .nav {
             opacity: var(--sds-size-stroke-border);
@@ -115,6 +121,12 @@ const selected = isSelected(lang, Astro.url);
     @media (max-width: 950px) {
         .donate-button-container {
             width: 160px;
+        }
+    }
+
+    @media (max-width: 1080px) {
+        nav a {
+            font-size: 12px;
         }
     }
 

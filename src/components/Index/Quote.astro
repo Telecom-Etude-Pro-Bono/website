@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Subsubtitle from "../Subsubtitle.astro";
+
+
+interface Props {
+  quote: CollectionEntry<"quote">;
+}
+
+const { quote } = Astro.props;
+
+
+---
+
+<div class="quote">
+    <p class="quote-text">
+        {quote.data.text}
+    </p>
+    <p class="quote-author function">
+        {quote.data.author} <br> {quote.data.function}
+    </p>
+</div>
+
+
+<style>
+     p{
+        text-align: center;
+    }
+</style>

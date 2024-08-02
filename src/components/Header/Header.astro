@@ -87,7 +87,7 @@ import SearchBar from "../Search/SearchBar.astro";
     margin: 10px;
     }
     .header {
-        height:81px;
+        height:100px;
         display: flex;
 
         flex-direction: column;
@@ -110,6 +110,7 @@ import SearchBar from "../Search/SearchBar.astro";
         align-self: stretch;
         opacity: var(--sds-size-stroke-border);
         padding: 10px;
+        height: -webkit-fill-available;
     }
 
     .separator {
@@ -146,7 +147,7 @@ import SearchBar from "../Search/SearchBar.astro";
         display: none;
     }
 
-    @media (max-width: 1120px) {
+    @media (max-width: 1140px) {
 
         .header {
             height:131px;

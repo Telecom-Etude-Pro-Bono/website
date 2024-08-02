@@ -13,6 +13,17 @@ const blogCollection = defineCollection({
   }),
 });
 
+const quoteCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    text: z.string(),
+    author: z.string(),
+    function: z.string(),
+    img: z.string(),
+  }),
+});
+
 export const collections = {
   blog: blogCollection,
+  quote: quoteCollection,
 };
