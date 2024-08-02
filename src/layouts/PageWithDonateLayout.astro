@@ -1,9 +1,14 @@
 ---
 import DonateButton from "../components/DonateButton.astro";
 import PageLayout from "./PageLayout.astro";
+
+const {title} = Astro.props;
+interface Props {
+	title: string;
+}
 ---
 
-<PageLayout>
+<PageLayout title={title}>
 	<div class="fixed-donate">
 		<DonateButton dynamic={true} big={true} />
 	</div>

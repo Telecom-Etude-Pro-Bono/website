@@ -1,6 +1,7 @@
 ---
+import { toCodes, toPaths } from "astro:i18n";
 import Icon from "../Icon.astro";
-import Subsubtitle from "../Subsubtitle.astro";
+import Subtitle from "../Subtitle.astro";
 import Quote from "./Quote.astro";
 
 import { getCollection } from "astro:content";
@@ -8,6 +9,16 @@ import type { CollectionEntry } from "astro:content";
 
 const allQuotes: CollectionEntry<"quote">[] = await getCollection("quote");
 const size = allQuotes.length;
+
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../../web-data/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
 ---
 
 {
@@ -18,7 +29,13 @@ const size = allQuotes.length;
                     <Icon icon="chevron-left" />
                 </div>
                 <div class="text-container">
-                    <Subsubtitle subsubtitle="CITAS DESTACADAS" />
+                    <div class="title-container">
+                        <div class="dquotes">
+                            <Icon icon="dquotes" alt={t('alt.dquote')}/>
+                        </div>
+                        <Subtitle subtitle={t('index.supporters')} />
+
+                    </div>
 
                     <Quote quote={quote} />
                 </div>
@@ -57,6 +74,11 @@ const size = allQuotes.length;
 </script>
 
 <style>
+
+    .dquotes {
+
+        width: 80px;
+    }
     .quote-carousel-container {
         top: 0;
         left: 0;
@@ -102,6 +124,12 @@ const size = allQuotes.length;
     @media screen and (max-width: 810px) {
         .quote-conatiner {
             width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 425px) {
+        .dquotes {
+            width:50px;
         }
 
     }

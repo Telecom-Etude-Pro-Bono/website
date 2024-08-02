@@ -5,13 +5,20 @@ import {
     useTranslatedPath,
 } from "../../web-data/i18n/utils";
 
+const { link, text } = Astro.props;
+
+interface BigButtonProps {
+    link: string;
+    text: string;
+}
+
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const tr = useTranslatedPath(lang);
 ---
 
-<div class="cause-button" id="causeButtonContainer">
-    <a class="button-text">Notre cause en détail</a>
+<div class="big-button" id="bigButtonContainer">
+    <a class="button-text" href={tr(link)}>{t(text)}</a>
 </div>
 
 <style>
@@ -31,9 +38,9 @@ const tr = useTranslatedPath(lang);
         justify-content: center;
         height: 100%;
     }
-    .cause-button-child {
+    .big-button-child {
     }
-    .cause-button {
+    .big-button {
         width: 100%;
         position: relative;
         height: 79px;

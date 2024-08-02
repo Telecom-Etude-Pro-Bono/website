@@ -3,17 +3,23 @@ import Nav from "./Nav.astro";
 import Icon from "../Icon.astro";
 import LogoText from "../LogoText.astro";
 import SearchBar from "../Search/SearchBar.astro";
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../../web-data/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
 ---
 
 <header class="header w-nav">
     <script>
-        console.log(
-            "Hi! I’m the client. This is logged in browser dev console.",
-        );
     </script>
     <div class="header-container">
         <div id="menu-icon" class="overlay-button">
-            <Icon icon="menu" alt="Icone de menu" />
+            <Icon icon="menu" alt={t('alt.menu')} />
         </div>
         <LogoText />
         <div class="pill-list">
@@ -21,13 +27,13 @@ import SearchBar from "../Search/SearchBar.astro";
                 <Nav />
             </div>
             <div id="search">
-                <Icon icon="search" alt="Icone de recherche" />
+                <Icon icon="search" alt={t('alt.search')} />
             </div>
         </div>
     </div>
     <div id="myNav" class="overlay">
         <div id="close-icon" class="overlay-button">
-            <Icon icon="x" alt="Icone de menu" />
+            <Icon icon="x" alt={t('alt.x')} />
         </div>
         <div class="overlay-content">
             <Nav />

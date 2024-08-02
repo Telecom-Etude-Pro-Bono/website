@@ -1,28 +1,35 @@
 ---
-import Subsubtitle from "../Subsubtitle.astro";
-import CauseButton from "./CauseButton.astro";
+import Subtitle from "../Subtitle.astro";
+import CauseButton from "./BigButton.astro";
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../../web-data/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
 ---
 
 <div class="container">
     <div class="text-image">
         <div class="text-container">
-            <Subsubtitle subsubtitle="President's Words" align="center" />
+            <Subtitle subtitle="President's Words" align="center" />
             <p class="president-words">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                {t('index.president.word.1')}
             </p>
             <p class="president-words">
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat.
+               {t('index.president.word.2')}
             </p>
             <p class="president-id">
-                Prénom Nom, <br /> Président(e) de Telecom Etude ProBono
+                {t('index.president.name')}, <br /> {t('index.president.function')}
             </p>
         </div>
         <div class="image-container"></div>
         <img class="image" src="/essentiel-cause.jpg" />
     </div>
-    <CauseButton />
+    <CauseButton link="/about" text="index.cause-button"/>
 </div>
 
 <style>

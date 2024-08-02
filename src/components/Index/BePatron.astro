@@ -1,0 +1,101 @@
+---
+import Subtitle from "../Subtitle.astro";
+import Subsubtitle from "../Subsubtitle.astro";
+import BigButton from "./BigButton.astro";
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../../web-data/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+---
+
+<div class="patron-container">
+    <div class="text-title-container">
+        <Subtitle subtitle="Become a patron" />
+        <div class="text-container">
+            <div class="patron-text">
+                <h3 class="uppercase">{t('index.individual.title')}</h3>
+                <p>
+                    {t('index.individual.text')}
+                </p>
+            </div>
+            <div class="patron-text">
+                <h3 class="uppercase">{t('index.company.title')}</h3>
+                <p>
+                    {t('index.company.text')}
+                </p>
+            </div>
+        </div>
+    </div>
+    <BigButton link="/donate" text="index.support" />
+</div>
+
+<style>
+    .patron-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: space-between;
+        gap: 40px;
+        width:100%;
+
+    }
+
+    .text-title-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        background-color: var(--bg-div);
+        width: 75%;
+        padding-bottom: 20px;
+    }
+
+    .text-container {
+        display: flex;
+        padding: 0px 30px;
+        justify-content: center;
+        align-items: baseline;
+        gap: 60px;
+        flex-wrap: nowrap;
+        flex-direction: row;
+    }
+
+    .patron-text {
+        display: flex;
+        min-width: 300px;
+        flex-direction: column;
+        align-items: center;
+        width: fit-content;
+    }
+
+    .patron-text h3 {
+        color: #02542d;
+
+        text-align: center;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        /* subsubtitle */
+        font-family: Montserrat;
+        font-size: 23px;
+        font-style: normal;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .patron-text p {
+        text-align: justify;
+        line-height: 28px; /* 140% */
+    }
+
+    @media screen and (max-width: 900px) {
+        .text-container {
+            flex-direction: column;
+            gap: 40px;
+        }
+
+    }
+</style>

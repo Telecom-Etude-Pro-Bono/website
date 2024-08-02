@@ -1,5 +1,5 @@
 ---
-import { getLangFromUrl, useTranslatedPath } from "../web-data/i18n/utils";
+import { getLangFromUrl, useTranslatedPath, useTranslations } from "../web-data/i18n/utils";
 
 const { dynamic, big } = Astro.props;
 interface DonateButtonProps {
@@ -9,6 +9,8 @@ interface DonateButtonProps {
 
 const lang = getLangFromUrl(Astro.url);
 const tr = useTranslatedPath(lang);
+const t = useTranslations(lang);
+
 
 const prefix = + big ? " big-donate-button" : "donate-button"
 ---
@@ -19,25 +21,25 @@ const prefix = + big ? " big-donate-button" : "donate-button"
     <div class={prefix +"-bar"}></div>
     <div class={prefix +"-content"}>
         <div class={prefix +"-text"}>
-            <p>Faire un don</p>
+            <p>{t('nav.donate')}</p>
         </div>
         {
             dynamic ? (
                 <object
                     type="image/svg+xml"
                     class="animated-tpb-logo"
-                    data="/public/logos/animated-tpb-logo.svg"
+                    data="/logos/animated-tpb-logo.svg"
                 >
                     <img
-                        src="/public/logos/animated-tpb-logo.svg"
-                        alt="Logo animé de Telecom Etude Pro Bono"
+                        src="/logos/animated-tpb-logo.svg"
+                        alt={t('alt.logo')}
                     />
                 </object>
             ) : (
                 <img
                     class="animated-tpb-logo"
                     src="/logos/animated-tpb-logo.svg"
-                    alt="Logo animé de Telecom Etude Pro Bono"
+                    alt={t('alt.animated-logo')}
                 />
             )
         }

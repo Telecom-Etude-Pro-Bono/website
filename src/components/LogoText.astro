@@ -6,13 +6,14 @@ import {
 } from "../web-data/i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const tr = useTranslatedPath(lang);
+const t = useTranslations(lang);
 ---
 <a href={tr("/")}>
     <div class="logo-container">
         <img
             class="logo"
             src="/logos/tpb-logo-text.svg"
-            alt="Logo Telecom Etude Pro Bono avec texte"
+            alt={t('alt.logo-text')}
         />
     </div>
 </a>
