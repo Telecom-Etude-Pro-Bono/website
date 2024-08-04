@@ -1,0 +1,264 @@
+---
+import Carousel from "../components/Article/Carousel.astro";
+import CauseButton from "../components/Index/BigButton.astro";
+import PresidentWords from "../components/Index/PresidentWords.astro";
+import Title from "../components/Title.astro";
+import PageWithDonateLayout from "../layouts/PageWithDonateLayout.astro";
+import QuoteCarousel from "../components/Index/QuoteCarousel.astro";
+import BePatron from "../components/Index/BePatron.astro";
+import {CREATION_JO_NUM} from "../web-data/constants"
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../web-data/i18n/utils";
+import Subsubtitle from "../components/Subsubtitle.astro";
+import Subtitle from "../components/Subtitle.astro";
+import Icon from "../components/Icon.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+---
+
+<PageWithDonateLayout title={t("page.patron")}>
+    <Title title={t("patron.title")} height="50vh" img="/images/title/bg.jpg" />
+    <Carousel title={t("index.last-news")} />
+    <div class="patron-container">
+        <div class="title">
+            <Subsubtitle subsubtitle={t("patron.individual.title")} />
+            <div class="subtitle-text">
+                <p class="uppercase subtitle">
+                    <b class="title-green">
+                        {t("patron.individual.subtitle.1")}
+                        </b>
+                    <br />
+                    {t("patron.individual.subtitle.2")}
+                </p>
+            </div>
+        </div>
+        <div class="benefits green-div">
+            <Subsubtitle
+                subsubtitle={t("patron.individual.benefits.title")}
+                align="left"
+            />
+            <ul>
+                <li>
+                    <p class="benefits-text">
+                        <b class="benefits-text-headline">
+                            {t("patron.individual.benefits.text.headline")}
+                        </b>
+
+                        {t("patron.individual.benefits.text")}
+                        <br />
+
+                        <b>{t("patron.individual.benefits.text.example")}</b>
+                    </p>
+                </li>
+
+                <li>
+                    <p class="benefits-text">
+                        <b class="benefits-text-headline">
+                            {t("patron.individual.benefits.isf.headline")}
+                        </b>
+
+                        {t("patron.individual.benefits.isf")}
+                        <br />
+
+                        <b>{t("patron.individual.benefits.isf.example")}</b>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="patron-container">
+        <div class="title">
+            <Subsubtitle subsubtitle={t("patron.company.title")} />
+            <div class="subtitle-text">
+                <p class="uppercase subtitle">
+                    <b class="title-green">{t("patron.company.subtitle.1")}</b>
+                    <br />
+                    {t("patron.company.subtitle.2")}
+                </p>
+            </div>
+        </div>
+        <div class="benefits green-div">
+            <Subsubtitle
+                subsubtitle={t("patron.company.benefits.title")}
+                align="left"
+            />
+            <p class="benefits-text">
+                {t("patron.company.benefits.text")}
+                <br />
+
+                <b>{t("patron.company.benefits.text.example")}</b>
+            </p>
+        </div>
+    </div>
+
+    <div class="more-information-container">
+        <Subtitle subtitle={t("patron.more-information.title")} />
+        <p>
+            <b>{t("patron.more-information.1")}</b>
+        </p>
+        <div>
+            <p>
+                <b>{t("patron.more-information.2")}</b>
+                {t("patron.more-information.3")}
+                (<a href={"JO"}>{t("patron.more-information.4")+CREATION_JO_NUM}</a>).
+                {t("patron.more-information.5")}
+                <b>{t("patron.more-information.6")}</b>
+                {t("patron.more-information.7")}
+                <b> {t("patron.more-information.8")}</b>
+                {t("patron.more-information.9")}
+            </p>
+        </div>
+        <p>
+            {t("patron.more-information.10")}
+            <a href="DEF"> {t("patron.more-information.11")} </a>
+        </p>
+        <p>
+            <b>{t("patron.more-information.12")}</b>
+            <ul>
+                <li>{t("patron.more-information.13")}</li>
+                <li>
+                    <b>{t("patron.more-information.14")}</b>
+                    {t("patron.more-information.15")}
+                </li>
+            </ul>
+        </p>
+    </div>
+    <div class="publications green-div">
+        <div class="icon">
+            <Icon icon="dquotes" alt={t("alt.dquote")} />
+        </div>
+        <p>
+            <a href={tr("/publications")} class="title-green">
+                {t("patron.publication.link")}
+            </a>
+            {t("patron.publication.text")}
+        </p>
+    </div>
+
+    <style>
+        .patron-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 75%;
+        }
+
+        li {
+            font-size: 20px;
+        }
+
+        ul {
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+        .benefits {
+            display: flex;
+            padding: 20px 80px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            text-align: justify;
+        }
+
+        .benefits-text {
+            line-height: 28px; /* 140% */
+            font-size: 20px;
+        }
+
+        .benefits-text-headline {
+            font-weight: 700;
+            color: var(--dark-green);
+        }
+
+        .title-green {
+            color: var(--title-green);
+        }
+        .subtitle {
+            font-size: 1.5rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .more-information-container {
+            padding: 20px 80px;
+            gap: 10px;
+            width: 75%;
+            gap: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .more-information-container p {
+            display: block;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            unicode-bidi: isolate;
+            margin-bottom: 1rem;
+            font-size: inherit;
+            line-height: 1.6;
+            text-align: justify;
+            font-size: 20px;
+        }
+        .more-information-container a {
+            display: inline;
+            text-decoration: underline;
+            color: var(--title-green);
+        }
+
+        .icon {
+            width: 80px;
+        }
+
+        .publications {
+            display: flex;
+            align-content: center;
+            padding: 20px;
+            gap: 20px;
+            width: 75%;
+            justify-content: center;
+            align-items: center;
+        }
+        .publications a {
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        .publications p {
+            display: inline-flex;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            unicode-bidi: isolate;
+            margin-bottom: 1rem;
+            font-size: inherit;
+            line-height: 1.6;
+            text-align: justify;
+            font-size: 20px;
+            gap: 5px;
+        }
+
+        @media screen and (max-width: 810px) {
+            .patron-container {
+                width: 100%;
+            }
+            .benefits {
+                padding: 20px 20px;
+            }
+            .more-information-container {
+                padding: 20px 20px;
+                width: 100%;
+            }
+        }
+    </style>
+</PageWithDonateLayout>

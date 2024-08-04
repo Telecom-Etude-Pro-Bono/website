@@ -4,6 +4,7 @@
     --completed-color:#0D3E06;
     --dark-green:#276033;
     --bg-div: #efffeccf;;
+    --title-green: #2B782C;
     --orange: #fd8334;
     --deg1: #ffb58f;
     --deg2: #ffb99d;
@@ -104,6 +105,10 @@ code {
 
 .under-header{
     padding-top: 100px;
+}
+
+.green-div{
+    background-color: var(--bg-div);
 }
 
  @media screen and (max-width: 1140px) {

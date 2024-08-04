@@ -9,3 +9,8 @@ export const ARTICLES_PER_CAROUSEL = 3;
 export const EMAIL = "probono@telecom-etude.fr";
 
 export const MOBILE_BREAKPOINT = "810px";
+
+export const DONATION_FUND_DEF_LINK= "https://www.service-public.fr/particuliers/vosdroits/F24469";
+
+export const CREATION_JO_NUM =2215;
+export const CREATION_JO_LINK = "https://www.journal-officiel.gouv.fr/pages/associations-detail-annonce/?q.id=id:201600042215";
