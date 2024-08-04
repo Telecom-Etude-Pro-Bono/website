@@ -6,7 +6,7 @@ import Title from "../components/Title.astro";
 import PageWithDonateLayout from "../layouts/PageWithDonateLayout.astro";
 import QuoteCarousel from "../components/Index/QuoteCarousel.astro";
 import BePatron from "../components/Index/BePatron.astro";
-import {CREATION_JO_NUM} from "../web-data/constants"
+import {CREATION_JO_NUM, CREATION_JO_LINK, DONATION_FUND_DEF_LINK} from "../web-data/constants"
 import {
     getLangFromUrl,
     useTranslations,
@@ -106,7 +106,7 @@ const tr = useTranslatedPath(lang);
             <p>
                 <b>{t("patron.more-information.2")}</b>
                 {t("patron.more-information.3")}
-                (<a href={"JO"}>{t("patron.more-information.4")+CREATION_JO_NUM}</a>).
+                (<a href={CREATION_JO_LINK}>{t("patron.more-information.4")+CREATION_JO_NUM}</a>).
                 {t("patron.more-information.5")}
                 <b>{t("patron.more-information.6")}</b>
                 {t("patron.more-information.7")}
@@ -116,7 +116,7 @@ const tr = useTranslatedPath(lang);
         </div>
         <p>
             {t("patron.more-information.10")}
-            <a href="DEF"> {t("patron.more-information.11")} </a>
+            <a href={DONATION_FUND_DEF_LINK}> {t("patron.more-information.11")} </a>
         </p>
         <p>
             <b>{t("patron.more-information.12")}</b>

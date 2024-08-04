@@ -1,4 +1,5 @@
 import { defineCollection, z } from 'astro:content';
+import { partners } from '../web-data/externals/links';
 
 const blogCollection = defineCollection({
   type: 'content',
@@ -22,6 +23,8 @@ const quoteCollection = defineCollection({
     img: z.string(),
   }),
 });
+
+
 
 export const collections = {
   blog: blogCollection,

@@ -116,6 +116,13 @@ export const ui = {
         'patron.publication.link': 'Consultez les publication',
         'patron.publication.text': 'de Telecom Etude Pro Bono.',
 
+        /* ################ SUPPORT ###############*/
+        'support.title': 'Ils nous soutiennent',
+        'support.partners': 'Nos partenaires',
+        'support.donators': 'Nous remercions',
+        'support.company': 'Nos Mecènes',
+        'support.individual': 'Nos Donateurs',
+
 
 
     },

@@ -49,19 +49,28 @@ const tr = useTranslatedPath(lang);
         const closeBtn = document.getElementById("close-icon");
         const searchIcon = document.getElementById("search");
         const closeSearchBtn = document.getElementById("close-search");
+        const fixed_button = document.getElementById("fixed-donate");
+
         menuIcon.addEventListener("click", openNav);
         closeBtn.addEventListener("click", closeNav);
         searchIcon.addEventListener("click", openSearch);
         closeSearchBtn.addEventListener("click", closeSearch);
         function openNav() {
+            if (fixed_button) {
+                fixed_button.style.display = "none";
+            }
             document.getElementById("myNav").style.width = "100%";
         }
 
         function closeNav() {
+            if (fixed_button) {
+                fixed_button.style.display = "flex";
+            }
             document.getElementById("myNav").style.width = "0%";
         }
 
         function openSearch() {
+
             document.getElementById("search-bar").style.display = "flex";
             document.getElementById("search-bar").style.width = "100%";
             document.getElementById("query").focus();

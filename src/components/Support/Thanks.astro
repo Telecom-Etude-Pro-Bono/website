@@ -1,0 +1,134 @@
+---
+import { toCodes, toPaths } from "astro:i18n";
+import Icon from "../Icon.astro";
+import Subtitle from "../Subtitle.astro";
+import Quote from "../Index/Quote.astro";
+
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+const allQuotes: CollectionEntry<"quote">[] = await getCollection("quote");
+const size = allQuotes.length;
+
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../../web-data/i18n/utils";
+import Title from "../Title.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+---
+
+<div class="title under-header">
+    <div class="container">
+        <div class="text-container">
+            <div class="title-container">
+                <h1 class="title-text">Un Grand Merci</h1>
+                <div class="separator title-separator"></div>
+            </div>
+
+            <div class="quote">
+                <p class="quote-text">
+                    Au nom de toutes les équipes du CHUGA mobilisées et en tant que Présidente du Fonds de dotation, je remercie très chaleureusement nos mécènes, nos donateurs et nos parrains sportifs qui adhèrent à notre cause et soutiennent nos projets.
+                </p>
+                <p class="quote-author function">
+                   Kevin Garnier <br> Président du Fonds de dotation
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    p {
+        text-align: justify;
+        padding: 0 20px;
+
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #000;
+        margin: 0;
+        line-height: normal;
+        text-align: left;
+    }
+    .title-text {
+        letter-spacing: 1.36px;
+        text-transform: uppercase;
+        white-space: pre-wrap;
+    }
+    .title-separator {
+        height: 5px;
+        width: 190px;
+    }
+    .title-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 38px 18px;
+        box-sizing: border-box;
+        gap: 15px;
+        align-items: left;
+    }
+    .dquotes {
+        width: 80px;
+    }
+    .title
+ {
+        top: 0;
+        left: 0;
+        width: 100%;
+        position: relative;
+        text-align: center;
+        overflow: hidden;
+        /* padding: 38px 18px; */
+        box-sizing: border-box;
+        gap: 15px;
+        height: fit-content;
+        background-image: url(/quote-test.jpg);
+        background-position: left;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: rgba(255, 255, 255, 0.45);
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+
+    }
+
+    .icon-container {
+        width: 50px;
+        height: 50px;
+    }
+
+    .container {
+        display: flex;
+        width: 810px;
+        min-height: 600px;
+        padding: 2px 10px;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        flex-shrink: 0;
+        background: rgba(255, 255, 255, 0.75);
+        font-size: 24px;
+        line-height: 28px;
+       }
+    @media screen and (max-width: 810px) {
+        .container {
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 425px) {
+        .dquotes {
+            width: 50px;
+        }
+    }
+</style>

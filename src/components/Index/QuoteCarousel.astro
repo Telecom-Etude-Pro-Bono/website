@@ -107,8 +107,8 @@ const tr = useTranslatedPath(lang);
 
     .quote-conatiner {
         display: flex;
-        width: 810px;
-        height: 520px;
+        max-width: 810px;
+        min-height: 520px;
         padding: 2px 10px;
         justify-content: center;
         align-items: center;
@@ -124,12 +124,22 @@ const tr = useTranslatedPath(lang);
     @media screen and (max-width: 810px) {
         .quote-conatiner {
             width: 100%;
+            gap:10px;
         }
     }
 
     @media screen and (max-width: 425px) {
         .dquotes {
             width:50px;
+        }
+
+        .icon-container {
+            width: 20px;
+            height: 30px;
+        }
+        .quote-conatiner {
+            padding: 0px;
+            gap: 5px;
         }
 
     }

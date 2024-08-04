@@ -1,0 +1,61 @@
+---
+import Subsubtitle from "../Subsubtitle.astro";
+
+
+const {partner} = Astro.props;
+
+---
+
+<div class="partner">
+    <a class="subtitle" href={partner.link} target="_blank"
+        ><Subsubtitle subsubtitle={partner.name} />
+        <div class="partner-content">
+            <img class="partner-img" alt="" src={"/images/"+partner.img} />
+            <div class="partner-text">
+                {partner.text}
+            </div>
+        </div>
+    </a>
+
+    <style>
+        .partner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+        .partner-content {
+            display: flex;
+    max-width: 840px;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: 50px;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    padding: 20px;
+        }
+
+        .partner-img {
+            width: 200px;
+        }
+
+        .partner-text {
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 28px;
+            text-align: justify;
+        }
+
+        @media screen and (max-width: 810px) {
+            .partner-content {
+                flex-direction: column;
+                gap: 20px;
+                font-size: 16px;
+            }
+
+        }
+    </style>
+</div>
