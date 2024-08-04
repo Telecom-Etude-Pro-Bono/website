@@ -101,3 +101,20 @@ code {
         color: var(--dark-green);
         font-weight: 500;
 }
+
+.under-header{
+    padding-top: 100px;
+}
+
+ @media screen and (max-width: 1140px) {
+    .under-header {
+        padding-top: 131px;
+    }
+
+ }
+
+ @media screen and (max-width: 810px) {
+    .under-header {
+        padding-top: 80px;
+    }
+ }

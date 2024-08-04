@@ -1,0 +1,114 @@
+---
+
+const {member} = Astro.props;
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../../web-data/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+
+const imgPath = `/images/team/`;
+const ext = `.jpg`;
+
+---
+<div class="one-item">
+    <div>
+        <div class="cards-image-mask">
+            <div class="img-wrap">
+                <img
+                    src={imgPath + member.role + ext}
+                    sizes="(max-width: 479px) 100vw, (max-width: 767px) 93vw, (max-width: 991px) 30vw, 286px"
+                    class="image-cards"
+                    alt={`${member.name} - ${t("team."+member.role)}`}
+                />
+            </div>
+        </div>
+        <h3>
+            <span class="center">{member.name}</span>
+        </h3>
+        <p class="paragraph-light" />
+        <span class="center">{t("team."+member.role)}</span>
+        <p />
+    </div>
+</div>
+
+<style>
+    .one-item {
+        border-radius: 5px;
+        border-radius: 0.5rem;
+        padding: var(--margin);
+        --margin: 0.2rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        background-position: 100%;
+    }
+    .one-item > * {
+        padding: 10px;
+        background-color: white;
+        width: 270px;
+        border-radius: 0.5rem;
+        height: 100%;
+    }
+    .info-bureau {
+        display: none;
+        text-align: center;
+        font-size: small;
+    }
+    .center {
+        display: block;
+        text-align: -webkit-center;
+        text-align: center;
+    }
+    .cards-image-mask {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        padding-top: 100%;
+        border-radius: 0%;
+    }
+    img {
+        display: block;
+        max-width: 100%;
+        vertical-align: middle;
+        display: inline-block;
+        border: 0;
+        border-radius: 2px;
+    }
+    .cards-grid-container {
+        display: -ms-grid;
+        display: grid;
+        grid-auto-columns: 1fr;
+        grid-column-gap: 40px;
+        grid-row-gap: 40px;
+        -ms-grid-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        text-align: left;
+    }
+    .img-wrap {
+        position: absolute;
+        left: 0%;
+        top: 0%;
+        right: 0%;
+        bottom: 0%;
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        border-radius: 20px;
+        -o-object-fit: cover;
+        object-fit: cover;
+        -o-object-position: 50% 50%;
+        object-position: 50% 50%;
+    }
+
+    @media screen and (max-width: 767px) {
+        .cards-grid-container {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+</style>

@@ -39,6 +39,7 @@ export const ui = {
 
         /* ################ PAGES ###############*/
         'page.index': 'Telecom Etude Pro Bono',
+        'page.about': 'Qui sommes-nous ? | Telecom Etude Pro Bono',
 
         /* ################ INDEX ###############*/
         'index.title':'big blah blah',
@@ -58,6 +59,19 @@ export const ui = {
 
         'index.last-news':"Les dernières actualités de Telecom Etude Pro Bono",
         'index.last-projects':"Nous avons besoin de vous pour financer des projets. Un grand merci par avance pour votre soutien !",
+
+        /* ################ ABOUT ###############*/
+        'about.title': 'Telecom Etude Pro Bono',
+        'about.description': "Telecom Etude Pro Bono est un fonds de dotation indépendant et entièrement géré par des étudiants de Télécom Paris. Sensibles aux problématiques du tissu associatif et rigoureux sur l'audit des projets que vos dons nous permettent de financer, nous rendons la contribution carritative efficace.",
+
+        /* ################ TEAM ###############*/
+        'team.title': 'Notre équipe',
+        'team.president': 'Président',
+        'team.treasurer': 'Trésorier',
+        'team.secretary':'Secrétaire Générale',
+        'team.financial':'Responsable financier',
+        'team.communication':'Responsable communication',
+        'team.member':'Membre',
 
 
     },

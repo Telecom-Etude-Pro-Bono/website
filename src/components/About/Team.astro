@@ -1,0 +1,48 @@
+---
+import { team } from "../../web-data/team/team";
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../../web-data/i18n/utils";
+import Subtitle from "../Subtitle.astro";
+import Member from "./Member.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+---
+
+<div class="bureau-div">
+    <Subtitle subtitle={t("team.title")} />
+    <div class="cards-grid-container">
+        {team.map((member) => <Member member={member} />)}
+    </div>
+</div>
+
+<style>
+    .cards-grid-container {
+        display: -ms-grid;
+        display: grid;
+        grid-auto-columns: 1fr;
+        grid-column-gap: 40px;
+        grid-row-gap: 40px;
+        -ms-grid-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        text-align: left;
+    }
+    .bureau-div {
+        margin-bottom: 100px;
+    }
+
+    @media screen and (max-width: 810px) {
+		.cards-grid-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+	}
+</style>

@@ -1,14 +1,16 @@
 ---
-const { title, height } = Astro.props;
+const { title, height, img} = Astro.props;
 
 export interface Props {
     title: string;
     height?: string;
+    img?: string;
 }
 const imgHeight = height || "auto";
+
 ---
 
-<div class="title-container">
+<div id="title-container-id"class="title-container">
     <!-- <img alt="icon" src="/bg.jpg" /> -->
     <div class="text-container">
         <h1 class="title-text">{title}</h1>
@@ -16,7 +18,12 @@ const imgHeight = height || "auto";
     </div>
 </div>
 
-<style define:vars={{ imgHeight }}>
+<script define:vars={{img}}>
+        const titleContainer = document.getElementById("title-container-id");
+        titleContainer.style.backgroundImage = "url(" + img + ")";
+</script>
+
+<style define:vars={{ imgHeight,img }}>
     .title-container {
         padding-top: 80px;
         top: 0;
@@ -29,7 +36,6 @@ const imgHeight = height || "auto";
     box-sizing: border-box;
     gap: 15px;
     height: var(--imgHeight);
-    background-image: url(/bg.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
