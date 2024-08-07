@@ -14,9 +14,6 @@ import {
 } from "../web-data/i18n/utils";
 import Title from "../components/Title.astro";
 import Pagination from "../components/Article/Pagination.astro";
-import type { Page } from "astro";
-import { pathHasLocale } from "astro:i18n";
-import Icon from "../components/Icon.astro";
 import Selector from "../components/Article/Selector.astro";
 
 const lang = getLangFromUrl(Astro.url);
@@ -58,16 +55,24 @@ const url_format = (page: number) => {
 // };
 
 // const { page } = Astro.props;
-
-if (currentPage > totalPages || currentPage < 1) {
-  return Astro.redirect(tr("/blog"));
-}
 ---
 
 <PageWithDonateLayout title={t("page.blog")}>
   <Title title={t("blog.title")} height="50vw" img="/images/title/bg.jpg" />
   <div class="articles-selector">
     <Selector />
+    {articlesForPage.length === 0 && (!filter || filter === 'all') &&
+      (<h2>{t("blog.no-news")}</h2>)
+    }
+    {articlesForPage.length === 0 && filter==='ongoing' &&
+      (<h2>{t("blog.no-ongoing")}</h2>)
+    }
+    {articlesForPage.length === 0 && filter==='completed' &&
+      (<h2>{t("blog.no-completed")}</h2>)
+    }
+    {articlesForPage.length === 0 && filter==='information' &&
+      (<h2>{t("blog.no-information")}</h2>)
+    }
     <div class="articles">
       {articlesForPage.map((article) => <ArticleCard article={article} />)}
     </div>
@@ -82,6 +87,9 @@ if (currentPage > totalPages || currentPage < 1) {
   </div>
 
   <style>
+    h2 {
+      margin: 80px;
+    }
     .articles {
       display: -ms-grid;
       display: grid;
@@ -166,13 +174,5 @@ if (currentPage > totalPages || currentPage < 1) {
       }
     }
 
-    @media screen and (max-width: 320px) {
-      .arrow-icon {
-        width: 30px;
-      }
-      .pagination-list {
-        gap: 0px;
-      }
-    }
   </style>
 </PageWithDonateLayout>

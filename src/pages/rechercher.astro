@@ -1,0 +1,146 @@
+---
+export const prerender = false;
+
+import {
+  getLangFromUrl,
+  useTranslations,
+  useTranslatedPath,
+} from "../web-data/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+
+import { ARTICLES_PER_PAGE } from "../web-data/constants";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import PageWithDonateLayout from "../layouts/PageWithDonateLayout.astro";
+import ArticleCard from "../components/Article/ArticleCard.astro";
+import Title from "../components/Title.astro";
+import Pagination from "../components/Article/Pagination.astro";
+
+const query: string | null = Astro.url.searchParams.get('q');
+
+const allBlogArticles: CollectionEntry<'blog'>[] = await getCollection('blog');
+
+// Filter articles based on query
+const searchResults = allBlogArticles.filter(article => {
+  const titleMatch: boolean = article.data.title
+    .toLowerCase()
+    .includes(query!.toLowerCase());
+
+    const bodyMatch: boolean = article.body
+    .toLowerCase()
+    .includes(query!.toLowerCase());
+
+    const slugMatch: boolean = article.slug
+    .toLowerCase()
+    .includes(query!.toLowerCase());
+
+    return titleMatch || bodyMatch || slugMatch
+}).sort(
+  (a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) =>
+    b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const currentPage: number | null = +Astro.url.searchParams.get('page')! || 1;
+
+const totalPages: number = Math.ceil(
+  searchResults.length / ARTICLES_PER_PAGE,
+);
+
+const articlesForPage: CollectionEntry<"blog">[] = searchResults.slice(
+  (currentPage - 1) * ARTICLES_PER_PAGE,
+  currentPage * ARTICLES_PER_PAGE,
+);
+
+const url_format = (page: number) => {
+    return `${tr("/search")}?page=${page}&q=${query}`;
+};
+---
+
+<PageWithDonateLayout title="page.search">
+    <Title title={t("search.title")+'"'+query+'"'} height="50vw" img="/images/title/bg.jpg" />
+
+  <div class="articles">
+    {articlesForPage.length === 0 && (
+      <h2>{t("search.no-result")+'"'+query+'"'}</h2>
+    )}
+    {articlesForPage.map(article => (
+      <ArticleCard article={article} />
+    ))}
+  </div>
+
+  <Pagination
+      previous={currentPage > 1 ? url_format(currentPage - 1) : null}
+      next={currentPage + 1 <= totalPages ? url_format(currentPage + 1) : null}
+      current={currentPage}
+      first={currentPage != 1 ? url_format(1) : null}
+      last={currentPage!= totalPages ? url_format(totalPages): null}
+      lastIndex={totalPages}
+    />
+
+  <style>
+    .articles {
+      display: -ms-grid;
+      display: grid;
+      grid-auto-columns: 1fr;
+      grid-column-gap: 40px;
+      grid-row-gap: 40px;
+      -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+      -ms-grid-rows: auto;
+      grid-template-rows: auto;
+      text-align: left;
+    }
+
+    @media screen and (max-width: 1140px) {
+      .articles {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media screen and (max-width: 810px) {
+      .previous {
+        display: none;
+      }
+
+      .pagination {
+        gap: 5px;
+      }
+
+      .pagination-next {
+        gap: 0px;
+        width: fit-content;
+      }
+
+      .pagination-list {
+        gap: 5px;
+      }
+
+      .arrow-icon {
+        width: 40px;
+      }
+    }
+
+    @media screen and (max-width: 320px) {
+      .arrow-icon {
+        width: 30px;
+      }
+      .pagination-list {
+        gap: 0px;
+      }
+    }
+
+    @media screen and (max-width: 1140px) {
+      .articles {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+
+  </style>
+</PageWithDonateLayout>
