@@ -41,6 +41,8 @@ export const ui = {
         'page.index': 'Telecom Etude Pro Bono',
         'page.about': 'Qui sommes-nous ? | Telecom Etude Pro Bono',
         'page.patron': 'Devenez mécène | Telecom Etude Pro Bono',
+        'page.support': 'Ils nous soutiennent | Telecom Etude Pro Bono',
+        'page.blog': 'Actualités | Telecom Etude Pro Bono',
 
         /* ################ INDEX ###############*/
         'index.title':'big blah blah',
@@ -122,6 +124,14 @@ export const ui = {
         'support.donators': 'Nous remercions',
         'support.company': 'Nos Mecènes',
         'support.individual': 'Nos Donateurs',
+
+
+        /* ################ BLOG ###############*/
+        'blog.title': 'Actualités',
+        'blog.ongoing': 'Projets en cours',
+        'blog.completed': 'Projets terminés',
+        'blog.information': 'Informations',
+        'blog.all': 'Toutes les actualités',
 
 
 

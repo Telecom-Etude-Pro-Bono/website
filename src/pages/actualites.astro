@@ -1,0 +1,178 @@
+---
+export const prerender = false;
+
+import PageWithDonateLayout from "../layouts/PageWithDonateLayout.astro";
+
+import ArticleCard from "../components/Article/ArticleCard.astro";
+import type { CollectionEntry } from "astro:content";
+import { ARTICLES_PER_PAGE } from "../web-data/constants";
+import { getCollection } from "astro:content";
+import {
+  getLangFromUrl,
+  useTranslations,
+  useTranslatedPath,
+} from "../web-data/i18n/utils";
+import Title from "../components/Title.astro";
+import Pagination from "../components/Article/Pagination.astro";
+import type { Page } from "astro";
+import { pathHasLocale } from "astro:i18n";
+import Icon from "../components/Icon.astro";
+import Selector from "../components/Article/Selector.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+
+const filter: string | null = Astro.url.searchParams.get('f');
+const currentPage: number | null = +Astro.url.searchParams.get('page')! || 1;
+
+const allBlogArticles: CollectionEntry<"blog">[] = (
+  await getCollection("blog")
+).sort(
+  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+    b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+).filter(
+        (article) =>
+            article.data.type === filter ||
+            filter === "all" || !filter,
+    );;
+
+const totalPages: number = Math.ceil(
+  allBlogArticles.length / ARTICLES_PER_PAGE,
+);
+
+const articlesForPage: CollectionEntry<"blog">[] = allBlogArticles.slice(
+  (currentPage - 1) * ARTICLES_PER_PAGE,
+  currentPage * ARTICLES_PER_PAGE,
+);
+
+const url_format = (page: number) => {
+  if (filter) {
+      return `${tr("/blog")}?page=${page}&f=${filter}`;
+    }
+    return `${tr("/blog")}?page=${page}`;
+};
+
+// type Props = {
+//   page: Page<CollectionEntry<"blog">>;
+// };
+
+// const { page } = Astro.props;
+
+if (currentPage > totalPages || currentPage < 1) {
+  return Astro.redirect(tr("/blog"));
+}
+---
+
+<PageWithDonateLayout title={t("page.blog")}>
+  <Title title={t("blog.title")} height="50vw" img="/images/title/bg.jpg" />
+  <div class="articles-selector">
+    <Selector />
+    <div class="articles">
+      {articlesForPage.map((article) => <ArticleCard article={article} />)}
+    </div>
+    <Pagination
+      previous={currentPage > 1 ? url_format(currentPage - 1) : null}
+      next={currentPage + 1 <= totalPages ? url_format(currentPage + 1) : null}
+      current={currentPage}
+      first={currentPage != 1 ? url_format(1) : null}
+      last={currentPage!= totalPages ? url_format(totalPages): null}
+      lastIndex={totalPages}
+    />
+  </div>
+
+  <style>
+    .articles {
+      display: -ms-grid;
+      display: grid;
+      grid-auto-columns: 1fr;
+      grid-column-gap: 40px;
+      grid-row-gap: 40px;
+      -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+      -ms-grid-rows: auto;
+      grid-template-rows: auto;
+      text-align: left;
+    }
+
+    @media screen and (max-width: 1140px) {
+      .articles {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media screen and (max-width: 810px) {
+      .previous {
+        display: none;
+      }
+
+      .pagination {
+        gap: 5px;
+      }
+
+      .pagination-next {
+        gap: 0px;
+        width: fit-content;
+      }
+
+      .pagination-list {
+        gap: 5px;
+      }
+
+      .arrow-icon {
+        width: 40px;
+      }
+    }
+
+    @media screen and (max-width: 320px) {
+      .arrow-icon {
+        width: 30px;
+      }
+      .pagination-list {
+        gap: 0px;
+      }
+    }
+
+    @media screen and (max-width: 1140px) {
+      .articles {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media screen and (max-width: 810px) {
+      .previous {
+        display: none;
+      }
+
+      .pagination {
+        gap: 5px;
+      }
+
+      .pagination-next {
+        gap: 0px;
+        width: fit-content;
+      }
+
+      .pagination-list {
+        gap: 5px;
+      }
+
+      .arrow-icon {
+        width: 40px;
+      }
+    }
+
+    @media screen and (max-width: 320px) {
+      .arrow-icon {
+        width: 30px;
+      }
+      .pagination-list {
+        gap: 0px;
+      }
+    }
+  </style>
+</PageWithDonateLayout>

@@ -14,6 +14,7 @@
     --deg6: #d92b4d;
     --red: #d51f48;
     --accent-gradient: linear-gradient(45deg, var(--orange), var(--red) 85%, rgb(255, 252, 251) 150%);
+    --background-select: linear-gradient(to left, #34495e 3rem, #2c3e50 3rem);
 }
 html {
     font-family: Montserrat, sans-serif;

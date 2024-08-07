@@ -16,11 +16,13 @@ const typeColor = "var(--"+article.data.type + "-color)";
 import {
     getLangFromUrl,
     useTranslatedPath,
+    useTranslations,
 } from "../../web-data/i18n/utils";
 
 
 const lang = getLangFromUrl(Astro.url);
 const tr = useTranslatedPath(lang);
+const t = useTranslations(lang);
 
 const path =
   "/" + tr("blog") + "/" + article.slug;
@@ -43,7 +45,7 @@ const date = mdToDate(lang, article.data.pubDate);
       </b>
     </div>
     <div class="article-card-type">
-      <b class="article-card-type-text letter-space">{typeToString(article.data.type)}</b>
+      <b class="article-card-type-text letter-space">{t("blog."+article.data.type)}</b>
     </div>
   </a>
 

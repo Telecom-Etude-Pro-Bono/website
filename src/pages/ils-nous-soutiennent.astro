@@ -16,10 +16,10 @@ const t = useTranslations(lang);
 const tr = useTranslatedPath(lang);
 ---
 
-<PageWithDonateLayout title={t("page.index")}>
+<PageWithDonateLayout title={t("page.support")}>
 	<Thanks />
 	<div class="partners-container">
-		<Subtitle subtitle={t("support.supporters")} />
+		<Subtitle subtitle={t("support.partners")} />
 		{partners.map((partner) => <Partners partner={partner} />)}
 	</div>
 

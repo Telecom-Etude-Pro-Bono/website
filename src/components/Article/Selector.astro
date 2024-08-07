@@ -1,0 +1,95 @@
+---
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../../web-data/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+
+const filter: string | null = Astro.url.searchParams.get('f');
+const currentPage: number | null = +Astro.url.searchParams.get('page')! || 1;
+
+const formatUrl = (page: number) => {
+    if (filter || filter === '') {
+      return `${tr("/blog")}?page=${page}&f=${filter}`;
+    }
+    return `${tr("/blog")}?page=${page}`;
+};
+
+---
+<form action={formatUrl(currentPage)} method="GET">
+<label class="select" >
+    <select name="f" onchange="this.form.submit()">
+      {!filter || filter === 'all' ? <option value="all" selected> {t('blog.all')} </option> : <option value="all"> {t('blog.all')} </option>}
+      {filter === 'information' ? <option value="information" selected> {t('blog.information')} </option> : <option value="information"> {t('blog.information')} </option>}
+      {filter === 'ongoing' ? <option value="ongoing" selected> {t('blog.ongoing')} </option> : <option value="ongoing"> {t('blog.ongoing')} </option>}
+      {filter === 'completed' ? <option value="completed" selected> {t('blog.completed')} </option> : <option value="completed"> {t('blog.completed')} </option>}
+      <!-- <option value="information" > {t('blog.information')} </option>
+      <option value="ongoing">{t('blog.ongoing')}</option>
+      <option value="completed">{t('blog.completed')}</option> -->
+    </select>
+  </label>
+</form>
+
+<style>
+/* Reset <select> defaults */
+select {
+  appearance: none;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: white;
+  box-shadow: none;
+  background-color: var(--dark-green);
+  font-family: Montserrat, sans-serif;
+  font-size: 20px;
+}
+select::-ms-expand {
+  /* display: none; */
+}
+/* Custom Select wrapper */
+.select {
+  position: relative;
+  display: flex;
+  width: min(20rem, 90vw);
+  background: var(--background-select);
+  border-radius: 0.25rem;
+  overflow: hidden;
+  color: white;
+
+  margin: 20px;
+  margin-bottom: 80px;
+  /* // Select style */
+  select {
+    flex: 1;
+    padding: 1em;
+    cursor: pointer;
+  }
+  /* // Arrow style */
+  &::after {
+    content: "\25BC";
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    transition: 0.25s all ease;
+    pointer-events: none; // IMPORTANT to click on arrow
+  }
+  /* // Arrow hover */
+  &:hover::after {
+    color: #f39c12;
+    animation: bounce 0.5s infinite;
+  }
+}
+@keyframes bounce {
+  25% {
+    transform: translatey(5px);
+  }
+  75% {
+    transform: translatey(-5px);
+  }
+}
+
+</style>
