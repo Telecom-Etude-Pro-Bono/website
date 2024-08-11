@@ -89,6 +89,10 @@ code {
     text-transform: uppercase;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 .separator {
     display: flex;
     height: 2px;
@@ -100,6 +104,11 @@ code {
     width: -webkit-fill-available;
 
     background: var(--dark-green);
+}
+
+.short-separator {
+    width: 100px;
+    height: 3.5px;
 }
 
 .w-nav {

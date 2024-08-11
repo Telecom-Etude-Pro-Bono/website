@@ -1,0 +1,179 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+---
+
+<PageLayout title="Contact">
+    <div class="under-header container">
+        <div class="title">
+            <h1>Contactez-nous !</h1>
+            <div class="separator short-separator"></div>
+        </div>
+        <p>
+            Vous désirez nous contacter ? Il vous suffit de remplir ce
+            formulaire et notre équipe vous prendra en charge.
+        </p>
+        <form id="contact">
+            <label class="uppercase bold" for="name">Name</label>
+            <div class="input-wrapper bold">
+                <input type="text" id="name" name="name" required />
+            </div>
+            <label class="uppercase bold" for="email">Email</label>
+            <div class="input-wrapper">
+                <input type="email" id="email" name="email" required />
+            </div>
+            <label class="uppercase bold" for="phone">Phone</label>
+            <div class="input-wrapper">
+                <input type="tel" id="phone" name="phone" />
+            </div>
+            <label class="uppercase bold" for="message">Message</label>
+            <div class="input-wrapper">
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            <div class="legal">
+                <p>
+                    En remplissant ce formulaire, vous acceptez que les données
+                    renseignées soient conservées par Telecom Etude Pro Bono
+                    jusqu'à la fin de la prise en charge de votre demande.
+                </p>
+            </div>
+            <button class="big-button" type="submit">
+                <span class="button-text">Send</span>
+            </button>
+        </form>
+    </div>
+</PageLayout>
+
+<script>
+    // const message = document.getElementById("message");
+    // message.addEventListener("input", () => {
+    //     auto_grow(message);
+    // });
+    // function auto_grow(element) {
+    //     element.style.height = "5px";
+    //     element.style.height = element.scrollHeight + "px";
+    // }
+
+    // const form = document.getElementById("contact");
+    // form.addEventListener("submit", (e) => {
+    //     const req = {
+    //         email: EMAIL,
+    //         to: EMAIL
+    //     }
+    // });
+</script>
+
+<style>
+    .title {
+        margin-top:50px;
+    }
+    h1 {
+        margin: 0%;
+    }
+    .title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: self-start;
+        gap: 20px;
+        width: 75%;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+    }
+    .input-wrapper {
+        width: 100%;
+        height: fit-content;
+        position: relative;
+        border-radius: 5px;
+        background-color: #fff;
+        border: solid;
+        border-color: #757575;
+        border-width: 1px;
+        box-sizing: border-box;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 15px 11px;
+        gap: 8px;
+        text-align: left;
+        font-size: 16px;
+        color: #1e1e1e;
+    }
+
+    input {
+        flex: 1;
+        width: 100%;
+        position: relative;
+        font-size: 16px;
+        line-height: 100%;
+        color: #1e1e1e;
+        text-align: left;
+        display: inline-block;
+        border: none;
+        field-sizing: content;
+    }
+
+    textarea {
+        border: none;
+        outline: none;
+        overflow: inherit;
+        width: 100%;
+        min-height: 100px; /* set minimum height */
+        resize: none;
+        font-size: inherit;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    .input-wrapper:focus-within {
+        border-color: var(--ongoing-color);
+        border-width: 2px;
+    }
+
+    .button-text {
+        width: 100%;
+        top: 3px;
+        left: 0%;
+        letter-spacing: 1px;
+
+        text-transform: uppercase;
+        font-weight: 500;
+        background: linear-gradient(74.01deg, #34c759, #276033 85%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .big-button {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        max-width: 33vw;
+        cursor: pointer;
+        font-size: 16px;
+        border-width: 4px;
+        border-style: solid;
+        border-image: linear-gradient(74.01deg, #34c759, #276033 85%) 1;
+        min-width: 320px;
+        border-radius: 6px;
+        background-color: white;
+        align-self: center;
+        height: 50px;
+    }
+</style>
