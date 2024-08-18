@@ -100,26 +100,10 @@ export const ui = {
         'patron.company.benefits.title' : "Avantages Fiscaux pour les entreprises",
         'patron.company.benefits.text' : "Vous bénéficiez d'une réduction d'impôt de 60 % dans la limite de 0,5 % du chiffre d'affaires HT de votre entreprise.",
         'patron.company.benefits.text.example' : "Ex : un don de 5 000 € coûte seulement 2 000 € après déduction fiscale.",
-
-        'patron.more-information.title' : "Pour votre information",
-        'patron.more-information.1' : "Telecom Etude Pro Bono est un Fonds de dotation* régi par la loi n° 2021-1109 du 24 août 2021.",
-        'patron.more-information.2' : "Telecom Etude Pro Bono est un organisme à but non lucratif",
-        'patron.more-information.3' : "dont la création a été annoncée au Journal Officiel de la République Française le 23 janvier 2016",
-        'patron.more-information.4' : "annonce n°",
-        'patron.more-information.5' : "De par ses statuts,",
-        'patron.more-information.6' : "aucune aide de l'État",
-        'patron.more-information.7' : "(fonds public ou subventions publiques),",
-        'patron.more-information.8' : "de quelque nature qu'elle soit, ne peut être versée",
-        'patron.more-information.9' : "à Telecom Etude Pro Bono.",
-        'patron.more-information.10' : "(*) Fonds de dotation :",
-        'patron.more-information.11' : "cliquer ici pour en savoir plus.",
-        'patron.more-information.12' : "Les dons versés a Telecom Etude Pro Bono, sont fléchés, selon la seule volonté du mécène (ou donateur) sur un des projets soutenus par le Fonds de dotation :",
-        'patron.more-information.13' : "Tuto faire don sur un projet.",
-        'patron.more-information.14' : "Le mécène (ou donateur) peut laisser Telecom Etude Pro Bono décider de l'affectation de son don.",
-        'patron.more-information.15' : "Ces dons non affectés permettent de financer tous les projets soutenus par le Fonds de dotation, et non un projet spécifique. Cela permet notamment de financer des projets peu financés par d'autres sources et de mobiliser des fonds rapidement.",
-
-        'patron.publication.link': 'Consultez les publication',
+        'patron.publication.link': 'Consultez les publications',
         'patron.publication.text': 'de Telecom Etude Pro Bono.',
+
+
 
         /* ################ SUPPORT ###############*/
         'support.title': 'Ils nous soutiennent',
@@ -151,6 +135,35 @@ export const ui = {
         /* ################ SEARCH ###############*/
         'search.title': 'Recherche de ',
         'search.no-result': 'Aucun résultat pour ',
+
+        /* ################ LEGAL ###############*/
+        'legal.donation-funds.title' : "Pour votre information",
+        'legal.donation-funds.1' : "Telecom Etude Pro Bono est un Fonds de dotation* régi par la loi n° 2021-1109 du 24 août 2021 et le décret n° 2022-813 du 16 mai 2022.",
+        'legal.donation-funds.2' : "Telecom Etude Pro Bono est un organisme à but non lucratif",
+        'legal.donation-funds.3' : "dont la création a été annoncée au Journal Officiel de la République Française le 23 janvier 2016",
+        'legal.donation-funds.4' : "annonce n°",
+        'legal.donation-funds.5' : "De par ses statuts,",
+        'legal.donation-funds.6' : "aucune aide de l'État",
+        'legal.donation-funds.7' : "(fonds public ou subventions publiques),",
+        'legal.donation-funds.8' : "de quelque nature qu'elle soit, ne peut être versée",
+        'legal.donation-funds.9' : "à Telecom Etude Pro Bono.",
+        'legal.donation-funds.10' : "(*) Fonds de dotation :",
+        'legal.donation-funds.11' : "cliquer ici pour en savoir plus.",
+        'legal.donation-funds.12' : "Les dons versés a Telecom Etude Pro Bono, sont fléchés, selon la seule volonté du donateur ou du mécène sur un des projets soutenus par le Fonds de dotation :",
+        'legal.donation-funds.13' : "Tuto faire don sur un projet.",
+        'legal.donation-funds.14' : "Le donateur ou le mécène peut laisser Telecom Etude Pro Bono décider de l'affectation de son don.",
+        'legal.donation-funds.15' : "Ces dons non affectés permettent de financer tous les projets soutenus par le Fonds de dotation, et non un projet spécifique. Cela permet notamment de financer des projets peu financés par d'autres sources et de mobiliser des fonds rapidement.",
+
+        /* ################ PUBLICATION ###############*/
+        'publication.title': 'Publications',
+        'publication.report-title': 'Rapports d\'activités',
+        'publication.report': 'Rapport d\'activité',
+        'publication.documents-title': 'Documents statuaires',
+        'publication.statuts': 'Statuts de Telecom Etude Pro Bono',
+        'publication.jo.1': 'relative à la création du Fonds de dotation ',
+        'publication.jo.2': 'Publication au JO du 23 janvier 2016',
+
+
 
 
 

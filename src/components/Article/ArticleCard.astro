@@ -25,7 +25,7 @@ const tr = useTranslatedPath(lang);
 const t = useTranslations(lang);
 
 const path =
-  "/" + tr("blog") + "/" + article.slug;
+  tr("blog") + "/" + article.slug;
 
 
 const date = mdToDate(lang, article.data.pubDate);

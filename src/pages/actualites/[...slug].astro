@@ -1,0 +1,56 @@
+---
+export const prerender = false;
+
+import { getEntry } from "astro:content";
+import PageWithDonateLayout from "../../layouts/PageWithDonateLayout.astro";
+import PictureWithInfo from "../../components/Article/PictureWithInfo.astro";
+import { formatDate } from "../../components/utils";
+const { slug } = Astro.params;
+import Title from "../../components/Title.astro";
+import Subtitle from "../../components/Subtitle.astro";
+import Subsubtitle from "../../components/Subsubtitle.astro";
+import TitleNoImg from "../../components/TitleNoImg.astro";
+
+if (slug === undefined) {
+  throw new Error("Slug is required");
+}
+
+const entry = await getEntry("blog", slug);
+
+if (entry === undefined) {
+  return Astro.redirect("/404");
+}
+
+const { Content } = await entry.render();
+---
+
+<PageWithDonateLayout title={entry.data.title}>
+  <article>
+    <TitleNoImg title={entry.data.title} />
+    <div>
+      <PictureWithInfo article={entry} />
+    </div>
+    <Content />
+  </article>
+</PageWithDonateLayout>
+
+<style>
+  article {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  p {
+    margin: 20px 0;
+  }
+
+  h2 {
+    margin: 20px 0;
+    font-size: 1.8rem;
+    color: #8a0404;
+  }
+</style>

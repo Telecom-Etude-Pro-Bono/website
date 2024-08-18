@@ -29,6 +29,12 @@ body {
 
 }
 
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
 h2 {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -66,9 +72,10 @@ a {
     display: block;
     -webkit-transition: opacity 200ms ease;
     transition: opacity 200ms ease;
-    color: #1e1e1e;
     cursor: pointer;
-    text-decoration: none;
+    display: inline;
+    text-decoration: underline;
+    color: var(--title-green);
 }
 code {
     font-family:

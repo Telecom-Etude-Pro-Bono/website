@@ -1,0 +1,84 @@
+---
+import Subtitle from "../Subtitle.astro";
+
+const raw_files = await Astro.glob('../../../public/publications/rapports/*.pdf');
+import { PUBLICATION_LIMIT } from '../../web-data/constants';
+
+import { getYear} from '../utils'
+
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../../web-data/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+
+const reports = raw_files.map((file) => {
+    const year = getYear(file.default);
+    return {
+        default: file.default,
+        year: year,
+    };
+}).sort((a, b) => b.year.start - a.year.start).slice(0, PUBLICATION_LIMIT);
+
+
+
+
+
+---
+
+    <div class="publications">
+        <div class="publications-container">
+            <div class="title">
+                <Subtitle subtitle={t('publication.report-title')} align="left" />
+            </div>
+            <ul>
+                {
+                    reports.map((report) => (
+                        <li>
+                            <a href={report.default} target="_blank" rel="noreferrer">
+                                {t("publication.report")} {report.year.start} - {report.year.end}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    </div>
+
+    <style>
+        li {
+            font-size: 20px;
+            text-align: justify;
+            color: var(--title-green);
+        }
+        .publications {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width:75%;
+            padding: 0px 80px;
+        }
+        a {
+            font-size: 18px;
+            text-align: justify;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        ul {
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+        @media screen and (max-width: 810px) {
+            .publications {
+                padding: 0px 20px;
+                width:100%;
+
+            }
+
+        }
+    </style>

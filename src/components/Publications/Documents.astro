@@ -1,0 +1,66 @@
+---
+import Subtitle from "../Subtitle.astro";
+
+import { CREATION_JO_LINK, CREATION_JO_NUM, STATUS_PATH } from '../../web-data/constants';
+
+
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../../web-data/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+---
+
+<div class="documents">
+    <Subtitle subtitle={t('publication.documents-title')} align="left" />
+    <ul>
+                <li>
+                    <a href={STATUS_PATH} target="_blank" rel="noreferrer">
+                        {t("publication.statuts")}
+                </li>
+                <li>
+                    <a href={CREATION_JO_LINK}>
+                        {t("legal.donation-funds.4")+CREATION_JO_NUM+" "+t('publication.jo.1')}
+                        </a>
+                        - {t('publication.jo.2')}
+
+                </li>
+</div>
+
+<style>
+    li {
+            font-size: 20px;
+            text-align: justify;
+        }
+        .documents {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width:75%;
+            padding: 0px 80px;
+        }
+        a {
+            font-size: 18px;
+            text-align: justify;
+            font-weight: bold;
+            text-decoration: none;
+
+        }
+        ul {
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+        @media screen and (max-width: 810px) {
+            .documents {
+                padding: 0px 20px;
+                width:100%;
+
+            }
+
+        }
+</style>

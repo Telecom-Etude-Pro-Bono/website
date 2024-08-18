@@ -15,6 +15,7 @@ import {
 import Subsubtitle from "../components/Subsubtitle.astro";
 import Subtitle from "../components/Subtitle.astro";
 import Icon from "../components/Icon.astro";
+import DonationLegal from "../components/DonationLegal.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -42,33 +43,12 @@ const tr = useTranslatedPath(lang);
                 subsubtitle={t("patron.individual.benefits.title")}
                 align="left"
             />
-            <ul>
-                <li>
                     <p class="benefits-text">
-                        <b class="benefits-text-headline">
-                            {t("patron.individual.benefits.text.headline")}
-                        </b>
-
                         {t("patron.individual.benefits.text")}
                         <br />
 
                         <b>{t("patron.individual.benefits.text.example")}</b>
                     </p>
-                </li>
-
-                <li>
-                    <p class="benefits-text">
-                        <b class="benefits-text-headline">
-                            {t("patron.individual.benefits.isf.headline")}
-                        </b>
-
-                        {t("patron.individual.benefits.isf")}
-                        <br />
-
-                        <b>{t("patron.individual.benefits.isf.example")}</b>
-                    </p>
-                </li>
-            </ul>
         </div>
     </div>
 
@@ -96,38 +76,9 @@ const tr = useTranslatedPath(lang);
             </p>
         </div>
     </div>
-
-    <div class="more-information-container">
-        <Subtitle subtitle={t("patron.more-information.title")} />
-        <p>
-            <b>{t("patron.more-information.1")}</b>
-        </p>
-        <div>
-            <p>
-                <b>{t("patron.more-information.2")}</b>
-                {t("patron.more-information.3")}
-                (<a href={CREATION_JO_LINK}>{t("patron.more-information.4")+CREATION_JO_NUM}</a>).
-                {t("patron.more-information.5")}
-                <b>{t("patron.more-information.6")}</b>
-                {t("patron.more-information.7")}
-                <b> {t("patron.more-information.8")}</b>
-                {t("patron.more-information.9")}
-            </p>
-        </div>
-        <p>
-            {t("patron.more-information.10")}
-            <a href={DONATION_FUND_DEF_LINK}> {t("patron.more-information.11")} </a>
-        </p>
-        <p>
-            <b>{t("patron.more-information.12")}</b>
-            <ul>
-                <li>{t("patron.more-information.13")}</li>
-                <li>
-                    <b>{t("patron.more-information.14")}</b>
-                    {t("patron.more-information.15")}
-                </li>
-            </ul>
-        </p>
+    <div class="legal">
+    <Subtitle subtitle={t("legal.donation-funds.title")} />
+    <DonationLegal />
     </div>
     <div class="publications green-div">
         <div class="icon">
@@ -142,6 +93,11 @@ const tr = useTranslatedPath(lang);
     </div>
 
     <style>
+        .legal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         .patron-container {
             display: flex;
             flex-direction: column;
@@ -248,6 +204,16 @@ const tr = useTranslatedPath(lang);
             gap: 5px;
         }
 
+        @media  screen and (max-width: 950px) {
+            .publications p {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+            }
+        }
+
         @media screen and (max-width: 810px) {
             .patron-container {
                 width: 100%;
@@ -258,6 +224,18 @@ const tr = useTranslatedPath(lang);
             .more-information-container {
                 padding: 20px 20px;
                 width: 100%;
+            }
+            .publications p{
+               text-align: left;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            .publications {
+                flex-direction: column;
+            }
+            .publications p {
+                text-align: center;
             }
         }
     </style>

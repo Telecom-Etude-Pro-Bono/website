@@ -1,0 +1,75 @@
+---
+const { title } = Astro.props;
+interface Props {
+    title: string;
+}
+---
+
+<div class="title under-header">
+    <div id="title-container-id" class="title-container">
+        <div class="text-container">
+            <h1 class="title-text">{title}</h1>
+            <div class="separator title-separator"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        margin: 50px;
+    }
+
+    .title-text {
+        letter-spacing: 1.36px;
+        text-transform: uppercase;
+        font-size: 2rem;
+    }
+
+    .title p {
+        text-align: center;
+        max-width: 900px;
+        font-size: 1.2em;
+        line-height: 1.5;
+        margin: 20px;
+    }
+
+    .title-container {
+        top: 0;
+        left: 0;
+        width: 100%;
+        position: relative;
+        text-align: center;
+        overflow: hidden;
+        /* padding: 38px 18px; */
+        box-sizing: border-box;
+        gap: 15px;
+        height: fit-content;
+    }
+
+    .title-separator {
+        height: 5px;
+        width: 190px;
+        align-self: center;
+    }
+
+    .text-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        gap: 15px;
+        align-items: center;
+        font-size: 2rem;
+    }
+
+    .text-container h1 {
+        margin: 0px;
+        width: fit-content;
+    }
+</style>

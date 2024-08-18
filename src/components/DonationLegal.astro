@@ -1,0 +1,105 @@
+---
+import {
+    CREATION_JO_NUM,
+    CREATION_JO_LINK,
+    DONATION_FUND_DEF_LINK,
+} from "../web-data/constants";
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../web-data/i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+---
+
+<div class="more-information-container">
+    <p>
+        <b>{t("legal.donation-funds.1")}</b>
+    </p>
+    <div>
+        <p>
+            <b>{t("legal.donation-funds.2")}</b>
+            {t("legal.donation-funds.3")}
+            (<a href={CREATION_JO_LINK}>{t("legal.donation-funds.4")+CREATION_JO_NUM}</a>).
+            {t("legal.donation-funds.5")}
+            <b>{t("legal.donation-funds.6")}</b>
+            {t("legal.donation-funds.7")}
+            <b> {t("legal.donation-funds.8")}</b>
+            {t("legal.donation-funds.9")}
+        </p>
+    </div>
+    <p>
+        {t("legal.donation-funds.10")}
+        <a href={DONATION_FUND_DEF_LINK}> {t("legal.donation-funds.11")} </a>
+    </p>
+    <p>
+        <b>{t("legal.donation-funds.12")}</b>
+        <ul>
+            <li>{t("legal.donation-funds.13")}</li>
+            <li>
+                <b>{t("legal.donation-funds.14")}</b>
+                {t("legal.donation-funds.15")}
+            </li>
+        </ul>
+    </p>
+</div>
+
+<style>
+
+li {
+    font-size: 20px;
+    text-align: justify;
+}
+
+ul {
+    font-size: 20px;
+    line-height: 1.6;
+}
+.more-information-container {
+    padding: 20px 80px;
+    gap: 10px;
+    width: 75%;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.more-information-container p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    unicode-bidi: isolate;
+    margin-bottom: 1rem;
+    font-size: inherit;
+    line-height: 1.6;
+    text-align: justify;
+    font-size: 20px;
+}
+.more-information-container a {
+    display: inline;
+    text-decoration: underline;
+    color: var(--title-green);
+}
+
+.publications {
+    display: flex;
+    align-content: center;
+    padding: 20px;
+    gap: 20px;
+    width: 75%;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 810px) {
+    .more-information-container {
+        padding: 20px 20px;
+        width: 100%;
+    }
+}
+</style>

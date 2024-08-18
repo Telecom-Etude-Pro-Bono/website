@@ -7,6 +7,7 @@ import {
 	useTranslations,
 	useTranslatedPath,
 } from "../web-data/i18n/utils";
+import TitleNoImg from "../components/TitleNoImg.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -14,14 +15,8 @@ const tr = useTranslatedPath(lang);
 ---
 
 <PageLayout title={t("page.about")}>
-	<div class="title under-header">
-		<div id="title-container-id"class="title-container">
-			<!-- <img alt="icon" src="/bg.jpg" /> -->
-			<div class="text-container">
-				<h1 class="title-text">{t("about.title")}</h1>
-				<div class="separator title-separator"></div>
-			</div>
-		</div>
+	<div class="title">
+		<TitleNoImg title={t("about.title")} />
 		<p>{t("about.description")}</p>
 	</div>
 
@@ -38,11 +33,6 @@ const tr = useTranslatedPath(lang);
 		margin-top: 50px;
 	}
 
-	.title-text {
-        letter-spacing: 1.36px;
-        text-transform: uppercase;
-		font-size: 2rem;
-    }
 
 	.title p {
 		text-align: center;
@@ -51,47 +41,6 @@ const tr = useTranslatedPath(lang);
 		line-height: 1.5;
 		margin:20px;
 	}
-
-	.title-container {
-        top: 0;
-  left: 0;
-        width: 100%;
-    position: relative;
-    text-align: center;
-    overflow: hidden;
-    /* padding: 38px 18px; */
-    box-sizing: border-box;
-    gap: 15px;
-	height: fit-content;
-	height: 100px;
-	}
-
-	.title-separator {
-        height: 5px;
-        width: 190px;
-        align-self: center;
-    }
-
-	.text-container {
-        position: relative;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        box-sizing: border-box;
-        gap: 15px;
-        align-items: center;
-        font-size: 2rem;
-
-    }
-
-	.text-container h1 {
-        margin: 0px;
-        width: fit-content;
-    }
 
 
 </style>

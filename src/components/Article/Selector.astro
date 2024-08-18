@@ -36,6 +36,13 @@ const formatUrl = (page: number) => {
 
 <style>
 /* Reset <select> defaults */
+  form {
+    left: 10%;
+    position: relative;
+    width: fit-content;
+    align-self: baseline;
+    margin-bottom: 80px;
+  }
 select {
   appearance: none;
   border: 0;
@@ -60,8 +67,6 @@ select::-ms-expand {
   overflow: hidden;
   color: white;
 
-  margin: 20px;
-  margin-bottom: 80px;
   /* // Select style */
   select {
     flex: 1;
@@ -90,6 +95,14 @@ select::-ms-expand {
   75% {
     transform: translatey(-5px);
   }
+}
+
+@media screen and (max-width: 768px) {
+  form {
+    align-self: center;
+    left: 0%;
+  }
+
 }
 
 </style>

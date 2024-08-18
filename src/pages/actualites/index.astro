@@ -1,20 +1,20 @@
 ---
 export const prerender = false;
 
-import PageWithDonateLayout from "../layouts/PageWithDonateLayout.astro";
+import PageWithDonateLayout from "../../layouts/PageWithDonateLayout.astro";
 
-import ArticleCard from "../components/Article/ArticleCard.astro";
+import ArticleCard from "../../components/Article/ArticleCard.astro";
 import type { CollectionEntry } from "astro:content";
-import { ARTICLES_PER_PAGE } from "../web-data/constants";
+import { ARTICLES_PER_PAGE } from "../../web-data/constants";
 import { getCollection } from "astro:content";
 import {
   getLangFromUrl,
   useTranslations,
   useTranslatedPath,
-} from "../web-data/i18n/utils";
-import Title from "../components/Title.astro";
-import Pagination from "../components/Article/Pagination.astro";
-import Selector from "../components/Article/Selector.astro";
+} from "../../web-data/i18n/utils";
+import Title from "../../components/Title.astro";
+import Pagination from "../../components/Article/Pagination.astro";
+import Selector from "../../components/Article/Selector.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -87,6 +87,15 @@ const url_format = (page: number) => {
   </div>
 
   <style>
+
+    .articles-selector {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin: 20px;
+    }
     h2 {
       margin: 80px;
     }

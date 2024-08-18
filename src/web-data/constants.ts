@@ -14,3 +14,10 @@ export const DONATION_FUND_DEF_LINK= "https://www.service-public.fr/particuliers
 
 export const CREATION_JO_NUM =2215;
 export const CREATION_JO_LINK = "https://www.journal-officiel.gouv.fr/pages/associations-detail-annonce/?q.id=id:201600042215";
+
+export const LAW_NUMBER = 2021-1109;
+export const LAW_DATE = "2021-08-09";
+
+export const PUBLICATION_LIMIT = 3;
+
+

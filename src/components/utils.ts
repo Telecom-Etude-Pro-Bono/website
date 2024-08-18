@@ -59,4 +59,11 @@ export const isSelected = (lang : keyof typeof ui, url: URL) => (pagename: strin
     return url.pathname.includes(useTranslatedPath(lang)(pagename));
 }
 
+export const getYear = (url: string) => {
+    const filename = url.split('#')[0].split('?')[0].split('/').pop();
+    const start = filename?.split('-')[0];
+    const end = filename?.split('-')[1].split('.')[0];
+    return {start, end};
+
+};
 
