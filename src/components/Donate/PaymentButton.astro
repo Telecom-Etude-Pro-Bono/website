@@ -1,0 +1,89 @@
+---
+import Icon from "../Icon.astro";
+
+
+---
+<div class="container">
+    <div class="button-container">
+        <img alt="Bouton payer avec HelloAsso" loading="lazy" src="https://cdn.helloasso.com/images/header_public/badge-helloasso.svg" title="" align="center" class="" caption="" height="auto" width="auto">
+        <div class="button-text">
+            <p>Payer avec <b>helloasso</b></p>
+        </div>
+    </div>
+    <div class="secure-payment">
+        <div class="secure-payement-img">
+        <Icon icon="lock" alt="cadenas"/>
+        </div>
+        <p>Paiement sécurisé</p>
+            <div class="secure-payement-img">
+            <Icon icon="cb" alt="cb"/>
+        </div>
+            <div class="secure-payement-img">
+            <Icon icon="visa" alt="visa"/>
+        </div>
+            <div class="secure-payement-img">
+            <Icon icon="mastercard" alt="mastercard"/>
+        </div>
+            <div class="secure-payement-img">
+            <Icon icon="pcj" alt="pcj"/>
+        </div>
+
+</div>
+
+<style>
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 10px;
+        gap:10px;
+        border-color: var(--information-color);
+        border-width: thin;
+        border-style: solid;
+        height:3rem;
+        overflow: hidden;
+
+    }
+
+    .button-container img {
+        width: 2rem;
+        height: 2rem;
+        margin-left: 7%;
+    }
+
+    .button-text {
+        background-color: var(--information-color);
+        color: white;
+        width:75%;
+        height: 100%;
+        display: flex;
+    align-items: center;
+    justify-content: center;
+
+    }
+
+    .button-text p {
+        text-align: center;
+        margin: 0%;
+        font-size: 1.2em;
+        font-weight: 600;
+    }
+
+    .button-text p b {
+        font-weight: 900;
+    }
+
+    .secure-payement-img {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    .secure-payment {
+        display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    }
+
+
+</style>

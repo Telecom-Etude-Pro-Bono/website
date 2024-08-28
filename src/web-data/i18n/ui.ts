@@ -87,7 +87,7 @@ export const ui = {
         'patron.individual.subtitle.2': "C'est nous aider à améliorer le monde de demain",
         'patron.individual.benefits.title' : "Vos avantages fiscaux",
         'patron.individual.benefits.text.headline' : "En tant que particulier :",
-        'patron.individual.benefits.text' : "vous bénéficiez d'une réduction d'impôt de 66 %, dans la limite de 20 % du revenu imposable.",
+        'patron.individual.benefits.text' : "Vous bénéficiez d'une réduction d'impôt de 66 %, dans la limite de 20 % du revenu imposable.",
         'patron.individual.benefits.text.example' : "Ex : un don de 200 € coûte seulement 68 € après déduction fiscale.",
         'patron.individual.benefits.isf.headline' : "Vous êtes assujetti à l'IFI (ex ISF) :",
         'patron.individual.benefits.isf' : "vous bénéficiez d'une réduction d'impôt de 75%, dans la limite de 50 000 € de réduction d'impôt par an.",
@@ -98,11 +98,10 @@ export const ui = {
         'patron.company.subtitle.1': "Soutenir Telecom Etude Pro Bono,",
         'patron.company.subtitle.2': "C'est soutenir l'innovation sociale et solidaire",
         'patron.company.benefits.title' : "Avantages Fiscaux pour les entreprises",
-        'patron.company.benefits.text' : "Vous bénéficiez d'une réduction d'impôt de 60 % dans la limite de 0,5 % du chiffre d'affaires HT de votre entreprise.",
+        'patron.company.benefits.text' : "Vous bénéficiez d'une réduction d'impôt de 60 % dans la limite de 5 ‰ du chiffre d'affaires HT de votre entreprise.",
         'patron.company.benefits.text.example' : "Ex : un don de 5 000 € coûte seulement 2 000 € après déduction fiscale.",
         'patron.publication.link': 'Consultez les publications',
         'patron.publication.text': 'de Telecom Etude Pro Bono.',
-
 
 
         /* ################ SUPPORT ###############*/
@@ -130,6 +129,12 @@ export const ui = {
 
         /* ################ DONATE ###############*/
         'donate.title': 'Faire un don',
+        'donate.monthly.1':"Vous serez prélevé tous les",
+        'donate.monthly.2': "de chaque mois.",
+        'donate.monthly.3': "Afin de valider votre carte bancaire, votre premier prélèvement sera effectué aujourd'hui. Le prochain aura lieu le",
+        'donate.monthly.4': "du mois suivant.",
+
+        'donate.reduction.title':"Don avec reduction d'impôts",
 
 
         /* ################ SEARCH ###############*/

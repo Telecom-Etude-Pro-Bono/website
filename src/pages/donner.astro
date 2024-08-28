@@ -1,0 +1,401 @@
+---
+import DonateCompany from "../components/Donate/DonateCompany.astro";
+import DonateIndividual from "../components/Donate/DonateIndividual.astro";
+import PaymentButton from "../components/Donate/PaymentButton.astro";
+import Icon from "../components/Icon.astro";
+import Subsubtitle from "../components/Subsubtitle.astro";
+import Subtitle from "../components/Subtitle.astro";
+import Title from "../components/Title.astro";
+import DonationSectionLayout from "../layouts/DonationSectionLayout.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+import { DONATION_ONCE_AMOUNTS, DONATION_MONTHLY_AMOUNTS, DONATION_MAX_DAY, DONATION_MIN_DAY } from "../web-data/constants";
+
+
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../web-data/i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+
+---
+<PageLayout title={t("page.donate")}>
+    <Title title={t("donate.title")} height="50vh" img="/images/title/bg.jpg" />
+    <form class="donation-container">
+    <DonationSectionLayout title="Donner" icon="heart">
+        <div class="big-selector bold">
+            <input type="radio" id="donation-type-1" name="donation-type" value="once" checked />
+            <label for="donation-type-1">Don ponctuel</label>
+            <input type="radio" id="donation-type-2" name="donation-type" value="monthly" />
+            <label for="donation-type-2">Don mensuel</label>
+        </div>
+        <div id="amount-once" class="amount bold">
+
+            {DONATION_ONCE_AMOUNTS.map((amount) => (
+                    <div>
+                    <input type="radio" id={`amount-${amount}`} name="amount" value={amount} />
+                    <label for={`amount-${amount}`}>{amount} €</label>
+                </div>
+            ))}
+            </div>
+            <div id="amount-monthly" class="amount bold">
+
+            {DONATION_MONTHLY_AMOUNTS.map((amount) => (
+                <div>
+                    <input type="radio" id={`amount-${amount}`} name="amount" value={amount} />
+                    <label for={`amount-${amount}`}>{amount} €</label>
+                </div>
+            ))}
+        </div>
+        <div class="custom-amount-container">
+        <label for="custom-amount">Autre Montant</label>
+        <div>
+        <input type="number" id="custom-amount" name="custom-amount" placeholder="--,--" class="donate-field"/>
+        <label for="custom-amount">€</label>
+        </div>
+    </div>
+        <div class="reduction green-div">
+            <p>Votre don ne coutera que <b id="reduction-amount">24€</b> après déduction fiscale</p>
+        </div>
+        <div class="montly-day-selector-container green-div">
+            <label for="monthly-day-selector">{t('donate.monthly.1')}</label>
+            <input class="donate-field" type="number" id="monthly-day-selector" name="monthly-day-selector" value="5" min={DONATION_MIN_DAY} max={DONATION_MAX_DAY} />
+            <label for="monthly-day-selector">{t('donate.monthly.2')}</label>
+            <p>{t('donate.monthly.3')} <b id="monthly-day">5</b> {t('donate.monthly.4')}</p>
+        </div>
+
+        <div class="taxation-container">
+            <Subsubtitle subsubtitle={t('donate.reduction.title')} align="left"/>
+            <p class="center-div">Votre don ouvre droit à une réduction fiscale car il remplit les conditions générales prévues aux articles 200 et 238 bis du code général des impôts.</p>
+            <div class="reduction green-div">
+                <p>Votre don ne coutera que <b id="reduction-amount">24€</b> après déduction fiscale</p>
+            </div>
+            <div class="legal-selector big-selector bold">
+                <input type="radio" id="entity-selector-1" name="entity-selector" value="1" checked />
+                <label for="entity-selector-1">Particulier</label>
+                <input type="radio" id="entity-selector-2" name="entity-selector" value="2" />
+                <label for="entity-selector-2">Entreprise</label>
+            </div>
+            <div class="taxation-legal green-div">
+                <p id="individual-legal">{t("patron.individual.benefits.text")}</p>
+                <p id="company-legal">{t("patron.company.benefits.text")}</p>
+            </div>
+        </div>
+
+    </DonationSectionLayout>
+
+    <DonationSectionLayout title="Coordonnées" icon="user">
+        <div class="checkbox-container">
+        <input type="checkbox" id="is-company" name="is-company" />
+        <label for="is-company">Donner en tant qu'organisation</label>
+    </div>
+        <div id="individual-contact">
+            <DonateIndividual>
+
+        </div>
+        <div id="company-contact">
+            <DonateCompany>
+        </div>
+
+    </DonationSectionLayout>
+    <DonationSectionLayout title="RECAP" icon="check">
+        <table>
+            <thead>
+                <tr>
+                    <th>Selection</th>
+                    <th>Valeur</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>Don à Telecom Etude Pro Bono</td>
+                <td>25€</td>
+            </tr>
+            <tr>
+                <td>Mensualités</td>
+                <td>Non</td>
+            </tr>
+            <tr>
+                <td>Réduction d'imposition</td>
+            <td>7€</td>
+            </tr>
+        </table>
+            <div class="checkbox-container">
+                <input type="checkbox" id="newsletter" name="newsletter">
+                <label for="newsletter">S'abonner à la newsletter</label>
+            </div>
+            <div class="checkbox-container">
+            <input type="checkbox" id="donators-wall" name="donators-wall">
+            <label for="donators-wall">Accepter d'être affiché sur le mur des donateurs</label>
+        </div>
+
+        <button id="payment-button"type="submit"><PaymentButton/></button>
+
+        <div class="helloasso-why">
+            <Subsubtitle subsubtitle="Pourquoi passer par HelloAsso ?" align="left"/>
+            <p>Nous avons choisi HelloAsso pour réaliser votre paiement car ils prennent en charche les frais de transaction pour soutenir les associations.
+                <b>100% de votre paiement ira bien à notre fond de dotation</b>
+                Vous pouvez aider HelloAsso dans sa mission en laissant une contribution volontaire et ainsi participer à leur seule source de revenus.
+            </p>
+        </div>
+
+        <div class="secure-payment">
+            <Subsubtitle subsubtitle="Plateforme de paiement 100% sécurisée" align="left"/>
+            <p>Toutes les informations bancaires pour traiter ce paiement sont totalement sécurisées.
+                Grâce au cryptage SSL de vos données bancaires,
+                vous êtes assurés de la fiabilité de vos transactions sur HelloAsso.</p>
+                <div class="secure-payement-icons">
+                    <div class="secure-payement-img">
+                        <Icon icon="cb" alt="cb"/>
+                    </div>
+                        <div class="secure-payement-img">
+                        <Icon icon="visa" alt="visa"/>
+                    </div>
+                        <div class="secure-payement-img">
+                        <Icon icon="mastercard" alt="mastercard"/>
+                    </div>
+                        <div class="secure-payement-img">
+                        <Icon icon="pcj" alt="pcj"/>
+                    </div>
+
+        </div>
+    </DonationSectionLayout>
+    </form>
+
+
+</PageLayout>
+
+<script></script>
+
+<style>
+
+.secure-payement-img {
+    width: 3.5rem;
+    height: 3.5rem;
+    }
+
+    .secure-payement-icons{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    #payment-button{
+        align-self: center;
+    }
+ button{
+    background-color: white;
+    border:none;
+    padding: 0px;
+ }
+
+.checkbox-container{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+input[type="checkbox"]{
+    accent-color: var(--information-color);
+}
+
+.checkbox-container input{
+
+    width: 0.875rem;
+    height: 0.875rem;
+}
+
+    table{
+    align-self: center;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.875rem;
+    /* font-family: sans-serif; */
+    /* min-width: 400px; */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1)
+    }
+
+    table thead tr {
+    background-color: var(--information-color);
+    color: #ffffff;
+    text-align: left;
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+table tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+table tr:last-of-type {
+    border-bottom: 2px solid var(--information-color);
+}
+
+    .multi-panel{
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        width:33%;
+
+    }
+
+    .multi-panel section{
+        width:100%
+    }
+
+    .legal-selector{
+        margin-bottom: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .reduction, montly-day-selector-container{
+        padding:1rem;
+        text-align: justify;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    #reduction-amount {
+        color: var(--completed-color);
+    }
+    .donation-container{
+        max-width: 100%;
+        display: flex;
+
+    padding: 50px;
+    }
+
+    .amount {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-column-gap: .75rem;
+    grid-row-gap: .75rem;
+    justify-content: space-evenly;
+    }
+
+    .amount input{
+        appearance: none;
+    }
+
+    .amount label{
+    border: .0625rem solid transparent;
+    border-radius: .1875rem;
+    cursor: pointer;
+    display: inline-flex;
+    transition: color, background-color, border-color, -webkit-box-shadow;
+    transition: color, background-color, border-color, box-shadow, -webkit-box-shadow;
+    transition-duration: .2s;
+    transition-timing-function: ease;
+    font-size: .875rem;
+    border-color: black;
+    padding: 1rem;
+    width: 100%;
+    justify-content: center;
+
+}
+
+    .amount input:checked+label{
+        background-color: var(--information-color);
+        color: white;
+    }
+
+    .amount input:focus+label{
+        outline: auto;
+        background-color: var(--information-color);
+        color: white;
+        outline-color: black;
+        /* border-width: 3px; */
+    }
+
+
+
+    .big-selector {
+        width: 100%;
+    display: flex;
+    }
+
+    .big-selector input{
+        appearance: none;
+        /* display: none; */
+    }
+
+    .big-selector label{
+    border: .0625rem solid transparent;
+    border-radius: .1875rem;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    transition: color, background-color, border-color, -webkit-box-shadow;
+    transition: color, background-color, border-color, box-shadow, -webkit-box-shadow;
+    transition-duration: .2s;
+    transition-timing-function: ease;
+    font-size: .875rem;
+    border-color: black;
+    padding: 1rem;
+    width:100%;
+}
+
+    .big-selector input:checked+label{
+        background-color: var(--information-color);
+        color: white;
+    }
+
+    .big-selector input:focus+label{
+        outline: auto;
+        background-color: var(--information-color);
+        color: white;
+        outline-color: black;
+
+    }
+
+    .green-div{
+        padding: 1rem;
+    }
+
+    .custom-amount-container{
+        width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    }
+
+    #custom-amount{
+        width:8rem;
+        margin: 0 0.5rem;
+        text-align: center;
+        appearance: none;
+    }
+    #monthly-day-selector{
+        width: 3.5rem;
+    margin: 0 0.5rem;
+    text-align: center;
+    }
+
+    #amount-monthly{
+        display: none;
+    }
+    #company-contact{
+        display: none;
+    }
+
+    #company-legal{
+        display: none;
+    }
+
+    .center-div{
+        padding: 1rem;
+    }
+
+
+</style>

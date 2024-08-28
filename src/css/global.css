@@ -24,7 +24,8 @@ body {
     margin-left: 0px;
     margin-right: 0px;
     margin-top: 0px;
-    font-size: 16px;
+    line-height: 1.5;
+    /* font-size: .875rem; */
 
 
 }
@@ -38,20 +39,20 @@ video {
 h2 {
     margin-top: 10px;
     margin-bottom: 10px;
-    font-size: 1.7em;
+    /* font-size: 1.7rem; */
 }
 
 h3 {
     margin-top: 10px;
     margin-bottom: 10px;
-    font-size: 1.5em;
+    /* font-size: 1.5rem; */
 
 
 }
 h5 {
     margin-top: 10px;
     margin-bottom: 10px;
-    font-size: 20px;
+    /* font-size: 20px; */
 
 
 }
@@ -59,13 +60,13 @@ h5 {
 h6 {
     margin-top: 10px;
     margin-bottom: 10px;
-    font-size: 16px;
+    /* font-size: 16px; */
 
 }
 
 p {
     margin-bottom: 10px;
-    font-size: 18px;
+    /* font-size: 18px; */
 }
 
 a {
@@ -118,6 +119,42 @@ code {
     height: 3.5px;
 }
 
+.donate-field-container {
+    display: flex;
+flex-direction: column;
+align-items: flex-start;
+font-size: 1rem;
+margin-bottom: 1rem;
+gap:1rem;
+font-weight: 600;
+border-color: var(--information-color);
+width: 100%;
+}
+
+.donate-field, .donate-field-container input {
+    border: .0625rem solid;
+    border-radius: .1875rem;
+    /* -webkit-box-sizing: border-box; */
+    box-sizing: border-box;
+    color: var(--ha-color-text);
+    font-size: 1rem;
+    height: 100%;
+    min-height: 2.625rem;
+    padding: 0 1rem;
+    /* -webkit-transition: border-color, color, -webkit-box-shadow; */
+    /* transition: border-color, color, -webkit-box-shadow; */
+    /* transition: border-color, box-shadow, color; */
+    transition: border-color, box-shadow, color, -webkit-box-shadow;
+    /* -webkit-transition-duration: .2s; */
+    transition-duration: .2s;
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease;
+    width: 100%;
+    border-color: #000000;
+
+    outline-color: var(--ongoing-color);
+}
+
 .w-nav {
     width: 100%;
 }
@@ -129,7 +166,7 @@ code {
 }
 
 .under-header{
-    padding-top: 100px;
+    padding-top: 80px;
 }
 
 .green-div{
@@ -148,3 +185,18 @@ code {
         padding-top: 80px;
     }
  }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+p {
+    text-align: justify;
+}

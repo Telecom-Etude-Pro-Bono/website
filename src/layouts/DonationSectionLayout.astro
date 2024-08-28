@@ -1,0 +1,60 @@
+---
+import Icon from "../components/Icon.astro";
+
+const {title, icon} = Astro.props;
+interface Props {
+    title: string;
+    icon: string;
+}
+
+---
+
+<section class="donation-section">
+
+        <div class="section-header">
+            <div class="icon"><Icon name={icon} /></div>
+            <h2 class="section-title">{title}</h2>
+        </div>
+        <div class="section-content">
+            <slot />
+        </div>
+
+</section>
+
+<style>
+    .icon{
+        height: 1.7em;
+        width: 1.7em;
+    }
+    .section-content{
+        display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 1.5rem;
+    gap: 2.5rem;
+    height: fit-content;
+    }
+    .donation-section {
+        margin-top: 1.5rem;
+    min-height: 20rem;
+    overflow: hidden;
+    max-width: 33%;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+    border-radius: .375rem;
+    height: fit-content;
+
+    }
+
+    .section-header{
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background-color: var(--bg-div);
+    }
+
+
+</style>
