@@ -22,7 +22,9 @@ export const PUBLICATION_LIMIT = 3;
 
 export const DONATION_ONCE_AMOUNTS = [10, 30, 50, 100, 200, 500];
 export const DONATION_MONTHLY_AMOUNTS = [10, 15, 20, 25, 30, 50];
-export const DONATION_MIN_DAY = 0
+export const DONATION_MIN_DAY = 1
 export const DONATION_MAX_DAY = 28
+export const DONATION_MIN = 1
+export const DONATION_MAX = 9999
 
 

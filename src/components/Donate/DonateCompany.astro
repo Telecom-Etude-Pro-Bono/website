@@ -1,23 +1,30 @@
 ---
 import DonateIndividual from "./DonateIndividual.astro";
+import {
+    getLangFromUrl,
+    useTranslatedPath,
+    useTranslations,
+} from "../../web-data/i18n/utils";
 
+
+const lang = getLangFromUrl(Astro.url);
+const tr = useTranslatedPath(lang);
+const t = useTranslations(lang);
 
 ---
 
 <div class="container">
     <div class="donate-field-container">
-    <label for="social-reason" class="uppercase bold">Raison sociale</label>
+    <label for="social-reason" class="uppercase bold">{t('donate.form.social-reason')} *</label>
+    <input class="company-input" type="text" id="social-reason" name="social-reason"/>
 </div>
 <div class="donate-field-container">
-    <input type="text" id="social-reason" name="social-reason" />
-</div>
-<div class="donate-field-container"></div>
-    <label for="siret" class="uppercase bold">SIREN</label>
-    <input type="number" id="siret" name="siren" />
+    <label for="siret" class="uppercase bold">{t('donate.form.siren')} *</label>
+    <input class="company-input" type="number" id="siret" name="siren"/>
     </div>
     <div class="donate-field-container">
-    <label for="legal-status" class="uppercase bold">Statut juridique</label>
-    <input list="legal-status" />
+    <label for="legal-status" class="uppercase bold">{t('donate.form.legal-status')} *</label>
+    <input list="legal-status" class="company-input"/>
     </div>
 
     <DonateIndividual/>

@@ -60,6 +60,9 @@ const imgHeight = height || "auto";
         letter-spacing: 1.36px;
         text-transform: uppercase;
         white-space: pre-wrap;
+        padding-left: 2rem;
+        padding-right:2rem;
+        font-size: 3rem;
     }
     .title-separator {
         height: 5px;
@@ -68,9 +71,9 @@ const imgHeight = height || "auto";
     }
     .text-container {
         position: relative;
-        top: 50%;
+        /* top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%); */
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -79,7 +82,7 @@ const imgHeight = height || "auto";
         box-sizing: border-box;
         gap: 15px;
         align-items: center;
-        font-size: 2rem;
+        height: var(--imgHeight);
     }
 
     @media screen and (max-width: 810px) {

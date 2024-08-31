@@ -3,7 +3,7 @@ import Icon from "../Icon.astro";
 
 
 ---
-<div class="container">
+<div class="payment-button-super-container">
     <div class="button-container">
         <img alt="Bouton payer avec HelloAsso" loading="lazy" src="https://cdn.helloasso.com/images/header_public/badge-helloasso.svg" title="" align="center" class="" caption="" height="auto" width="auto">
         <div class="button-text">
@@ -31,6 +31,13 @@ import Icon from "../Icon.astro";
 </div>
 
 <style>
+
+    .payment-button-super-container{
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    }
     .button-container {
         display: flex;
         justify-content: space-between;
@@ -42,6 +49,7 @@ import Icon from "../Icon.astro";
         border-style: solid;
         height:3rem;
         overflow: hidden;
+        width:100%;
 
     }
 
@@ -83,6 +91,31 @@ import Icon from "../Icon.astro";
     gap: 0.5rem;
     flex-wrap: nowrap;
     flex-direction: row;
+    }
+
+    @media screen and (max-width:1215px){
+        .secure-payement-img {
+        width: 1rem;
+        height: 1rem;
+    }
+    .secure-payment {
+        display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    }
+
+    .secure-payement p {
+        font-size:0.875rem;
+    }
+    .button-text p {
+        text-align: center;
+        margin: 0%;
+        font-size: 1em;
+        font-weight: 600;
+    }
+
     }
 
 

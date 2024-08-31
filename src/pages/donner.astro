@@ -1,4 +1,5 @@
 ---
+// export const prerender = false;
 import DonateCompany from "../components/Donate/DonateCompany.astro";
 import DonateIndividual from "../components/Donate/DonateIndividual.astro";
 import PaymentButton from "../components/Donate/PaymentButton.astro";
@@ -8,7 +9,7 @@ import Subtitle from "../components/Subtitle.astro";
 import Title from "../components/Title.astro";
 import DonationSectionLayout from "../layouts/DonationSectionLayout.astro";
 import PageLayout from "../layouts/PageLayout.astro";
-import { DONATION_ONCE_AMOUNTS, DONATION_MONTHLY_AMOUNTS, DONATION_MAX_DAY, DONATION_MIN_DAY } from "../web-data/constants";
+import { DONATION_ONCE_AMOUNTS, DONATION_MONTHLY_AMOUNTS, DONATION_MAX_DAY, DONATION_MIN_DAY, DONATION_MIN, DONATION_MAX } from "../web-data/constants";
 
 
 import {
@@ -27,56 +28,56 @@ const tr = useTranslatedPath(lang);
     <DonationSectionLayout title="Donner" icon="heart">
         <div class="big-selector bold">
             <input type="radio" id="donation-type-1" name="donation-type" value="once" checked />
-            <label for="donation-type-1">Don ponctuel</label>
-            <input type="radio" id="donation-type-2" name="donation-type" value="monthly" />
-            <label for="donation-type-2">Don mensuel</label>
+            <label for="donation-type-1">{t('donate.once')}</label>
+            <input type="radio" id="donation-type-2" name="donation-type" value="monthly"/>
+            <label for="donation-type-2">{t('donate.monthly')}</label>
         </div>
-        <div id="amount-once" class="amount bold">
+        <div id="amount-once" class="amount-container bold">
 
             {DONATION_ONCE_AMOUNTS.map((amount) => (
                     <div>
-                    <input type="radio" id={`amount-${amount}`} name="amount" value={amount} />
+                    <input type="radio" class="amount" id={`amount-${amount}`} name="amount-once" value={amount} />
                     <label for={`amount-${amount}`}>{amount} €</label>
                 </div>
             ))}
             </div>
-            <div id="amount-monthly" class="amount bold">
+            <div id="amount-monthly" class="amount-container bold">
 
             {DONATION_MONTHLY_AMOUNTS.map((amount) => (
                 <div>
-                    <input type="radio" id={`amount-${amount}`} name="amount" value={amount} />
+                    <input type="radio" class="amount" id={`amount-${amount}`} name="amount-monthly" value={amount} />
                     <label for={`amount-${amount}`}>{amount} €</label>
                 </div>
             ))}
         </div>
         <div class="custom-amount-container">
-        <label for="custom-amount">Autre Montant</label>
+        <label for="custom-amount">{t('donate.custom-amount')}</label>
         <div>
-        <input type="number" id="custom-amount" name="custom-amount" placeholder="--,--" class="donate-field"/>
+        <input type="number" id="custom-amount" name="custom-amount" placeholder="--,--" class="donate-field" min={DONATION_MIN} max={DONATION_MAX}/>
         <label for="custom-amount">€</label>
         </div>
     </div>
         <div class="reduction green-div">
-            <p>Votre don ne coutera que <b id="reduction-amount">24€</b> après déduction fiscale</p>
+            <p>{t('donate.reduction.1')}<b class="reduction-amount"></b> {t('donate.reduction.2')}</p>
         </div>
-        <div class="montly-day-selector-container green-div">
+        <div id="monthly-day-selector-container" class="montly-day-selector-container green-div">
             <label for="monthly-day-selector">{t('donate.monthly.1')}</label>
             <input class="donate-field" type="number" id="monthly-day-selector" name="monthly-day-selector" value="5" min={DONATION_MIN_DAY} max={DONATION_MAX_DAY} />
             <label for="monthly-day-selector">{t('donate.monthly.2')}</label>
-            <p>{t('donate.monthly.3')} <b id="monthly-day">5</b> {t('donate.monthly.4')}</p>
+            <p>{t('donate.monthly.3')} <b id="monthly-day"></b> {t('donate.monthly.4')}</p>
         </div>
 
         <div class="taxation-container">
             <Subsubtitle subsubtitle={t('donate.reduction.title')} align="left"/>
-            <p class="center-div">Votre don ouvre droit à une réduction fiscale car il remplit les conditions générales prévues aux articles 200 et 238 bis du code général des impôts.</p>
+            <p class="center-div">{t('donate.reduction.legal')}</p>
             <div class="reduction green-div">
-                <p>Votre don ne coutera que <b id="reduction-amount">24€</b> après déduction fiscale</p>
+                <p>{t('donate.reduction.1')}<b class="reduction-amount"></b> {t('donate.reduction.2')}</p>
             </div>
             <div class="legal-selector big-selector bold">
                 <input type="radio" id="entity-selector-1" name="entity-selector" value="1" checked />
-                <label for="entity-selector-1">Particulier</label>
+                <label for="entity-selector-1">{t('donate.individual')}</label>
                 <input type="radio" id="entity-selector-2" name="entity-selector" value="2" />
-                <label for="entity-selector-2">Entreprise</label>
+                <label for="entity-selector-2">{t('donate.company')}</label>
             </div>
             <div class="taxation-legal green-div">
                 <p id="individual-legal">{t("patron.individual.benefits.text")}</p>
@@ -86,65 +87,66 @@ const tr = useTranslatedPath(lang);
 
     </DonationSectionLayout>
 
-    <DonationSectionLayout title="Coordonnées" icon="user">
+    <DonationSectionLayout title="Coordonnées" icon="list">
         <div class="checkbox-container">
         <input type="checkbox" id="is-company" name="is-company" />
-        <label for="is-company">Donner en tant qu'organisation</label>
+        <label for="is-company">{t('donate.as-compnay')}</label>
     </div>
-        <div id="individual-contact">
+        <div id="individual-contact" class="contact">
             <DonateIndividual>
 
         </div>
-        <div id="company-contact">
+        <div id="company-contact" class="contact">
             <DonateCompany>
         </div>
 
     </DonationSectionLayout>
-    <DonationSectionLayout title="RECAP" icon="check">
+    <DonationSectionLayout title="RECAP" icon="checkbox">
         <table>
             <thead>
                 <tr>
-                    <th>Selection</th>
-                    <th>Valeur</th>
+                    <th>{t('donate.recap.select')}</th>
+                    <th>{t('donate.recap.value')}</th>
                 </tr>
             </thead>
             <tr>
-                <td>Don à Telecom Etude Pro Bono</td>
-                <td>25€</td>
+                <td>{t('donate.recap.tepb')}</td>
+                <td id="recap-tepb">€</td>
             </tr>
             <tr>
-                <td>Mensualités</td>
-                <td>Non</td>
+                <td>{t('donate.recap.monthly')}</td>
+                <td id="recap-monthly">Non</td>
             </tr>
+            <td>{t('donate.recap.reduction')}</td>
+            <td id="recap-reduction"></td>
+            </tr>
+            <tr id="recap-day-line">
+                <td>{t('donate.recap.day')}</td>
+                <td id="recap-day"></td>
             <tr>
-                <td>Réduction d'imposition</td>
-            <td>7€</td>
-            </tr>
         </table>
             <div class="checkbox-container">
                 <input type="checkbox" id="newsletter" name="newsletter">
-                <label for="newsletter">S'abonner à la newsletter</label>
+                <label for="newsletter">{t('donate.newsletter')}</label>
             </div>
             <div class="checkbox-container">
             <input type="checkbox" id="donators-wall" name="donators-wall">
-            <label for="donators-wall">Accepter d'être affiché sur le mur des donateurs</label>
+            <label for="donators-wall">{t('donate.wall')}</label>
         </div>
 
         <button id="payment-button"type="submit"><PaymentButton/></button>
 
         <div class="helloasso-why">
             <Subsubtitle subsubtitle="Pourquoi passer par HelloAsso ?" align="left"/>
-            <p>Nous avons choisi HelloAsso pour réaliser votre paiement car ils prennent en charche les frais de transaction pour soutenir les associations.
-                <b>100% de votre paiement ira bien à notre fond de dotation</b>
-                Vous pouvez aider HelloAsso dans sa mission en laissant une contribution volontaire et ainsi participer à leur seule source de revenus.
+            <p>{t('donate.helloasso.1')}</p>
+                <b>{t('donate.helloasso.2')}</b>
+                {t('donate.helloasso.3')}
             </p>
         </div>
 
         <div class="secure-payment">
             <Subsubtitle subsubtitle="Plateforme de paiement 100% sécurisée" align="left"/>
-            <p>Toutes les informations bancaires pour traiter ce paiement sont totalement sécurisées.
-                Grâce au cryptage SSL de vos données bancaires,
-                vous êtes assurés de la fiabilité de vos transactions sur HelloAsso.</p>
+            <p>{t('donate.secure-payment')}</p>
                 <div class="secure-payement-icons">
                     <div class="secure-payement-img">
                         <Icon icon="cb" alt="cb"/>
@@ -166,9 +168,167 @@ const tr = useTranslatedPath(lang);
 
 </PageLayout>
 
-<script></script>
+<script>
+    let donationType = "once";
+    let donorsType = "individual";
+    let reductionRate = 0.66;
+    let donationAmount = 30;
+    let donationDay = 5;
+    let reduction = 24;
+    const amountOnce = document.getElementById("amount-once");
+    const amountMonthly = document.getElementById("amount-monthly");
+    const monthlyDaySelectorContainer = document.getElementById("monthly-day-selector-container");
+    const customAmount = document.getElementById("custom-amount");
+    const reductionAmounts = document.getElementsByClassName("reduction-amount");
+    const individualLegal = document.getElementById("individual-legal");
+    const companyLegal = document.getElementById("company-legal");
+    const isCompany = document.getElementById("is-company");
+    const companyButton = document.getElementById("entity-selector-2");
+    const individualButton = document.getElementById("entity-selector-1");
+    const recapTepb = document.getElementById("recap-tepb");
+    const recapMonthly = document.getElementById("recap-monthly");
+    const recapReduction = document.getElementById("recap-reduction");
+    const recapDay = document.getElementById("recap-day");
+    const recapDayLine = document.getElementById("recap-day-line");
+    const companyContact = document.getElementById("company-contact");
+    const individualContact = document.getElementById("individual-contact");
+    const companyInput = document.getElementsByClassName("company-input");
+
+
+
+    function selectMonth(value) {
+        donationType = value;
+        if (value === "once") {
+            amountOnce.style.display = "grid";
+            amountMonthly.style.display = "none";
+            monthlyDaySelectorContainer.style.display = "none";
+            recapMonthly.textContent = "Non";
+            recapDayLine.style.display = "none";
+        } else {
+            donationType = "monthly";
+            amountOnce.style.display = "none";
+            amountMonthly.style.display = "grid";
+            monthlyDaySelectorContainer.style.display = "block";
+            recapMonthly.textContent = "Oui";
+            recapDayLine.style.display = "table-row";
+        }
+
+       selectAmount(customAmount.value);
+
+    }
+
+    function selectAmount(value) {
+        donationAmount = value;
+        reduction = donationAmount * reductionRate;
+        const left = donationAmount - reduction;
+        const formattedLeft = Number.isInteger(left) ? left.toString() : left.toFixed(2);
+        for (let reductionAmount of reductionAmounts) {
+            reductionAmount.textContent = formattedLeft + "€";
+        }
+        customAmount.value = donationAmount;
+        for (let amount of document.getElementsByClassName("amount")) {
+            console.log(Number(amount.value), Number(customAmount.value));
+            if (Number(amount.value) == Number(customAmount.value)) {
+                amount.checked = true;
+            } else {
+                amount.checked = false;
+            }
+        }
+        const formattedReduction = Number.isInteger(reduction) ? reduction.toString() : reduction.toFixed(2);
+        recapTepb.textContent = donationAmount + "€";
+        recapReduction.textContent = formattedReduction + "€";
+    }
+
+    function selectDonorsType(value) {
+        if (value === "individual") {
+            reductionRate = 0.66;
+            donorsType = "individual";
+            individualLegal.style.display = "block";
+            companyLegal.style.display = "none";
+            selectAmount(customAmount.value);
+            isCompany.checked = false;
+            companyButton.checked = false;
+            individualButton.checked = true;
+            companyContact.style.display = "none";
+            individualContact.style.display = "block";
+            for (let input of companyInput) {
+                input.required = false;
+            }
+
+
+        }
+        else {
+            reductionRate = 0.6;
+            donorsType = "company";
+            individualLegal.style.display = "none";
+            companyLegal.style.display = "block";
+            selectAmount(customAmount.value);
+            isCompany.checked = true;
+            individualButton.checked = false;
+            companyButton.checked = true;
+            companyContact.style.display = "block";
+            individualContact.style.display = "none";
+            for (let input of companyInput) {
+                input.required = true;
+            }
+
+        }
+    }
+
+
+    function selectDay(value) {
+        donationDay = value;
+        document.getElementById("monthly-day").textContent = donationDay;
+        recapDay.textContent = donationDay;
+    }
+
+    document.getElementById("monthly-day-selector")?.addEventListener("input", () => selectDay(document.getElementById("monthly-day-selector").value));
+    document.getElementById("donation-type-1")?.addEventListener("click", () => selectMonth("once"));
+    document.getElementById("donation-type-2")?.addEventListener("click", () => selectMonth("monthly"));
+    individualButton.addEventListener("click", () => selectDonorsType("individual"));
+    companyButton.addEventListener("click", () => selectDonorsType("company"));
+    isCompany.addEventListener("click", () => selectDonorsType(isCompany.checked ? "company" : "individual"));
+    for (let amount of document.getElementsByClassName("amount")) {
+        amount.addEventListener("click", () => selectAmount(amount.value));
+    };
+
+    customAmount.addEventListener("input", () => {
+        var nonNumReg = /[^0-9]/g;
+        customAmount.value = customAmount.value.replace(nonNumReg, '');
+        selectAmount(customAmount.value);
+
+
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+      const customAmountInput = document.getElementById('custom-amount');
+      customAmountInput.addEventListener('keydown', function(event) {
+          if (event.key === 'Enter') {
+              event.preventDefault();
+          }
+      });
+  });
+
+  selectAmount(donationAmount);
+  selectMonth(donationType);
+  selectDonorsType(donorsType);
+  selectDay(donationDay);
+</script>
+
 
 <style>
+
+    .contact{
+        align-self: center;
+    }
+
+    #amount-monthly{
+        display: none;
+    }
+
+    #monthly-day-selector-container{
+        display: none;
+    }
 
 .secure-payement-img {
     width: 3.5rem;
@@ -180,10 +340,12 @@ const tr = useTranslatedPath(lang);
         justify-content: center;
         align-items: center;
         gap: 1rem;
+        flex-wrap: wrap;
     }
 
     #payment-button{
         align-self: center;
+        max-width: 270px;
     }
  button{
     background-color: white;
@@ -275,7 +437,7 @@ table tr:last-of-type {
     padding: 50px;
     }
 
-    .amount {
+    .amount-container {
     width: 100%;
     display: grid;
     grid-template-columns: auto auto auto;
@@ -284,11 +446,11 @@ table tr:last-of-type {
     justify-content: space-evenly;
     }
 
-    .amount input{
+    .amount-container input{
         appearance: none;
     }
 
-    .amount label{
+    .amount-container label{
     border: .0625rem solid transparent;
     border-radius: .1875rem;
     cursor: pointer;
@@ -305,12 +467,12 @@ table tr:last-of-type {
 
 }
 
-    .amount input:checked+label{
+    .amount-container input:checked+label{
         background-color: var(--information-color);
         color: white;
     }
 
-    .amount input:focus+label{
+    .amount-container input:focus+label{
         outline: auto;
         background-color: var(--information-color);
         color: white;
@@ -382,19 +544,23 @@ table tr:last-of-type {
     text-align: center;
     }
 
-    #amount-monthly{
-        display: none;
-    }
-    #company-contact{
-        display: none;
-    }
 
-    #company-legal{
-        display: none;
-    }
 
     .center-div{
         padding: 1rem;
+    }
+
+    @media screen and (max-width:1215px) {
+        #payment-button{
+            width:100%
+        }
+    }
+    @media screen and (max-width: 1140px) {
+        .donation-container{
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0%
+        }
     }
 
 
