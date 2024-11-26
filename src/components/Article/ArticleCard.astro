@@ -4,37 +4,37 @@ interface Props {
   inCarousel?: boolean;
 }
 
-import {mdToDate, typeToString } from "../utils";
+import { mdToDate, typeToString } from "../utils";
 import type { CollectionEntry } from "astro:content";
 
 const { article } = Astro.props;
 const inCarousel = Astro.props.inCarousel || false;
 
-
-const typeColor = "var(--"+article.data.type + "-color)";
+const typeColor = "var(--" + article.data.type + "-color)";
 
 import {
-    getLangFromUrl,
-    useTranslatedPath,
-    useTranslations,
+  getLangFromUrl,
+  useTranslatedPath,
+  useTranslations,
 } from "../../web-data/i18n/utils";
-
 
 const lang = getLangFromUrl(Astro.url);
 const tr = useTranslatedPath(lang);
 const t = useTranslations(lang);
 
-const path =
-  tr("blog") + "/" + article.slug;
-
+const path = tr("blog") + "/" + article.slug;
 
 const date = mdToDate(lang, article.data.pubDate);
 ---
 
-
-<div class="article-card">
-  <a href={path}>
-    <div class="article-card-img"></div>
+<a href={path}>
+  <div class="article-card">
+    <div class="article-card-img">
+      <img src={"/public/images/blog/"+article.data.image} alt={article.data.title} />
+      <div class="short-horizontal-separator">
+        <div class="short-horizontal-separator-child"></div>
+      </div>
+    </div>
     <div class="article-card-date">
       <b class="b">{date.day}</b>
       <b class="month-year">
@@ -45,33 +45,32 @@ const date = mdToDate(lang, article.data.pubDate);
       </b>
     </div>
     <div class="article-card-type">
-      <b class="article-card-type-text letter-space">{t("blog."+article.data.type)}</b>
+      <b class="article-card-type-text letter-space"
+        >{t("blog." + article.data.type)}</b
+      >
     </div>
-  </a>
 
-  <div class="article-card-title-parent">
-    <div class="article-card-title">
-      {
-        inCarousel ? (
-          <h3 class="article-card-title-text">{article.data.title}</h3>
-        ) : (
-          <h2 class="article-card-title-text">{article.data.title}</h2>
-        )
-      }
+    <div class="article-card-title-parent">
+      <div class="article-card-title">
+        {
+          inCarousel ? (
+            <h3 class="article-card-title-text">{article.data.title}</h3>
+          ) : (
+            <h2 class="article-card-title-text">{article.data.title}</h2>
+          )
+        }
+      </div>
+      <div class="article-card-description">
+        <p>
+          {article.data.description}
+        </p>
+      </div>
     </div>
-    <div class="article-card-description">
-      <p>
-        {article.data.description}
-      </p>
-    </div>
+
+    <div class="separator"></div>
   </div>
-
-  <div class="separator">
-  </div>
-</div>
-
+</a>
 <style define:vars={{ typeColor }}>
-
   .article-card-description p {
     font-size: 16px;
   }
@@ -79,6 +78,12 @@ const date = mdToDate(lang, article.data.pubDate);
     position: relative;
     background-color: #d9d9d9;
     height: 186px;
+  }
+
+  .article-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .short-horizontal-separator-child {
     position: absolute;
@@ -189,9 +194,8 @@ const date = mdToDate(lang, article.data.pubDate);
     justify-content: center;
     width: 133px;
     height: 22px;
-
   }
-  .letter-space{
+  .letter-space {
     letter-spacing: 1.36px;
   }
 
@@ -217,12 +221,10 @@ const date = mdToDate(lang, article.data.pubDate);
     font-family: Montserrat;
     position: relative;
     width: 320px;
-    display: flex;
-    flex-direction: column;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   }
 
   a {
-    color:white;
+    color: white;
   }
 </style>

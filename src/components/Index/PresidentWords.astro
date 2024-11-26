@@ -1,6 +1,7 @@
 ---
 import Subtitle from "../Subtitle.astro";
 import CauseButton from "./BigButton.astro";
+import {team} from "../../web-data/team/team.ts"
 import {
     getLangFromUrl,
     useTranslations,
@@ -23,18 +24,18 @@ const tr = useTranslatedPath(lang);
                {t('index.president.word.2')}
             </p>
             <p class="president-id">
-                {t('index.president.name')}, <br /> {t('index.president.function')}
+                {team.president.name}, <br /> {t("team."+team.president.role)} {t("index.president.function")}
             </p>
         </div>
         <div class="image-container"></div>
-        <img class="image" src="/essentiel-cause.jpg" />
+        <img class="image" src="/images/team.webp" />
     </div>
     <CauseButton link="/about" text="index.cause-button"/>
 </div>
 
 <style>
     .container {
-        max-width: 53.4375rem;
+        max-width: 80rem;
         margin-right: auto;
         margin-left: auto;
         display: flex;
@@ -88,6 +89,7 @@ const tr = useTranslatedPath(lang);
     .image {
         display: block;
         margin: auto;
+        object-fit:cover;
         width: 100%;
         display: inline-block;
         vertical-align: middle;

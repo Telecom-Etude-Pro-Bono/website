@@ -4,6 +4,8 @@ import Icon from "../Icon.astro";
 import Subtitle from "../Subtitle.astro";
 import Quote from "../Index/Quote.astro";
 
+import {team } from "../../web-data/team/team.ts"
+
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
@@ -23,6 +25,9 @@ const tr = useTranslatedPath(lang);
 ---
 
 <div class="title under-header">
+    <div>
+        <img class="background-img" src="/images/quote-thanks.webp" />
+    </div>
     <div class="container">
         <div class="text-container">
             <div class="title-container">
@@ -32,10 +37,11 @@ const tr = useTranslatedPath(lang);
 
             <div class="quote">
                 <p class="quote-text">
-                    Au nom de toutes les équipes du CHUGA mobilisées et en tant que Présidente du Fonds de dotation, je remercie très chaleureusement nos mécènes, nos donateurs et nos parrains sportifs qui adhèrent à notre cause et soutiennent nos projets.
+                    {t("support.thanks")}
+
                 </p>
                 <p class="quote-author function">
-                   Kevin Garnier <br> Président du Fonds de dotation
+                    {team.president.name} <br /> {t("team." + team.president.role)} {t("support.thanks.president")}
                 </p>
             </div>
         </div>
@@ -46,7 +52,6 @@ const tr = useTranslatedPath(lang);
     p {
         text-align: justify;
         padding: 0 20px;
-
     }
 
     h1 {
@@ -79,8 +84,7 @@ const tr = useTranslatedPath(lang);
     .dquotes {
         width: 80px;
     }
-    .title
- {
+    .title {
         top: 0;
         left: 0;
         width: 100%;
@@ -91,20 +95,27 @@ const tr = useTranslatedPath(lang);
         box-sizing: border-box;
         gap: 15px;
         height: fit-content;
-        background-image: url(/quote-test.jpg);
-        background-position: left;
+        /* background-image: url(/images/quote-thanks.webp); */
         background-repeat: no-repeat;
         background-size: cover;
         background-color: rgba(255, 255, 255, 0.45);
         display: flex;
         justify-content: center;
         flex-direction: row;
-
     }
 
     .icon-container {
         width: 50px;
         height: 50px;
+    }
+
+    .background-img {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        z-index: -1;
+        object-fit: cover;
+        left: 0px;
     }
 
     .container {
@@ -119,16 +130,22 @@ const tr = useTranslatedPath(lang);
         background: rgba(255, 255, 255, 0.75);
         font-size: 24px;
         line-height: 28px;
-       }
+    }
     @media screen and (max-width: 810px) {
         .container {
             width: 100%;
+        }
+
+        .title {
         }
     }
 
     @media screen and (max-width: 425px) {
         .dquotes {
             width: 50px;
+        }
+        * {
+            box-sizing: content-box;
         }
     }
 </style>

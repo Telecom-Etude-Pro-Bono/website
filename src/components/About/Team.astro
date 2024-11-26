@@ -1,5 +1,5 @@
 ---
-import { team } from "../../web-data/team/team";
+import { team_array } from "../../web-data/team/team";
 import {
     getLangFromUrl,
     useTranslations,
@@ -16,7 +16,7 @@ const tr = useTranslatedPath(lang);
 <div class="bureau-div">
     <Subtitle subtitle={t("team.title")} />
     <div class="cards-grid-container">
-        {team.map((member) => <Member member={member} />)}
+        {team_array.map((member) => <Member member={member} />)}
     </div>
 </div>
 

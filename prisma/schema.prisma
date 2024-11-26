@@ -1,0 +1,14 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model oauth {
+  name  String    @id
+  token String?
+  date  DateTime? @db.Timestamp(6)
+}

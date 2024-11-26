@@ -10,6 +10,7 @@ import Title from "../../components/Title.astro";
 import Subtitle from "../../components/Subtitle.astro";
 import Subsubtitle from "../../components/Subsubtitle.astro";
 import TitleNoImg from "../../components/TitleNoImg.astro";
+import DonateProjectButton from "../../components/Article/DonateProjectButton.astro";
 
 if (slug === undefined) {
   throw new Error("Slug is required");
@@ -30,6 +31,7 @@ const { Content } = await entry.render();
     <div>
       <PictureWithInfo article={entry} />
     </div>
+    {entry.data.type == "ongoing" && <DonateProjectButton project={entry.slug} />}
     <Content />
   </article>
 </PageWithDonateLayout>

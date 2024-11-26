@@ -1,0 +1,20 @@
+---
+import { getLangFromUrl, useTranslatedPath, useTranslations } from "../../web-data/i18n/utils";
+import DonateButton from "../DonateButton.astro";
+import BigButton from "../Index/BigButton.astro"
+import Index from "../../pages/index.astro";
+
+const {project} = Astro.props;
+
+interface Prop {
+    project:string
+}
+
+const lang = getLangFromUrl(Astro.url);
+const tr = useTranslatedPath(lang);
+const t = useTranslations(lang);
+---
+
+<div>
+    <BigButton text="blog.donate-project" link={tr("/donate") + "?project="+project}>
+</div>

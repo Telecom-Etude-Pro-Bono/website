@@ -1,57 +1,59 @@
 ---
 import DonateIndividual from "./DonateIndividual.astro";
+import {legal} from "../../web-data/legal-status.ts"
+import {team_array} from "../../web-data/team/team.ts"
 import {
     getLangFromUrl,
     useTranslatedPath,
     useTranslations,
 } from "../../web-data/i18n/utils";
+import type { arrayOutputType } from "astro/zod";
+import { DONATION_ONCE_AMOUNTS } from "../../web-data/constants";
 
 
 const lang = getLangFromUrl(Astro.url);
 const tr = useTranslatedPath(lang);
 const t = useTranslations(lang);
 
+const {errors, values} = Astro.props;
+interface DonateCompanyProps {
+    errors: any;
+    values: any;
+}
+
 ---
 
 <div class="container">
     <div class="donate-field-container">
-    <label for="social-reason" class="uppercase bold">{t('donate.form.social-reason')} *</label>
-    <input class="company-input" type="text" id="social-reason" name="social-reason"/>
+    <label for="companyName" class="uppercase bold">{t('donate.form.companyName')} *</label>
+    <input class="company-input" type="text" id="companyName"  value={values.social_reason} name="social-reason"/>
+    {errors && errors.socialReason && <p class="errors">{errors.socialReason}</p>}
 </div>
 <div class="donate-field-container">
-    <label for="siret" class="uppercase bold">{t('donate.form.siren')} *</label>
-    <input class="company-input" type="number" id="siret" name="siren"/>
+    <label for="siren" class="uppercase bold">{t('donate.form.siren')} *</label>
+    <input class="company-input" type="number" id="siren" value={values.siren} name="siren"/>
+    {errors && errors.siren && <p class="errors">{errors.siren}</p>}
     </div>
     <div class="donate-field-container">
     <label for="legal-status" class="uppercase bold">{t('donate.form.legal-status')} *</label>
-    <input list="legal-status" class="company-input"/>
+    <input list="legal-status" class="company-input" name="legal" value={values.legal_status}/>
+    {errors && errors.legal && <p class="errors">{errors.legal}</p>}
+
     </div>
-
-    <DonateIndividual/>
-
 
 </div>
 
 <datalist id="legal-status">
-    <option value="SAS" />
-    <option value="SARL" />
-    <option value="SA" />
-    <option value="SNC" />
-    <option value="SDF" />
-    <option value="SCOP" />
-    <option value="SCIC" />
-    <option value="SASU" />
-    <option value="SARLU" />
-    <option value="SAS" />
-    <option value="SARL" />
-    <option value="SA" />
-    <option value="SNC" />
-    <option value="SDF" />
-    <option value="SCOP" />
-    <option value="SCIC" />
-    <option value="SASU" />
-    <option value="SARLU" />
+    {legal.map((amount) => (
+        <option value={amount}/>
+    ))
+    }
+
 </datalist>
+
+
+
+
 
 <style>
     .container{

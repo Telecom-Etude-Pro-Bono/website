@@ -7,6 +7,7 @@ export const ARTICLES_PER_PAGE = 6;
 export const ARTICLES_PER_CAROUSEL = 3;
 
 export const EMAIL = "probono@telecom-etude.fr";
+export const GDPR_EMAIL = "probono@telecom-etude.fr"
 
 export const MOBILE_BREAKPOINT = "810px";
 
@@ -25,6 +26,17 @@ export const DONATION_MONTHLY_AMOUNTS = [10, 15, 20, 25, 30, 50];
 export const DONATION_MIN_DAY = 1
 export const DONATION_MAX_DAY = 28
 export const DONATION_MIN = 1
-export const DONATION_MAX = 9999
+export const DONATION_MAX = 99999.99
+
+export const SIREN =  "849 098 835"
+export const SIRET = "849 098 835 00010"
+export const APE = "88.10B"
+
+export const HOST_SIREN =  "402 647 101"
+export const HOST_SIRET = "402 647 101 00029"
+export const HOST_APE = "94.99Z"
+export const HOST_HREF = "https://rezel.net"
+export const HOST_WEBSITE = "rezel.net"
+export const HOST_MAIL = "contact@rezel.net"
 
 

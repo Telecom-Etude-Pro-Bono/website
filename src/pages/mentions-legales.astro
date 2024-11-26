@@ -1,0 +1,111 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import Title from "../components/Title.astro";
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../web-data/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+import Subtitle from "../components/Subtitle.astro";
+import { CREATION_JO_LINK, CREATION_JO_NUM, SIREN, SIRET, APE, HOST_APE, HOST_SIREN, HOST_SIRET, HOST_WEBSITE, HOST_HREF, HOST_MAIL } from "../web-data/constants";
+import { EMAIL, GDPR_EMAIL } from "../web-data/constants";
+import { team_array } from "../web-data/team/team";
+
+const president = team_array[0]
+const marketing = team_array[4]
+const gdpr = team_array[2]
+
+
+
+---
+
+<PageLayout title={t('nav.legal')}>
+    <Title title={t('legal.title')} height="50vh" img="/images/title/bg.jpg"/>
+    <div class="main">
+    <p>{t('legal.intro')}</p>
+    <div class="editor">
+        <Subtitle subtitle={t('legal.editor.title')} />
+        <p>
+            <b>{t("legal.donation-funds.1")}</b>
+        </p>
+        <p>
+        <b>{t("legal.donation-funds.2")}</b>
+        {t("legal.donation-funds.3")}
+        (<a href={CREATION_JO_LINK}>{t("legal.donation-funds.4")+CREATION_JO_NUM}</a>).
+        </p>
+        <p>
+
+        <ul>
+            <li><b>SIREN </b> {SIREN}</li>
+            <li><b>SIRET </b> {SIRET}</li>
+            <li><b>APE </b>{APE}</li>
+        </ul>
+        </p>
+        <p>
+        <b>{t('legal.location.title')}</b> {t('legal.editor.location.content')}<br>
+        <b>{t('legal.mail')}</b> <a href={"mailto:" +EMAIL}>{EMAIL} </a> <br>
+            <b>{t('legal.publication.title')}</b> {president.name}, {t("team."+president.role)}  {t('legal.pubed.end')} <br>
+            <b>{t('legal.editor')}</b> {marketing.name}, {t("team."+marketing.role)} {t('legal.pubed.end')}<br>
+        </p>
+        <p>
+            <b>{t('legal.responsibility.title')}</b> {t('legal.responsibility.content')}
+        </p>
+        <Subtitle subtitle={t('legal.gdrp')} />
+        <p>
+            <b>{t('legal.gdrp.representant')} </b> {gdpr.name}, {t("team."+gdpr.role)}  {t('legal.pubed.end')} <br>
+            <b>{t('legal.gdrp.contact')}</b> <a href={"mailto:"+GDPR_EMAIL}>{GDPR_EMAIL}</a>
+        </p>
+        <p>
+            {t('legal.grdp.content.1')}
+            <a href = {"mailto: + GDPR_EMAIL"}>{GDPR_EMAIL}</a>
+            {t('legal.grdp.content.2')}
+        </p>
+
+        <Subtitle subtitle={t('legal.hosting.title')} />
+        <p>
+            <b>{t('legal.host')}</b> {t('legal.hosting.text')}
+        </p>
+        <p>
+            <ul>
+            <li><b>SIREN </b> {HOST_SIREN}</li>
+            <li><b>SIRET </b> {HOST_SIRET}</li>
+            <li><b>APE </b>{HOST_APE}</li>
+            </ul>
+        </p>
+        <p>
+            <b>{t('legal.location.title')}</b> {t('legal.editor.location.content')}<br>
+        <b>{t('legal.mail')}</b> <a href={"mailto:" +HOST_MAIL}>{HOST_MAIL} </a> <br>
+        <b>{t('legal.host.website')}</b> <a href={HOST_HREF} target="_blank" rel="noreferrer">{HOST_WEBSITE}</a>
+        </p>
+
+        <Subtitle subtitle={t('legal.credit.title')} />
+        <p>{t('legal.credit.1')}
+            <ul>
+                <li><a href="https://astro.build/" target="_blank" rel="noreferrer">Astro</a></li>
+                <li><a href="https://www.flaticon.com/" target="_blank" rel="noreferrer">Flaticon</a></li>
+                <li><a href="https://mui.com/" target="_blank" rel="noreferrer">MUI</a></li>
+            </ul>
+        </p>
+
+        <p>{t('legal.credit.2')}
+            <a href="https://www.helloasso.com/">Hello Asso</a>.
+            {t('legal.credit.3')}
+        </p>
+
+
+
+
+
+</div>
+
+    </div>
+
+<style>
+    .main{
+        width:75%;
+    }
+</style>

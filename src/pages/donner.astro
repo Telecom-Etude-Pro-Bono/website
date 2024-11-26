@@ -1,5 +1,6 @@
 ---
-// export const prerender = false;
+export const prerender = false;
+import { sequence } from "astro:middleware";
 import DonateCompany from "../components/Donate/DonateCompany.astro";
 import DonateIndividual from "../components/Donate/DonateIndividual.astro";
 import PaymentButton from "../components/Donate/PaymentButton.astro";
@@ -10,6 +11,7 @@ import Title from "../components/Title.astro";
 import DonationSectionLayout from "../layouts/DonationSectionLayout.astro";
 import PageLayout from "../layouts/PageLayout.astro";
 import { DONATION_ONCE_AMOUNTS, DONATION_MONTHLY_AMOUNTS, DONATION_MAX_DAY, DONATION_MIN_DAY, DONATION_MIN, DONATION_MAX } from "../web-data/constants";
+import {pay} from "./api/payer";
 
 
 import {
@@ -17,14 +19,145 @@ import {
     useTranslations,
     useTranslatedPath,
 } from "../web-data/i18n/utils";
+import { validateAmount, validateSocialReason, validateSiren, validateLegal, validateName, validateEmail, validateConfirmEmail, validateDate, validateAddress, validateCity, validateZip, validateCountry, validatePhone, validateNamesAreDifferent, validateMonthlyDaySelector } from "./api/donate";
+
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const tr = useTranslatedPath(lang);
 
+const errors = {amount : "", day :"", social_reason :"", siren: "", firstName:"",lastName:"",email:"",confirm_email:"",dateOfBirth:"",address:"",city:"",zipCode:"",country:"",phone:"", legal:""};
+const values = {donation_type : "", entity_type : 1, company : false, totalAmount : 30, monthly_day_selector : 5 , legal : "", social_reason : "", siren : "", lastName : "", firstName : "" ,email : "",confirm_email : "",phone : "",dateOfBirth : "",address :"",city :"",zipCode :"",country : "", project:""}
+
+if (Astro.request.method === "GET") {
+    values.project = Astro.url.searchParams.get("project") || ""
+}
+if (Astro.request.method === "POST") {
+    try {
+
+        const data = await Astro.request.formData();
+
+        values.donation_type = String(data.get("donation-type"));
+        let once = values.donation_type === "once";
+        values.entity_type = Number(data.get("entity-selector"));
+        values.company = values.entity_type === 2;
+        values.totalAmount = Number(data.get("totalAmount"));
+        values.monthly_day_selector = Number(data.get("monthly-day-selector"));
+        values.legal = String(data.get("legal"))
+        values.social_reason = String(data.get("companyName"));
+        values.siren = String(data.get("siren"));
+        values.lastName = String(data.get("lastName"));
+        values.firstName = String(data.get("firstName"));
+        values.email = String(data.get("email"));
+        values.confirm_email = String(data.get("confirm-email"));
+        values.phone = String(data.get("phone"));
+        values.dateOfBirth = String(data.get("dateOfBirth"));
+        values.address = String(data.get("address"));
+        values.city = String(data.get("city"));
+        values.zipCode = String(data.get("zipCode"));
+        values.country = String(data.get("country"));
+
+        if (! validateAmount(values.totalAmount)) {
+           errors.amount += t('errors.amount') + "\n"
+        }
+        if (!validateMonthlyDaySelector(values.monthly_day_selector)) {
+            errors.day += t('errors.day') + "\n"
+        }
+
+        if (values.company && !validateSocialReason(values.social_reason)) {
+            errors.social_reason += t('errors.companyName') + "\n"
+
+        }
+
+        if (values.company && !validateSiren(values.siren)) {
+            errors.siren += t("errors.siren") + "\n"
+        }
+
+        if (values.company && !validateLegal(values.legal)) {
+            errors.legal += t("errors.legal") + "\n"
+
+        }
+
+        if (!validateName(values.lastName)) {
+            errors.lastName += t("errors.name") + "\n"
+
+        }
+
+        if (!validateName(values.firstName)) {
+            errors.firstName += t('errors.firstName') + "\n"
+
+        }
+
+        if (!validateEmail(values.email)) {
+            errors.email += t('errors.mail') + "\n"
+
+        }
+
+        if (!validateConfirmEmail(values.confirm_email, values.email)) {
+            errors.confirm_email += t('errors.confirm-mail') + "\n"
+
+        }
+
+        if (!validateDate(values.dateOfBirth)) {
+            errors.dateOfBirth += t('errors.dateOfBirth') + "\n"
+
+        }
+
+
+        if (!validateAddress(values.address)) {
+            errors.address += t('errors.address') + "\n"
+
+        }
+
+        if (!validateCity(values.city)) {
+            errors.city += t('errors.city') + "\n"
+
+        }
+
+        if (!validateZip(values.zipCode)) {
+            errors.zipCode += t('errors.zipCode') + "\n"
+
+        }
+
+        if (!validateCountry(values.country)) {
+            errors.country += t('errors.country') + "\n"
+
+        }
+
+        if (!validatePhone(values.phone)) {
+            errors.phone += t('errors.phone') + "\n"
+
+        }
+
+        if (!validateNamesAreDifferent(values.lastName, values.firstName)) {
+            errors.firstName += t('errors.same-name') + "\n"
+            errors.lastName += t('errors.same-name') + "\n"
+
+        }
+
+        if (!validateMonthlyDaySelector(values.monthly_day_selector)) {
+            errors.day += t('errors.day') + "\n"
+
+        }
+        const hasErrors = Object.values(errors).some(msg => msg)
+        if (!hasErrors) {
+            console.log(values)
+        const response = await pay(values);
+        console.log(response);
+        Astro.redirect(response.redirectUrl, 302);
+
+    }
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+    }
+}
+
+
 ---
 <PageLayout title={t("page.donate")}>
     <Title title={t("donate.title")} height="50vh" img="/images/title/bg.jpg" />
-    <form class="donation-container">
+    <form class="donation-container" target="_self" method="post">
     <DonationSectionLayout title="Donner" icon="heart">
         <div class="big-selector bold">
             <input type="radio" id="donation-type-1" name="donation-type" value="once" checked />
@@ -36,8 +169,8 @@ const tr = useTranslatedPath(lang);
 
             {DONATION_ONCE_AMOUNTS.map((amount) => (
                     <div>
-                    <input type="radio" class="amount" id={`amount-${amount}`} name="amount-once" value={amount} />
-                    <label for={`amount-${amount}`}>{amount} €</label>
+                    <input type="radio" class="amount" id={`amount-once-${amount}`} name="amount-once" value={amount} />
+                    <label for={`amount-once-${amount}`}>{amount} €</label>
                 </div>
             ))}
             </div>
@@ -45,26 +178,28 @@ const tr = useTranslatedPath(lang);
 
             {DONATION_MONTHLY_AMOUNTS.map((amount) => (
                 <div>
-                    <input type="radio" class="amount" id={`amount-${amount}`} name="amount-monthly" value={amount} />
-                    <label for={`amount-${amount}`}>{amount} €</label>
+                    <input type="radio" class="amount" id={`amount-month-${amount}`} name="amount-monthly" value={amount} />
+                    <label for={`amount-month-${amount}`}>{amount} €</label>
                 </div>
             ))}
         </div>
-        <div class="custom-amount-container">
-        <label for="custom-amount">{t('donate.custom-amount')}</label>
-        <div>
-        <input type="number" id="custom-amount" name="custom-amount" placeholder="--,--" class="donate-field" min={DONATION_MIN} max={DONATION_MAX}/>
-        <label for="custom-amount">€</label>
+        <div class="totalAmount-container">
+        <label for="totalAmount">{t('donate.totalAmount')}</label>
+        <div class="totalAmount-number">
+        <input type="number" id="totalAmount" name="totalAmount" placeholder="--,--" class="donate-field" min={DONATION_MIN} max={DONATION_MAX} value={values.totalAmount}/>
+        <label for="totalAmount">€</label>
         </div>
+        {errors.amount && <p class="errors">{errors.amount}</p>}
     </div>
         <div class="reduction green-div">
             <p>{t('donate.reduction.1')}<b class="reduction-amount"></b> {t('donate.reduction.2')}</p>
         </div>
         <div id="monthly-day-selector-container" class="montly-day-selector-container green-div">
             <label for="monthly-day-selector">{t('donate.monthly.1')}</label>
-            <input class="donate-field" type="number" id="monthly-day-selector" name="monthly-day-selector" value="5" min={DONATION_MIN_DAY} max={DONATION_MAX_DAY} />
+            <input class="donate-field" type="number" id="monthly-day-selector" name="monthly-day-selector" value={values.monthly_day_selector} min={DONATION_MIN_DAY} max={DONATION_MAX_DAY} />
             <label for="monthly-day-selector">{t('donate.monthly.2')}</label>
             <p>{t('donate.monthly.3')} <b id="monthly-day"></b> {t('donate.monthly.4')}</p>
+
         </div>
 
         <div class="taxation-container">
@@ -89,16 +224,18 @@ const tr = useTranslatedPath(lang);
 
     <DonationSectionLayout title="Coordonnées" icon="list">
         <div class="checkbox-container">
-        <input type="checkbox" id="is-company" name="is-company" />
+        <input type="checkbox" id="is-company" name="is-company" value=""/>
         <label for="is-company">{t('donate.as-compnay')}</label>
     </div>
+
         <div id="individual-contact" class="contact">
-            <DonateIndividual>
+            <div id="company-contact" class="contact">
+                <DonateCompany errors={errors} values={values}>
+            </div>
+            <DonateIndividual errors={errors} values={values}>
 
         </div>
-        <div id="company-contact" class="contact">
-            <DonateCompany>
-        </div>
+
 
     </DonationSectionLayout>
     <DonationSectionLayout title="RECAP" icon="checkbox">
@@ -133,8 +270,12 @@ const tr = useTranslatedPath(lang);
             <input type="checkbox" id="donators-wall" name="donators-wall">
             <label for="donators-wall">{t('donate.wall')}</label>
         </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="phone-consent" name="phone-consent">
+            <label for="phone-consent">{t('donate.phone-consent')}</label>
+        </div>
 
-        <button id="payment-button"type="submit"><PaymentButton/></button>
+        <button id="payment-button" type="submit"><PaymentButton/></button>
 
         <div class="helloasso-why">
             <Subsubtitle subsubtitle="Pourquoi passer par HelloAsso ?" align="left"/>
@@ -168,17 +309,17 @@ const tr = useTranslatedPath(lang);
 
 </PageLayout>
 
-<script>
-    let donationType = "once";
+<script define:vars={{values}}>
+    let donationType = values.donation_type;
     let donorsType = "individual";
     let reductionRate = 0.66;
-    let donationAmount = 30;
-    let donationDay = 5;
+    let donationAmount = values.totalAmount;
+    let donationDay = values.monthly_day_selector;
     let reduction = 24;
     const amountOnce = document.getElementById("amount-once");
     const amountMonthly = document.getElementById("amount-monthly");
     const monthlyDaySelectorContainer = document.getElementById("monthly-day-selector-container");
-    const customAmount = document.getElementById("custom-amount");
+    const customAmount = document.getElementById("totalAmount");
     const reductionAmounts = document.getElementsByClassName("reduction-amount");
     const individualLegal = document.getElementById("individual-legal");
     const companyLegal = document.getElementById("company-legal");
@@ -250,9 +391,8 @@ const tr = useTranslatedPath(lang);
             companyButton.checked = false;
             individualButton.checked = true;
             companyContact.style.display = "none";
-            individualContact.style.display = "block";
             for (let input of companyInput) {
-                input.required = false;
+                input.removeAttribute('required');
             }
 
 
@@ -267,9 +407,8 @@ const tr = useTranslatedPath(lang);
             individualButton.checked = false;
             companyButton.checked = true;
             companyContact.style.display = "block";
-            individualContact.style.display = "none";
             for (let input of companyInput) {
-                input.required = true;
+                input.setAttribute('required', '');
             }
 
         }
@@ -301,7 +440,7 @@ const tr = useTranslatedPath(lang);
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-      const customAmountInput = document.getElementById('custom-amount');
+      const customAmountInput = document.getElementById('totalAmount');
       customAmountInput.addEventListener('keydown', function(event) {
           if (event.key === 'Enter') {
               event.preventDefault();
@@ -317,6 +456,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <style>
+
+    .company-contact{
+        width:100%;
+    }
+
+    .totalAmount-number {
+        display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    }
 
     .contact{
         align-self: center;
@@ -525,14 +675,14 @@ table tr:last-of-type {
         padding: 1rem;
     }
 
-    .custom-amount-container{
+    .totalAmount-container{
         width: 100%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     }
 
-    #custom-amount{
+    #totalAmount{
         width:8rem;
         margin: 0 0.5rem;
         text-align: center;
@@ -561,6 +711,18 @@ table tr:last-of-type {
             align-items: center;
             padding-top: 0%
         }
+    }
+
+    @media screen and (max-width: 425px) {
+        .donation-container{
+            padding: 10px;
+            max-width: max-content;
+        }
+
+        .section-content{
+            padding: 0.5em;
+        }
+
     }
 
 

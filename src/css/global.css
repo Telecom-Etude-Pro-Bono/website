@@ -200,3 +200,9 @@ input[type=number] {
 p {
     text-align: justify;
 }
+
+.errors {
+    color: red;
+    font-size: smaller;
+    margin:0%
+}
