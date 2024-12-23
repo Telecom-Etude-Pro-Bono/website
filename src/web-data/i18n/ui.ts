@@ -62,8 +62,9 @@ export const ui = {
         'index.company.title': 'Entreprises',
         'index.company.text': "Source de rencontres, de partage et d'innovation, devenir mécène permet de tisser des liens privilégiés avec les étudiants de Télécom Paris et de vous associer à nos valeurs, nos ambitions et nos projets.",
 
-        'index.president.word.1': "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        'index.president.word.2': "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        'index.president.word.1': "Ensemble, soutenons les initiatives engagées.",
+        'index.president.word.2': "Innover est un dépassement de soi. Au vu des enjeux sociaux et environnementaux, accompagner les associations dans leurs projets ne peut être que bénéfique pour tous.",
+        'index.president.word.3': "Ensemble, faisons la différence pour un monde meilleur.",
         'index.president.function':'de ' + Name,
 
         'index.last-news':'Les dernières actualités de ' + Name ,
@@ -270,6 +271,7 @@ export const routes = {
         'donate': 'donner',
         'search': 'rechercher',
         'legal': 'mentions-legales',
+        'sitemap': 'plan-du-site',
     }
 
 } as const;

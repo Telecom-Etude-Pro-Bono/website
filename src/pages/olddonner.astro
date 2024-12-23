@@ -1,0 +1,742 @@
+---
+export const prerender = false;
+import { sequence } from "astro:middleware";
+import DonateCompany from "../components/Donate/DonateCompany.astro";
+import DonateIndividual from "../components/Donate/DonateIndividual.astro";
+import PaymentButton from "../components/Donate/PaymentButton.astro";
+import Icon from "../components/Icon.astro";
+import Subsubtitle from "../components/Subsubtitle.astro";
+import Subtitle from "../components/Subtitle.astro";
+import Title from "../components/Title.astro";
+import DonationSectionLayout from "../layouts/DonationSectionLayout.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+import { DONATION_ONCE_AMOUNTS, DONATION_MONTHLY_AMOUNTS, DONATION_MAX_DAY, DONATION_MIN_DAY, DONATION_MIN, DONATION_MAX } from "../web-data/constants";
+import {pay} from "./api/payer";
+
+
+import {
+    getLangFromUrl,
+    useTranslations,
+    useTranslatedPath,
+} from "../web-data/i18n/utils";
+import { validateAmount, validateSocialReason, validateSiren, validateLegal, validateName, validateEmail, validateConfirmEmail, validateDate, validateAddress, validateCity, validateZip, validateCountry, validatePhone, validateNamesAreDifferent, validateMonthlyDaySelector } from "./api/donate";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const tr = useTranslatedPath(lang);
+
+const errors = {amount : "", day :"", socialReason :"", siren: "", firstName:"",lastName:"",email:"",confirmEmail:"",dateOfBirth:"",address:"",city:"",zipCode:"",country:"",phone:"", legal:""};
+const values = {donationType : "", entityType : 1, company : false, totalAmount : 30, monthlyDaySelector : 5 , legal : "", socialReason : "", siren : "", lastName : "", firstName : "" ,email : "",confirmEmail : "",phone : "",dateOfBirth : "",address :"",city :"",zipCode :"",country : "", project:""}
+
+if (Astro.request.method === "GET") {
+    values.project = Astro.url.searchParams.get("project") || ""
+}
+if (Astro.request.method === "POST") {
+    try {
+
+        const data = await Astro.request.formData();
+
+        values.donationType = String(data.get("donation-type"));
+        let once = values.donationType === "once";
+        values.entityType = Number(data.get("entity-selector"));
+        values.company = values.entityType === 2;
+        values.totalAmount = Number(data.get("totalAmount"));
+        values.monthlyDaySelector = Number(data.get("monthly-day-selector"));
+        values.legal = String(data.get("legal"))
+        values.socialReason = String(data.get("companyName"));
+        values.siren = String(data.get("siren"));
+        values.lastName = String(data.get("lastName"));
+        values.firstName = String(data.get("firstName"));
+        values.email = String(data.get("email"));
+        values.confirmEmail = String(data.get("confirm-email"));
+        values.phone = String(data.get("phone"));
+        values.dateOfBirth = String(data.get("dateOfBirth"));
+        values.address = String(data.get("address"));
+        values.city = String(data.get("city"));
+        values.zipCode = String(data.get("zipCode"));
+        values.country = String(data.get("country"));
+        values.donationType = String(data.get("donation-type"));
+
+        if (! validateAmount(values.totalAmount)) {
+           errors.amount += t('errors.amount') + "\n"
+        }
+        if (!validateMonthlyDaySelector(values.monthlyDaySelector)) {
+            errors.day += t('errors.day') + "\n"
+        }
+
+        if (values.company && !validateSocialReason(values.socialReason)) {
+            errors.socialReason += t('errors.companyName') + "\n"
+
+        }
+
+        if (values.company && !validateSiren(values.siren)) {
+            errors.siren += t("errors.siren") + "\n"
+        }
+
+        if (values.company && !validateLegal(values.legal)) {
+            errors.legal += t("errors.legal") + "\n"
+
+        }
+
+        if (!validateName(values.lastName)) {
+            errors.lastName += t("errors.name") + "\n"
+
+        }
+
+        if (!validateName(values.firstName)) {
+            errors.firstName += t('errors.firstName') + "\n"
+
+        }
+
+        if (!validateEmail(values.email)) {
+            errors.email += t('errors.mail') + "\n"
+
+        }
+
+        if (!validateConfirmEmail(values.confirmEmail, values.email)) {
+            errors.confirmEmail += t('errors.confirm-mail') + "\n"
+
+        }
+
+        if (!validateDate(values.dateOfBirth)) {
+            errors.dateOfBirth += t('errors.dateOfBirth') + "\n"
+
+        }
+
+
+        if (!validateAddress(values.address)) {
+            errors.address += t('errors.address') + "\n"
+
+        }
+
+        if (!validateCity(values.city)) {
+            errors.city += t('errors.city') + "\n"
+
+        }
+
+        if (!validateZip(values.zipCode)) {
+            errors.zipCode += t('errors.zipCode') + "\n"
+
+        }
+
+        if (!validateCountry(values.country)) {
+            errors.country += t('errors.country') + "\n"
+
+        }
+
+        if (!validatePhone(values.phone)) {
+            errors.phone += t('errors.phone') + "\n"
+
+        }
+
+        if (!validateNamesAreDifferent(values.lastName, values.firstName)) {
+            errors.firstName += t('errors.same-name') + "\n"
+            errors.lastName += t('errors.same-name') + "\n"
+
+        }
+
+        if (!validateMonthlyDaySelector(values.monthlyDaySelector)) {
+            errors.day += t('errors.day') + "\n"
+
+        }
+        const hasErrors = Object.values(errors).some(msg => msg)
+        if (!hasErrors) {
+            console.log(values)
+            const response = await pay(values, lang, Astro.url);
+            console.log(response);
+            console.log(response.redirectUrl);
+            return Astro.redirect(response.redirectUrl, 302);
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+    }
+}
+
+
+---
+<PageLayout title={t("page.donate")}>
+    <Title title={t("donate.title")} height="50vh" img="/images/title/bg.jpg" />
+    <form class="donation-container" target="_self" method="post">
+    <DonationSectionLayout title="Donner" icon="heart">
+        <div class="big-selector bold">
+            <input type="radio" id="donation-type-1" name="donation-type" value="once" checked />
+            <label for="donation-type-1">{t('donate.once')}</label>
+            <input type="radio" id="donation-type-2" name="donation-type" value="monthly"/>
+            <label for="donation-type-2">{t('donate.monthly')}</label>
+        </div>
+        <div id="amount-once" class="amount-container bold">
+
+            {DONATION_ONCE_AMOUNTS.map((amount) => (
+                    <div>
+                    <input type="radio" class="amount" id={`amount-once-${amount}`} name="amount-once" value={amount} />
+                    <label for={`amount-once-${amount}`}>{amount} €</label>
+                </div>
+            ))}
+            </div>
+            <div id="amount-monthly" class="amount-container bold">
+
+            {DONATION_MONTHLY_AMOUNTS.map((amount) => (
+                <div>
+                    <input type="radio" class="amount" id={`amount-month-${amount}`} name="amount-monthly" value={amount} />
+                    <label for={`amount-month-${amount}`}>{amount} €</label>
+                </div>
+            ))}
+        </div>
+        <div class="totalAmount-container">
+        <label for="totalAmount">{t('donate.totalAmount')}</label>
+        <div class="totalAmount-number">
+        <input type="number" id="totalAmount" name="totalAmount" placeholder="--,--" class="donate-field" min={DONATION_MIN} max={DONATION_MAX} value={values.totalAmount}/>
+        <label for="totalAmount">€</label>
+        </div>
+        {errors.amount && <p class="errors">{errors.amount}</p>}
+    </div>
+        <div class="reduction green-div">
+            <p>{t('donate.reduction.1')}<b class="reduction-amount"></b> {t('donate.reduction.2')}</p>
+        </div>
+        <div id="monthly-day-selector-container" class="montly-day-selector-container green-div">
+            <label for="monthly-day-selector">{t('donate.monthly.1')}</label>
+            <input class="donate-field" type="number" id="monthly-day-selector" name="monthly-day-selector" value={values.monthlyDaySelector} min={DONATION_MIN_DAY} max={DONATION_MAX_DAY} />
+            <label for="monthly-day-selector">{t('donate.monthly.2')}</label>
+            <p>{t('donate.monthly.3')} <b id="monthly-day"></b> {t('donate.monthly.4')}</p>
+
+        </div>
+
+        <div class="taxation-container">
+            <Subsubtitle subsubtitle={t('donate.reduction.title')} align="left"/>
+            <p class="center-div">{t('donate.reduction.legal')}</p>
+            <div class="reduction green-div">
+                <p>{t('donate.reduction.1')}<b class="reduction-amount"></b> {t('donate.reduction.2')}</p>
+            </div>
+            <div class="legal-selector big-selector bold">
+                <input type="radio" id="entity-selector-1" name="entity-selector" value="1" checked />
+                <label for="entity-selector-1">{t('donate.individual')}</label>
+                <input type="radio" id="entity-selector-2" name="entity-selector" value="2" />
+                <label for="entity-selector-2">{t('donate.company')}</label>
+            </div>
+            <div class="taxation-legal green-div">
+                <p id="individual-legal">{t("patron.individual.benefits.text")}</p>
+                <p id="company-legal">{t("patron.company.benefits.text")}</p>
+            </div>
+        </div>
+
+    </DonationSectionLayout>
+
+    <DonationSectionLayout title="Coordonnées" icon="list">
+        <div class="checkbox-container">
+        <input type="checkbox" id="is-company" name="is-company" value=""/>
+        <label for="is-company">{t('donate.as-compnay')}</label>
+    </div>
+
+        <div id="individual-contact" class="contact">
+            <div id="company-contact" class="contact">
+                <DonateCompany errors={errors} values={values}>
+            </div>
+            <DonateIndividual errors={errors} values={values}>
+
+        </div>
+
+
+    </DonationSectionLayout>
+    <DonationSectionLayout title="RECAP" icon="checkbox">
+        <table>
+            <thead>
+                <tr>
+                    <th>{t('donate.recap.select')}</th>
+                    <th>{t('donate.recap.value')}</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>{t('donate.recap.tepb')}</td>
+                <td id="recap-tepb">€</td>
+            </tr>
+            <tr>
+                <td>{t('donate.recap.monthly')}</td>
+                <td id="recap-monthly">Non</td>
+            </tr>
+            <td>{t('donate.recap.reduction')}</td>
+            <td id="recap-reduction"></td>
+            </tr>
+            <tr id="recap-day-line">
+                <td>{t('donate.recap.day')}</td>
+                <td id="recap-day"></td>
+            <tr>
+        </table>
+            <div class="checkbox-container">
+                <input type="checkbox" id="newsletter" name="newsletter">
+                <label for="newsletter">{t('donate.newsletter')}</label>
+            </div>
+            <div class="checkbox-container">
+            <input type="checkbox" id="donators-wall" name="donators-wall">
+            <label for="donators-wall">{t('donate.wall')}</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="phone-consent" name="phone-consent">
+            <label for="phone-consent">{t('donate.phone-consent')}</label>
+        </div>
+
+        <button id="payment-button" type="submit"><PaymentButton/></button>
+
+        <div class="helloasso-why">
+            <Subsubtitle subsubtitle="Pourquoi passer par HelloAsso ?" align="left"/>
+            <p>{t('donate.helloasso.1')}</p>
+                <b>{t('donate.helloasso.2')}</b>
+                {t('donate.helloasso.3')}
+            </p>
+        </div>
+
+        <div class="secure-payment">
+            <Subsubtitle subsubtitle="Plateforme de paiement 100% sécurisée" align="left"/>
+            <p>{t('donate.secure-payment')}</p>
+                <div class="secure-payement-icons">
+                    <div class="secure-payement-img">
+                        <Icon icon="cb" alt="cb"/>
+                    </div>
+                        <div class="secure-payement-img">
+                        <Icon icon="visa" alt="visa"/>
+                    </div>
+                        <div class="secure-payement-img">
+                        <Icon icon="mastercard" alt="mastercard"/>
+                    </div>
+                        <div class="secure-payement-img">
+                        <Icon icon="pcj" alt="pcj"/>
+                    </div>
+
+        </div>
+    </DonationSectionLayout>
+    </form>
+
+
+</PageLayout>
+
+<script define:vars={{values}}>
+    let donationType = values.donationType;
+    let donorsType = "individual";
+    let reductionRate = 0.66;
+    let donationAmount = values.totalAmount;
+    let donationDay = values.monthlyDaySelector;
+    let reduction = 24;
+    const amountOnce = document.getElementById("amount-once");
+    const amountMonthly = document.getElementById("amount-monthly");
+    const monthlyDaySelectorContainer = document.getElementById("monthly-day-selector-container");
+    const customAmount = document.getElementById("totalAmount");
+    const reductionAmounts = document.getElementsByClassName("reduction-amount");
+    const individualLegal = document.getElementById("individual-legal");
+    const companyLegal = document.getElementById("company-legal");
+    const isCompany = document.getElementById("is-company");
+    const companyButton = document.getElementById("entity-selector-2");
+    const individualButton = document.getElementById("entity-selector-1");
+    const recapTepb = document.getElementById("recap-tepb");
+    const recapMonthly = document.getElementById("recap-monthly");
+    const recapReduction = document.getElementById("recap-reduction");
+    const recapDay = document.getElementById("recap-day");
+    const recapDayLine = document.getElementById("recap-day-line");
+    const companyContact = document.getElementById("company-contact");
+    const individualContact = document.getElementById("individual-contact");
+    const companyInput = document.getElementsByClassName("company-input");
+
+    const donationType1 = document.getElementById("donation-type-1");
+    const donationType2 = document.getElementById("donation-type-2");
+
+    console.log(values.donationType);
+    if (values.donationType == "monthly") {
+        donationType2.checked = true;
+        // selectMonth("monthly");
+    } else {
+        donationType1.checked = true;
+        // selectMonth("once");
+    }
+
+
+
+    function selectMonth(value) {
+        donationType = value;
+        if (value === "once") {
+            amountOnce.style.display = "grid";
+            amountMonthly.style.display = "none";
+            monthlyDaySelectorContainer.style.display = "none";
+            recapMonthly.textContent = "Non";
+            recapDayLine.style.display = "none";
+        } else {
+            donationType = "monthly";
+            amountOnce.style.display = "none";
+            amountMonthly.style.display = "grid";
+            monthlyDaySelectorContainer.style.display = "block";
+            recapMonthly.textContent = "Oui";
+            recapDayLine.style.display = "table-row";
+        }
+
+       selectAmount(customAmount.value);
+
+    }
+
+    function selectAmount(value) {
+        donationAmount = value;
+        reduction = donationAmount * reductionRate;
+        const left = donationAmount - reduction;
+        const formattedLeft = Number.isInteger(left) ? left.toString() : left.toFixed(2);
+        for (let reductionAmount of reductionAmounts) {
+            reductionAmount.textContent = formattedLeft + "€";
+        }
+        customAmount.value = donationAmount;
+        for (let amount of document.getElementsByClassName("amount")) {
+            console.log(Number(amount.value), Number(customAmount.value));
+            if (Number(amount.value) == Number(customAmount.value)) {
+                amount.checked = true;
+            } else {
+                amount.checked = false;
+            }
+        }
+        const formattedReduction = Number.isInteger(reduction) ? reduction.toString() : reduction.toFixed(2);
+        recapTepb.textContent = donationAmount + "€";
+        recapReduction.textContent = formattedReduction + "€";
+    }
+
+    function selectDonorsType(value) {
+        if (value === "individual") {
+            reductionRate = 0.66;
+            donorsType = "individual";
+            individualLegal.style.display = "block";
+            companyLegal.style.display = "none";
+            selectAmount(customAmount.value);
+            isCompany.checked = false;
+            companyButton.checked = false;
+            individualButton.checked = true;
+            companyContact.style.display = "none";
+            for (let input of companyInput) {
+                input.removeAttribute('required');
+            }
+
+
+        }
+        else {
+            reductionRate = 0.6;
+            donorsType = "company";
+            individualLegal.style.display = "none";
+            companyLegal.style.display = "block";
+            selectAmount(customAmount.value);
+            isCompany.checked = true;
+            individualButton.checked = false;
+            companyButton.checked = true;
+            companyContact.style.display = "block";
+            for (let input of companyInput) {
+                input.setAttribute('required', '');
+            }
+
+        }
+    }
+
+
+    function selectDay(value) {
+        donationDay = value;
+        document.getElementById("monthly-day").textContent = donationDay;
+        recapDay.textContent = donationDay;
+    }
+
+    document.getElementById("monthly-day-selector")?.addEventListener("input", () => selectDay(document.getElementById("monthly-day-selector").value));
+    donationType1?.addEventListener("click", () => selectMonth("once"));
+    donationType2?.addEventListener("click", () => selectMonth("monthly"));
+    individualButton.addEventListener("click", () => selectDonorsType("individual"));
+    companyButton.addEventListener("click", () => selectDonorsType("company"));
+    isCompany.addEventListener("click", () => selectDonorsType(isCompany.checked ? "company" : "individual"));
+    for (let amount of document.getElementsByClassName("amount")) {
+        amount.addEventListener("click", () => selectAmount(amount.value));
+    };
+
+    customAmount.addEventListener("input", () => {
+        var nonNumReg = /[^0-9]/g;
+        customAmount.value = customAmount.value.replace(nonNumReg, '');
+        selectAmount(customAmount.value);
+
+
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+      const customAmountInput = document.getElementById('totalAmount');
+      customAmountInput.addEventListener('keydown', function(event) {
+          if (event.key === 'Enter') {
+              event.preventDefault();
+          }
+      });
+  });
+
+  selectAmount(donationAmount);
+  selectMonth(donationType);
+  selectDonorsType(donorsType);
+  selectDay(donationDay);
+</script>
+
+
+<style>
+
+    .company-contact{
+        width:100%;
+    }
+
+    .totalAmount-number {
+        display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+    }
+
+    .contact{
+        align-self: center;
+    }
+
+    #amount-monthly{
+        display: none;
+    }
+
+    #monthly-day-selector-container{
+        display: none;
+    }
+
+.secure-payement-img {
+    width: 3.5rem;
+    height: 3.5rem;
+    }
+
+    .secure-payement-icons{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    #payment-button{
+        align-self: center;
+        max-width: 270px;
+    }
+ button{
+    background-color: white;
+    border:none;
+    padding: 0px;
+ }
+
+.checkbox-container{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+input[type="checkbox"]{
+    accent-color: var(--information-color);
+}
+
+.checkbox-container input{
+
+    width: 0.875rem;
+    height: 0.875rem;
+}
+
+    table{
+    align-self: center;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.875rem;
+    /* font-family: sans-serif; */
+    /* min-width: 400px; */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1)
+    }
+
+    table thead tr {
+    background-color: var(--information-color);
+    color: #ffffff;
+    text-align: left;
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+table tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+table tr:last-of-type {
+    border-bottom: 2px solid var(--information-color);
+}
+
+    .multi-panel{
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        width:33%;
+
+    }
+
+    .multi-panel section{
+        width:100%
+    }
+
+    .legal-selector{
+        margin-bottom: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .reduction, montly-day-selector-container{
+        padding:1rem;
+        text-align: justify;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    #reduction-amount {
+        color: var(--completed-color);
+    }
+    .donation-container{
+        max-width: 100%;
+        display: flex;
+
+    padding: 50px;
+    }
+
+    .amount-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-column-gap: .75rem;
+    grid-row-gap: .75rem;
+    justify-content: space-evenly;
+    }
+
+    .amount-container input{
+        appearance: none;
+    }
+
+    .amount-container label{
+    border: .0625rem solid transparent;
+    border-radius: .1875rem;
+    cursor: pointer;
+    display: inline-flex;
+    transition: color, background-color, border-color, -webkit-box-shadow;
+    transition: color, background-color, border-color, box-shadow, -webkit-box-shadow;
+    transition-duration: .2s;
+    transition-timing-function: ease;
+    font-size: .875rem;
+    border-color: black;
+    padding: 1rem;
+    width: 100%;
+    justify-content: center;
+
+}
+
+    .amount-container input:checked+label{
+        background-color: var(--information-color);
+        color: white;
+    }
+
+    .amount-container input:focus+label{
+        outline: auto;
+        background-color: var(--information-color);
+        color: white;
+        outline-color: black;
+        /* border-width: 3px; */
+    }
+
+
+
+    .big-selector {
+        width: 100%;
+    display: flex;
+    }
+
+    .big-selector input{
+        appearance: none;
+        /* display: none; */
+    }
+
+    .big-selector label{
+    border: .0625rem solid transparent;
+    border-radius: .1875rem;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    transition: color, background-color, border-color, -webkit-box-shadow;
+    transition: color, background-color, border-color, box-shadow, -webkit-box-shadow;
+    transition-duration: .2s;
+    transition-timing-function: ease;
+    font-size: .875rem;
+    border-color: black;
+    padding: 1rem;
+    width:100%;
+}
+
+    .big-selector input:checked+label{
+        background-color: var(--information-color);
+        color: white;
+    }
+
+    .big-selector input:focus+label{
+        outline: auto;
+        background-color: var(--information-color);
+        color: white;
+        outline-color: black;
+
+    }
+
+    .green-div{
+        padding: 1rem;
+    }
+
+    .totalAmount-container{
+        width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    }
+
+    #totalAmount{
+        width:8rem;
+        margin: 0 0.5rem;
+        text-align: center;
+        appearance: none;
+    }
+    #monthly-day-selector{
+        width: 3.5rem;
+    margin: 0 0.5rem;
+    text-align: center;
+    }
+
+
+
+    .center-div{
+        padding: 1rem;
+    }
+
+    @media screen and (max-width:1215px) {
+        #payment-button{
+            width:100%
+        }
+    }
+    @media screen and (max-width: 1140px) {
+        .donation-container{
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0%
+        }
+    }
+
+    @media screen and (max-width: 425px) {
+        .donation-container{
+            padding: 10px;
+            max-width: max-content;
+        }
+
+        .section-content{
+            padding: 0.5em;
+        }
+
+    }
+
+
+</style>

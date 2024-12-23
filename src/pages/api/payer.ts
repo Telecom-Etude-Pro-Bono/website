@@ -1,10 +1,34 @@
+import { AstroComponentInstance } from "astro/runtime/server/index.js";
 import { getToken, initCheckout } from "./helloasso";
-
 import { createRequire } from 'module';
+import { getDefaultFormatCodeSettings } from "typescript";
+
 const require = createRequire(import.meta.url);
+var countries = require("i18n-iso-countries");
 
+function getTerms(monthlyDaySelector, amount) {
+    var terms = [];
+    var date = new Date()
+    console.log(date);
+    date.setDate(monthlyDaySelector);
 
-export const pay = async (data) => {
+    for (var i = 0; i < 11; i++) {
+        if (date.getMonth() == 11)
+            date.setFullYear(date.getFullYear()+1)
+        date.setMonth((date.getMonth()+1)%12)
+        console.log(date);
+        terms.push({
+                "amount": amount,
+                "date": date.toISOString().split('T')[0]
+            });
+        }
+    return terms;
+
+}
+
+export const pay = async (data, lang, server_url) => {
+
+    console.log(data);
     const payer = {
         'firstName': data.firstName,
         'lastName': data.lastName,
@@ -13,8 +37,8 @@ export const pay = async (data) => {
         'address': data.address,
         'city': data.city,
         'zipCode': data.zipCode,
-        'country': data.country,
-        'companyName': data.companyName,
+        'country': countries.getAlpha3Code(data.country, lang),
+        'companyName': data.companyName
     };
 
     const metadata = {
@@ -24,17 +48,24 @@ export const pay = async (data) => {
         'legal': data.legal,
         'siren': data.siren,
     };
-
+    console.log(data.donation_type)
+    const totalAmount = data.totalAmount * 100;
+    var terms = undefined;
+    if (data.donationType == "monthly")
+        terms = getTerms(data.monthlyDaySelector, totalAmount);
+    console.log(terms);
+    console.log(totalAmount);
     const body = {
         "containsDonation": true,
         "payer": payer,
-        "totalAmount": data.totalAmount,
-        "initialAmount": data.totalAmount,
+        "totalAmount": data.donationType == "monthly" ? totalAmount * 12 :  totalAmount,
+        "initialAmount": data.donationType == "monthly" ? terms[0].amount : totalAmount,
         "itemName": "don",
-        "backUrl": "donate/back.ts",
-        "errorUrl": "donate/error.ts",
-        "returnUrl": "/",
-        "metadata": JSON.stringify(metadata),
+        "backUrl": server_url,
+        "errorUrl": server_url,
+        "returnUrl": server_url,
+        "metadata": metadata,
+        "terms" : terms
     }
 
     const payerRequirements = ['firstName', 'lastName', 'email', 'dateOfBirth', 'address', 'city', 'zipCode', 'country'];
@@ -56,10 +87,11 @@ export const pay = async (data) => {
         return new Response(JSON.stringify({ error: 'legal and siren are required for company' }), { status: 400 });
     }
 
+    console.log(JSON.stringify(body));
 
-
-    const token = getToken();
-    const res = initCheckout(token, body);
+    const token = await getToken();
+    const res = await initCheckout(token, body); // Ensure body is a JSON string
     return res;
 
 }
+

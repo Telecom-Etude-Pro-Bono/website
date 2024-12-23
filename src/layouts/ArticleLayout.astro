@@ -1,0 +1,45 @@
+---
+import DonateProjectButton from "../components/Article/DonateProjectButton.astro";
+import PictureWithInfo from "../components/Article/PictureWithInfo.astro";
+import TitleNoImg from "../components/TitleNoImg.astro";
+import PageWithDonateLayout from "./PageWithDonateLayout.astro";
+
+const { entry } = Astro.props;
+---
+
+<PageWithDonateLayout title={entry.data.title}>
+    <article>
+      <TitleNoImg title={entry.data.title} />
+      <div>
+        <PictureWithInfo article={entry} />
+      </div>
+      {entry.data.type == "ongoing" && <div class="donate-button"><DonateProjectButton project={entry.slug} /></div>}
+      <slot />
+    </article>
+  </PageWithDonateLayout>
+
+  <style>
+    article {
+      width: 75%;
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      align-items: flex-start;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    p {
+      margin: 20px 0;
+    }
+
+    article h2 {
+      margin: 20px 0;
+      font-size: 1.8rem;
+      color: #8a0404;
+      align-self: flex-start;
+    }
+
+    .donate-button {
+      align-self: center;
+    }
+  </style>

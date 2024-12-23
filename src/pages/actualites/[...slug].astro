@@ -11,6 +11,7 @@ import Subtitle from "../../components/Subtitle.astro";
 import Subsubtitle from "../../components/Subsubtitle.astro";
 import TitleNoImg from "../../components/TitleNoImg.astro";
 import DonateProjectButton from "../../components/Article/DonateProjectButton.astro";
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
 
 if (slug === undefined) {
   throw new Error("Slug is required");
@@ -25,34 +26,6 @@ if (entry === undefined) {
 const { Content } = await entry.render();
 ---
 
-<PageWithDonateLayout title={entry.data.title}>
-  <article>
-    <TitleNoImg title={entry.data.title} />
-    <div>
-      <PictureWithInfo article={entry} />
-    </div>
-    {entry.data.type == "ongoing" && <DonateProjectButton project={entry.slug} />}
-    <Content />
-  </article>
-</PageWithDonateLayout>
-
-<style>
-  article {
-    width: 75%;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  p {
-    margin: 20px 0;
-  }
-
-  h2 {
-    margin: 20px 0;
-    font-size: 1.8rem;
-    color: #8a0404;
-  }
-</style>
+<ArticleLayout entry={entry}>
+  <Content />
+</ArticleLayout>

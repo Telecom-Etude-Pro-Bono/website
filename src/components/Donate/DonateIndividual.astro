@@ -38,7 +38,7 @@ interface DonateIndividualProps {
 </div>
 <div class="donate-field-container">
     <label for="confirm-email"class="uppercase bold">{t('donate.form.confirm-email')} *</label>
-    <input type="email" id="confirm-email" name="confirm-email" value={values.confirm_email} required/>
+    <input type="email" id="confirm-email" name="confirm-email" value={values.confirmEmail} required/>
     {errors && errors.confirmEmail && <p class="errors">{errors.confirmEmail}</p>}
 </div>
 <div class="donate-field-container">

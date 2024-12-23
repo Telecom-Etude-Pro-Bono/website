@@ -26,7 +26,7 @@ interface DonateCompanyProps {
 <div class="container">
     <div class="donate-field-container">
     <label for="companyName" class="uppercase bold">{t('donate.form.companyName')} *</label>
-    <input class="company-input" type="text" id="companyName"  value={values.social_reason} name="social-reason"/>
+    <input class="company-input" type="text" id="companyName"  value={values.socialReason} name="social-reason"/>
     {errors && errors.socialReason && <p class="errors">{errors.socialReason}</p>}
 </div>
 <div class="donate-field-container">
@@ -36,7 +36,7 @@ interface DonateCompanyProps {
     </div>
     <div class="donate-field-container">
     <label for="legal-status" class="uppercase bold">{t('donate.form.legal-status')} *</label>
-    <input list="legal-status" class="company-input" name="legal" value={values.legal_status}/>
+    <input list="legal-status" class="company-input" name="legal" value={values.legalStatus}/>
     {errors && errors.legal && <p class="errors">{errors.legal}</p>}
 
     </div>

@@ -17,12 +17,14 @@ const tr = useTranslatedPath(lang);
     <div class="text-image">
         <div class="text-container">
             <Subtitle subtitle="President's Words" align="center" />
-            <p class="president-words">
+            <p id="president-word-1" class="president-words">
                 {t('index.president.word.1')}
             </p>
-            <p class="president-words">
+            <p id="president-word-2" class="president-words">
                {t('index.president.word.2')}
             </p>
+            <p id="president-word-3" class="president-words">
+                {t('index.president.word.3')}
             <p class="president-id">
                 {team.president.name}, <br /> {t("team."+team.president.role)} {t("index.president.function")}
             </p>
@@ -44,6 +46,16 @@ const tr = useTranslatedPath(lang);
         align-content: space-between;
     }
 
+    .president-words {
+        font-size: 1.2rem;
+        line-height: 1.5;
+    }
+
+    #president-word-1 {
+        font-style: italic;
+        color: var(--dark-green);
+    }
+
     .text-image {
         display: flex;
         flex-direction: row;
@@ -59,7 +71,6 @@ const tr = useTranslatedPath(lang);
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 25px;
     }
 
     .president-words {
